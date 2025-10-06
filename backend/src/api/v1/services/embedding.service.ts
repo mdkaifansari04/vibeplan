@@ -1,6 +1,7 @@
 // src/services/embeddingService.ts
 import OpenAI from "openai";
-import { getString } from "../env";
+import { getString } from "../../../libs/env";
+import { baseConfig } from "../../../libs/constant";
 
 export class EmbeddingService {
   private openai: OpenAI;
@@ -14,7 +15,7 @@ export class EmbeddingService {
   async generateEmbedding(text: string): Promise<number[]> {
     try {
       const response = await this.openai.embeddings.create({
-        model: "text-embedding-3-small", // 1536 dimensions, $0.02/1M tokens
+        model: baseConfig.openai.embeddingModel,
         input: text.slice(0, 8000), // Max ~8K tokens per request
       });
 

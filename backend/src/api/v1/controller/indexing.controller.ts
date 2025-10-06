@@ -5,11 +5,59 @@ import { execSync } from "child_process";
 import type { Response, NextFunction } from "express";
 import { CustomRequest } from "../../../types";
 import { AnalysisResult, FileInfo } from "./type";
+import { RepositoryEmbeddingService } from "../services/repository-embedding.service";
 
 class IndexingController {
   private readonly SKIP_DIRS = new Set(["node_modules", "dist", "build", ".git", ".next", "coverage", ".nuxt", "vendor", "__pycache__", ".pytest_cache", ".vscode", ".idea", "target", "bin", "obj", ".gradle", ".cache", ".expo", ".turbo", ".parcel-cache"]);
-
   private readonly INCLUDE_EXTENSIONS = new Set([".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs", ".py", ".java", ".go", ".rb", ".php", ".cpp", ".c", ".cs", ".swift", ".kt", ".rs", ".dart", ".scala", ".html", ".css", ".scss", ".json", ".yaml", ".yml", ".md"]);
+  private embeddingService: RepositoryEmbeddingService;
+
+  constructor() {
+    this.embeddingService = new RepositoryEmbeddingService();
+  }
+
+  public indexCodeRepository = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const tempDir = `./tmp_${Date.now()}`;
+    const { repoUrl, branch = "main" } = req.value;
+
+    try {
+      const namespace = this.embeddingService.generateNamespace(repoUrl, branch);
+      const namespaceExists = await this.embeddingService.namespaceExists(namespace);
+
+      if (namespaceExists) {
+        console.log(`Repository already indexed in namespace: ${namespace}`);
+        return res.json({
+          success: true,
+          data: namespace,
+          message: "Repository already indexed",
+          cached: true,
+        });
+      }
+
+      // Process repository if not cached
+      console.log(`Processing repository: ${repoUrl} (branch: ${branch})`);
+      await this.cloneRepository(repoUrl, branch, tempDir);
+      const files = await this.getAllFiles(tempDir);
+      const result = await this.analyzeRepository(files, repoUrl, branch, tempDir);
+
+      // Generate embeddings and store in Pinecone
+      console.log("Generating embeddings and storing in Pinecone...");
+      const processedNamespace = await this.embeddingService.processRepository(result);
+
+      res.json({
+        success: true,
+        data: processedNamespace,
+        message: "Repository indexed successfully",
+        cached: false,
+        stats: result.stats,
+      });
+    } catch (error) {
+      console.error("Error indexing repository:", error);
+      next(error);
+    } finally {
+      await this.cleanup(tempDir);
+    }
+  };
 
   private async cloneRepository(repoUrl: string, branch: string, tempDir: string): Promise<void> {
     if (await fs.pathExists(tempDir)) {
@@ -251,22 +299,6 @@ class IndexingController {
       // Ignore cleanup errors
     }
   }
-
-  public indexCodeRepository = async (req: CustomRequest, res: Response, next: NextFunction) => {
-    const tempDir = `./tmp_${Date.now()}`;
-    const { repoUrl, branch = "main" } = req.value;
-
-    try {
-      await this.cloneRepository(repoUrl, branch, tempDir);
-      const files = await this.getAllFiles(tempDir);
-      const result = await this.analyzeRepository(files, repoUrl, branch, tempDir);
-      res.json({ success: true, data: result });
-    } catch (error) {
-      next(error);
-    } finally {
-      await this.cleanup(tempDir);
-    }
-  };
 }
 
 export default new IndexingController();

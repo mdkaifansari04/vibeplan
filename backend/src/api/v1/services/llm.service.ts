@@ -1,6 +1,7 @@
 // src/services/llmService.ts
 import Groq from "groq-sdk";
-import { getString } from "../env";
+import { getString } from "../../../libs/env";
+import { baseConfig } from "../../../libs/constant";
 
 export class LLMService {
   private groq: Groq;
@@ -11,14 +12,11 @@ export class LLMService {
     });
   }
 
-  /**
-   * Generate text using Groq (fast and free!)
-   */
   async generatePhases(prompt: string, context: any): Promise<any> {
     const systemPrompt = `You are a senior software architect...`;
 
     const completion = await this.groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile", // Fast model
+      model: baseConfig.groq.model, // "llama-3.3-70b-versatile"
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: prompt },
@@ -35,9 +33,6 @@ export class LLMService {
     return JSON.parse(content);
   }
 
-  /**
-   * Generate detailed plan with agentic tool calls
-   */
   async generateDetailedPlan(phase: any, files: any[]): Promise<string> {
     const prompt = `
       Generate a detailed implementation plan for this phase:
