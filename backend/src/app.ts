@@ -1,8 +1,8 @@
 import express, { type Request, type Response } from "express";
-import config from "./libs/env.js";
+import config, { getString, getNumber } from "./libs/env";
 
 const app = express();
-const PORT = config.getNumber("PORT", 3000);
+const PORT = getNumber("PORT", 3000);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, World!");

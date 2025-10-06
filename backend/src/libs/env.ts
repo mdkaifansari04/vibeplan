@@ -56,10 +56,11 @@ function getBool(key: string, fallback?: boolean): boolean | undefined {
   return ["1", "true", "yes", "on"].includes(v.toLowerCase());
 }
 
-export default Object.assign(config, {
+const configWithHelpers = Object.assign(config, {
   getString,
   getNumber,
   getBool,
 });
 
+export default configWithHelpers;
 export { getString, getNumber, getBool };
