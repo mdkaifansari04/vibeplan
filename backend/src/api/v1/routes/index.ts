@@ -1,3 +1,9 @@
+import { Router } from "express";
+
 import indexingRoute from "./indexing.route";
 
-export { indexingRoute };
+const router = Router();
+
+router.use("/indexing", indexingRoute);
+
+export default router;

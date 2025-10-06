@@ -4,74 +4,12 @@ import * as path from "path";
 import { execSync } from "child_process";
 import type { Response, NextFunction } from "express";
 import { CustomRequest } from "../../../types";
-
-interface FileInfo {
-  name: string;
-  path: string;
-  fullPath: string;
-  extension: string;
-}
-
-interface AnalysisResult {
-  repo_name: string;
-  repo_url: string;
-  branch: string;
-  stats: {
-    total_files: number;
-    code_files: number;
-    analyzed_files: number;
-    skipped_dirs: string[];
-    included_extensions: string[];
-  };
-  files: Array<{
-    file_path: string;
-    relative_path: string;
-    language: string;
-    imports: string[];
-    exports: string[];
-    classes: Array<{
-      name: string;
-      methods: string[];
-      properties: string[];
-      isExported: boolean;
-    }>;
-    functions: Array<{
-      name: string;
-      parameters: string[];
-      returnType: string;
-      isAsync: boolean;
-      isExported: boolean;
-    }>;
-    variables: string[];
-    description: string;
-    lines_of_code: number;
-    metadata: {
-      size_bytes: number;
-      last_modified: string;
-    };
-  }>;
-}
+import { AnalysisResult, FileInfo } from "./type";
 
 class IndexingController {
   private readonly SKIP_DIRS = new Set(["node_modules", "dist", "build", ".git", ".next", "coverage", ".nuxt", "vendor", "__pycache__", ".pytest_cache", ".vscode", ".idea", "target", "bin", "obj", ".gradle", ".cache", ".expo", ".turbo", ".parcel-cache"]);
 
   private readonly INCLUDE_EXTENSIONS = new Set([".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs", ".py", ".java", ".go", ".rb", ".php", ".cpp", ".c", ".cs", ".swift", ".kt", ".rs", ".dart", ".scala", ".html", ".css", ".scss", ".json", ".yaml", ".yml", ".md"]);
-
-  async indexCodeRepository(req: CustomRequest, res: Response, next: NextFunction) {
-    const tempDir = `./tmp_${Date.now()}`;
-    const { repoUrl, branch = "main" } = req.value;
-
-    try {
-      await this.cloneRepository(repoUrl, branch, tempDir);
-      const files = await this.getAllFiles(tempDir);
-      const result = await this.analyzeRepository(files, repoUrl, branch, tempDir);
-      res.json({ success: true, data: result });
-    } catch (error) {
-      next(error);
-    } finally {
-      await this.cleanup(tempDir);
-    }
-  }
 
   private async cloneRepository(repoUrl: string, branch: string, tempDir: string): Promise<void> {
     if (await fs.pathExists(tempDir)) {
@@ -169,14 +107,13 @@ class IndexingController {
     const project = new Project();
     const codeFiles = allFiles.filter((file) => [".ts", ".tsx", ".js", ".jsx"].includes(file.extension));
 
-    // Add TypeScript/JavaScript files to ts-morph
     const validSourceFiles = [];
     for (const file of codeFiles) {
       try {
         const sourceFile = project.addSourceFileAtPath(file.fullPath);
         validSourceFiles.push({ sourceFile, fileInfo: file });
       } catch (error) {
-        // Skip files that can't be parsed
+        // skipping files that can't be parsed
       }
     }
 
@@ -314,6 +251,22 @@ class IndexingController {
       // Ignore cleanup errors
     }
   }
+
+  public indexCodeRepository = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const tempDir = `./tmp_${Date.now()}`;
+    const { repoUrl, branch = "main" } = req.value;
+
+    try {
+      await this.cloneRepository(repoUrl, branch, tempDir);
+      const files = await this.getAllFiles(tempDir);
+      const result = await this.analyzeRepository(files, repoUrl, branch, tempDir);
+      res.json({ success: true, data: result });
+    } catch (error) {
+      next(error);
+    } finally {
+      await this.cleanup(tempDir);
+    }
+  };
 }
 
 export default new IndexingController();

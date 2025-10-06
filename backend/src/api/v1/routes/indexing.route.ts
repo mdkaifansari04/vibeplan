@@ -4,6 +4,6 @@ import { indexingRouteValidation } from "../../../validation/indexing-route.vali
 
 const router = Router();
 
-router.post("/index", indexingRouteValidation, IndexingController.indexCodeRepository);
+router.post("/", indexingRouteValidation, IndexingController.indexCodeRepository);
 
 export default router;
