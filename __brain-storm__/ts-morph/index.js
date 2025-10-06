@@ -112,7 +112,7 @@ async function analyzeRepo(allFiles) {
 
   const project = new Project();
 
-  const codeFiles = allFiles.filter((file) => [".ts", ".tsx", ".js", ".jsx"].includes(file.extension));
+  const codeFiles = allFiles.filter((file) => INCLUDE_EXTENSIONS.includes(file.extension));
 
   console.log(`📊 Found ${codeFiles.length} code files to analyze`);
 
@@ -261,7 +261,6 @@ async function cleanup() {
   }
 }
 
-// 🚀 Main function with improved error handling
 (async () => {
   try {
     console.log(`🎯 Starting repository analysis for ${OWNER}/${REPO}`);
