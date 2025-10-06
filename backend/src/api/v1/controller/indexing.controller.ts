@@ -5,15 +5,15 @@ import { execSync } from "child_process";
 import type { Response, NextFunction } from "express";
 import { CustomRequest } from "../../../types";
 import { AnalysisResult, FileInfo } from "./type";
-import { RepositoryEmbeddingService } from "../services/repository-embedding.service";
+import { TextSearchService } from "../services/text-search.service";
 
 class IndexingController {
   private readonly SKIP_DIRS = new Set(["node_modules", "dist", "build", ".git", ".next", "coverage", ".nuxt", "vendor", "__pycache__", ".pytest_cache", ".vscode", ".idea", "target", "bin", "obj", ".gradle", ".cache", ".expo", ".turbo", ".parcel-cache"]);
   private readonly INCLUDE_EXTENSIONS = new Set([".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs", ".py", ".java", ".go", ".rb", ".php", ".cpp", ".c", ".cs", ".swift", ".kt", ".rs", ".dart", ".scala", ".html", ".css", ".scss", ".json", ".yaml", ".yml", ".md"]);
-  private embeddingService: RepositoryEmbeddingService;
+  private textSearchService: TextSearchService;
 
   constructor() {
-    this.embeddingService = new RepositoryEmbeddingService();
+    this.textSearchService = new TextSearchService();
   }
 
   public indexCodeRepository = async (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -21,8 +21,8 @@ class IndexingController {
     const { repoUrl, branch = "main" } = req.value;
 
     try {
-      const namespace = this.embeddingService.generateNamespace(repoUrl, branch);
-      const namespaceExists = await this.embeddingService.namespaceExists(namespace);
+      const namespace = this.textSearchService.generateNamespace(repoUrl, branch);
+      const namespaceExists = await this.textSearchService.namespaceExists(namespace);
 
       if (namespaceExists) {
         console.log(`Repository already indexed in namespace: ${namespace}`);
@@ -40,13 +40,13 @@ class IndexingController {
       const files = await this.getAllFiles(tempDir);
       const result = await this.analyzeRepository(files, repoUrl, branch, tempDir);
 
-      // Generate embeddings and store in Pinecone
-      console.log("Generating embeddings and storing in Pinecone...");
-      const processedNamespace = await this.embeddingService.processRepository(result);
+      // Store repository using text search service
+      console.log("Storing repository data in Pinecone...");
+      await this.textSearchService.storeRepositoryAsText(result);
 
       res.json({
         success: true,
-        data: processedNamespace,
+        data: namespace,
         message: "Repository indexed successfully",
         cached: false,
         stats: result.stats,
@@ -289,6 +289,35 @@ class IndexingController {
 
     return result;
   }
+
+  public searchRepository = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    try {
+      const { repoUrl, branch = "main", query, limit = 10 } = req.value;
+
+      if (!query || query.trim().length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "Search query is required",
+        });
+      }
+
+      console.log(`Searching in repository: ${repoUrl} (branch: ${branch}) for: "${query}"`);
+
+      const namespace = this.textSearchService.generateNamespace(repoUrl, branch);
+      const results = await this.textSearchService.searchRepository(namespace, query, limit);
+
+      res.json({
+        success: true,
+        data: results,
+        message: "Search completed successfully",
+        query,
+        resultCount: results.length,
+      });
+    } catch (error) {
+      console.error("Error searching repository:", error);
+      next(error);
+    }
+  };
 
   private async cleanup(tempDir: string): Promise<void> {
     try {
