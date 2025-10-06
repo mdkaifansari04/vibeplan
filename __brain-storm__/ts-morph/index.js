@@ -242,7 +242,7 @@ async function analyzeRepo(allFiles) {
 
       analysisResult.files.push(fileData);
     } catch (error) {
-      console.warn(`⚠️  Error processing file ${file.path}: ${error.message}`);
+      console.warn(` Error processing file ${file.path}: ${error.message}`);
     }
   }
 
@@ -263,37 +263,37 @@ async function cleanup() {
 
 (async () => {
   try {
-    console.log(`🎯 Starting repository analysis for ${OWNER}/${REPO}`);
-    console.log(`📋 Configuration:`);
-    console.log(`   • Repository: ${REPO_URL}`);
-    console.log(`   • Branch: ${BRANCH}`);
-    console.log(`   • Temporary directory: ${TEMP_DIR}`);
-    console.log(`   • Skip directories: ${Array.from(SKIP_DIRS).join(", ")}`);
-    console.log(`   • Include extensions: ${Array.from(INCLUDE_EXTENSIONS).join(", ")}`);
+    console.log(`Starting repository analysis for ${OWNER}/${REPO}`);
+    console.log(`Configuration:`);
+    console.log(`Repository: ${REPO_URL}`);
+    console.log(`Branch: ${BRANCH}`);
+    console.log(`Temporary directory: ${TEMP_DIR}`);
+    console.log(`Skip directories: ${Array.from(SKIP_DIRS).join(", ")}`);
+    console.log(`Include extensions: ${Array.from(INCLUDE_EXTENSIONS).join(", ")}`);
 
     // Step 1: Clone repository
     await cloneRepository();
 
     // Step 2: Get all relevant files
-    console.log(`📁 Scanning for files...`);
+    console.log(`Scanning for files...`);
     const files = await getAllFiles();
-    console.log(`✅ Found ${files.length} relevant files`);
+    console.log(`Found ${files.length} relevant files`);
 
     // Step 3: Analyze with ts-morph and generate JSON
-    console.log(`🔍 Performing comprehensive analysis...`);
+    console.log(`Performing comprehensive analysis...`);
     const analysisResult = await analyzeRepo(files);
 
     // Step 4: Save JSON output
     const outputFile = `./analysis_${REPO}_${Date.now()}.json`;
     await fs.writeJson(outputFile, analysisResult, { spaces: 2 });
-    console.log(`💾 Analysis saved to: ${outputFile}`);
+    console.log(`Analysis saved to: ${outputFile}`);
 
     // Step 5: Display summary
-    console.log(`\n📊 Analysis Summary:`);
-    console.log(`   • Repository: ${analysisResult.repo_name}`);
-    console.log(`   • Total files: ${analysisResult.stats.total_files}`);
-    console.log(`   • Code files: ${analysisResult.stats.code_files}`);
-    console.log(`   • Successfully analyzed: ${analysisResult.stats.analyzed_files}`);
+    console.log(`Analysis Summary:`);
+    console.log(` Repository: ${analysisResult.repo_name}`);
+    console.log(` Total files: ${analysisResult.stats.total_files}`);
+    console.log(` Code files: ${analysisResult.stats.code_files}`);
+    console.log(` Successfully analyzed: ${analysisResult.stats.analyzed_files}`);
 
     // File type breakdown
     const fileTypes = {};
@@ -309,17 +309,17 @@ async function cleanup() {
     // Step 6: Cleanup (optional - comment out if you want to keep the repo)
     await cleanup();
 
-    console.log(`🎉 Analysis completed successfully!`);
-    console.log(`📄 JSON output available at: ${outputFile}`);
+    console.log(`Analysis completed successfully!`);
+    console.log(`JSON output available at: ${outputFile}`);
   } catch (error) {
-    console.error("❌ Error:", error.message);
-    console.error("📋 Stack trace:", error.stack);
+    console.error("Error:", error.message);
+    console.error("Stack trace:", error.stack);
 
     // Attempt cleanup on error
     try {
       await cleanup();
     } catch (cleanupError) {
-      console.warn(`⚠️  Cleanup failed: ${cleanupError.message}`);
+      console.warn(`Cleanup failed: ${cleanupError.message}`);
     }
 
     process.exit(1);
