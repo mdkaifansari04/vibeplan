@@ -1,0 +1,7259 @@
+{
+  "repo_name": "post0",
+  "repo_url": "https://github.com/mdkaifansari04/post0",
+  "branch": "main",
+  "stats": {
+    "total_files": 205,
+    "code_files": 176,
+    "analyzed_files": 176,
+    "skipped_dirs": [
+      "node_modules",
+      "dist",
+      "build",
+      ".git",
+      ".next",
+      "coverage",
+      ".nuxt",
+      "vendor",
+      "__pycache__",
+      ".pytest_cache",
+      ".vscode",
+      ".idea",
+      "target",
+      "bin",
+      "obj"
+    ],
+    "included_extensions": [
+      ".js",
+      ".ts",
+      ".jsx",
+      ".tsx",
+      ".json",
+      ".md",
+      ".yml",
+      ".yaml"
+    ]
+  },
+  "files": [
+    {
+      "file_path": "README.md",
+      "relative_path": "README.md",
+      "language": "markdown",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Markdown documentation file",
+      "lines_of_code": 4,
+      "metadata": {
+        "size_bytes": 61,
+        "last_modified": "2025-10-06T15:32:38.464Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/clerk-migration/auth.ts",
+      "relative_path": "_brain_storm/clerk-migration/auth.ts",
+      "language": "typescript",
+      "imports": [
+        "pg",
+        "better-auth",
+        "better-auth/plugins"
+      ],
+      "exports": [
+        "auth"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "auth"
+      ],
+      "description": "Contains variables auth.",
+      "lines_of_code": 20,
+      "metadata": {
+        "size_bytes": 520,
+        "last_modified": "2025-10-06T15:32:38.464Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/clerk-migration/index.ts",
+      "relative_path": "_brain_storm/clerk-migration/index.ts",
+      "language": "typescript",
+      "imports": [
+        "better-auth/crypto",
+        "@/lib/auth"
+      ],
+      "exports": [
+        "generateBackupCodes"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getCSVData",
+          "parameters": [
+            "csv"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": false
+        },
+        {
+          "name": "getClerkUsers",
+          "parameters": [
+            "totalUsers"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        },
+        {
+          "name": "generateBackupCodes",
+          "parameters": [
+            "secret"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "safeDateConversion",
+          "parameters": [
+            "timestamp"
+          ],
+          "returnType": "Date",
+          "isAsync": false,
+          "isExported": false
+        },
+        {
+          "name": "migrateFromClerk",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        }
+      ],
+      "variables": [
+        "exportedUserCSV"
+      ],
+      "description": "Contains functions getCSVData, getClerkUsers, generateBackupCodes, safeDateConversion, migrateFromClerk and variables exportedUserCSV.",
+      "lines_of_code": 275,
+      "metadata": {
+        "size_bytes": 8241,
+        "last_modified": "2025-10-06T15:32:38.464Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-queue-example/package-lock.json",
+      "relative_path": "_brain_storm/demo-queue-example/package-lock.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 335,
+      "metadata": {
+        "size_bytes": 12488,
+        "last_modified": "2025-10-06T15:32:38.464Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-queue-example/package.json",
+      "relative_path": "_brain_storm/demo-queue-example/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 328,
+        "last_modified": "2025-10-06T15:32:38.464Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-queue-example/queue-event.js",
+      "relative_path": "_brain_storm/demo-queue-example/queue-event.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ QueueEvents }",
+        "QUEUE_NAME",
+        "IORedis",
+        "connection",
+        "queueEvent"
+      ],
+      "description": "Contains variables { QueueEvents }, QUEUE_NAME, IORedis, connection, queueEvent.",
+      "lines_of_code": 21,
+      "metadata": {
+        "size_bytes": 605,
+        "last_modified": "2025-10-06T15:32:38.465Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-queue-example/queue.js",
+      "relative_path": "_brain_storm/demo-queue-example/queue.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "addJobs",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        }
+      ],
+      "variables": [
+        "{ Queue }",
+        "QUEUE_NAME",
+        "queue"
+      ],
+      "description": "Contains functions addJobs and variables { Queue }, QUEUE_NAME, queue.",
+      "lines_of_code": 13,
+      "metadata": {
+        "size_bytes": 284,
+        "last_modified": "2025-10-06T15:32:38.465Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-queue-example/worker.js",
+      "relative_path": "_brain_storm/demo-queue-example/worker.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ Worker }",
+        "IORedis",
+        "connection",
+        "worker"
+      ],
+      "description": "Contains variables { Worker }, IORedis, connection, worker.",
+      "lines_of_code": 21,
+      "metadata": {
+        "size_bytes": 460,
+        "last_modified": "2025-10-06T15:32:38.465Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-resend/index.ts",
+      "relative_path": "_brain_storm/demo-resend/index.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ Resend }",
+        "resend"
+      ],
+      "description": "Contains variables { Resend }, resend.",
+      "lines_of_code": 19,
+      "metadata": {
+        "size_bytes": 420,
+        "last_modified": "2025-10-06T15:32:38.465Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-resend/package-lock.json",
+      "relative_path": "_brain_storm/demo-resend/package-lock.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 274,
+      "metadata": {
+        "size_bytes": 9622,
+        "last_modified": "2025-10-06T15:32:38.465Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/demo-resend/package.json",
+      "relative_path": "_brain_storm/demo-resend/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 17,
+      "metadata": {
+        "size_bytes": 295,
+        "last_modified": "2025-10-06T15:32:38.465Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/groq-image-recognition-model/index.js",
+      "relative_path": "_brain_storm/groq-image-recognition-model/index.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "main",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        }
+      ],
+      "variables": [
+        "{ Groq }",
+        "groq"
+      ],
+      "description": "Contains functions main and variables { Groq }, groq.",
+      "lines_of_code": 36,
+      "metadata": {
+        "size_bytes": 874,
+        "last_modified": "2025-10-06T15:32:38.465Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/muti-thread-enviroment-node/main-thread.js",
+      "relative_path": "_brain_storm/muti-thread-enviroment-node/main-thread.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ Worker }",
+        "worker"
+      ],
+      "description": "Contains variables { Worker }, worker.",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 380,
+        "last_modified": "2025-10-06T15:32:38.466Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/muti-thread-enviroment-node/package-lock.json",
+      "relative_path": "_brain_storm/muti-thread-enviroment-node/package-lock.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 1605,
+      "metadata": {
+        "size_bytes": 58339,
+        "last_modified": "2025-10-06T15:32:38.466Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/muti-thread-enviroment-node/package.json",
+      "relative_path": "_brain_storm/muti-thread-enviroment-node/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 342,
+        "last_modified": "2025-10-06T15:32:38.466Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/muti-thread-enviroment-node/worker-thread.js",
+      "relative_path": "_brain_storm/muti-thread-enviroment-node/worker-thread.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ parentPort }",
+        "Cabin",
+        "{ Signale }",
+        "isCancelled",
+        "cabin"
+      ],
+      "description": "Contains variables { parentPort }, Cabin, { Signale }, isCancelled, cabin.",
+      "lines_of_code": 32,
+      "metadata": {
+        "size_bytes": 708,
+        "last_modified": "2025-10-06T15:32:38.466Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/package-lock.json",
+      "relative_path": "_brain_storm/package-lock.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 30,
+      "metadata": {
+        "size_bytes": 677,
+        "last_modified": "2025-10-06T15:32:38.466Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/package.json",
+      "relative_path": "_brain_storm/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 6,
+      "metadata": {
+        "size_bytes": 51,
+        "last_modified": "2025-10-06T15:32:38.466Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/pnpm-lock.yaml",
+      "relative_path": "_brain_storm/pnpm-lock.yaml",
+      "language": "yaml",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "YAML configuration file",
+      "lines_of_code": 25,
+      "metadata": {
+        "size_bytes": 427,
+        "last_modified": "2025-10-06T15:32:38.466Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/poc/package-lock.json",
+      "relative_path": "_brain_storm/poc/package-lock.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 334,
+      "metadata": {
+        "size_bytes": 11579,
+        "last_modified": "2025-10-06T15:32:38.467Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/poc/package.json",
+      "relative_path": "_brain_storm/poc/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 322,
+        "last_modified": "2025-10-06T15:32:38.467Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/poc/post.js",
+      "relative_path": "_brain_storm/poc/post.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "postToLinkedIn",
+          "parameters": [
+            "{ accessToken, personURN, text, imageUrl }"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        },
+        {
+          "name": "postTestContent",
+          "parameters": [
+            "{ text, urn }"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        },
+        {
+          "name": "main",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        }
+      ],
+      "variables": [
+        "axios",
+        "{ default: axiosRetry }",
+        "{ config }",
+        "token",
+        "axiosInstance",
+        "img"
+      ],
+      "description": "Contains functions postToLinkedIn, postTestContent, main and variables axios, { default: axiosRetry }, { config }, token, axiosInstance, img.",
+      "lines_of_code": 150,
+      "metadata": {
+        "size_bytes": 4094,
+        "last_modified": "2025-10-06T15:32:38.467Z"
+      }
+    },
+    {
+      "file_path": "_brain_storm/poc/user.js",
+      "relative_path": "_brain_storm/poc/user.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "main",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        }
+      ],
+      "variables": [
+        "axios",
+        "{ config }",
+        "getAccessToken",
+        "getUserInfo",
+        "getLinkedInUserURN",
+        "token"
+      ],
+      "description": "Contains functions main and variables axios, { config }, getAccessToken, getUserInfo, getLinkedInUserURN, token.",
+      "lines_of_code": 95,
+      "metadata": {
+        "size_bytes": 3064,
+        "last_modified": "2025-10-06T15:32:38.467Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/package.json",
+      "relative_path": "apps/email-service/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 24,
+      "metadata": {
+        "size_bytes": 487,
+        "last_modified": "2025-10-06T15:32:38.467Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/index.ts",
+      "relative_path": "apps/email-service/src/index.ts",
+      "language": "typescript",
+      "imports": [
+        "dotenv/config",
+        "./worker/send-email-worker",
+        "./worker/send-email-dlq-worker",
+        "bullmq",
+        "@repo/email-queue-types"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "queue"
+      ],
+      "description": "Contains variables queue.",
+      "lines_of_code": 20,
+      "metadata": {
+        "size_bytes": 563,
+        "last_modified": "2025-10-06T15:32:38.467Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/libs/emailProvider.ts",
+      "relative_path": "apps/email-service/src/libs/emailProvider.ts",
+      "language": "typescript",
+      "imports": [
+        "resend"
+      ],
+      "exports": [
+        "emailProvider"
+      ],
+      "classes": [
+        {
+          "name": "ResendProvider",
+          "methods": [
+            "sendEmail"
+          ],
+          "properties": [
+            "resend",
+            "from"
+          ],
+          "isExported": false
+        }
+      ],
+      "functions": [],
+      "variables": [
+        "apiKey",
+        "defaultFrom",
+        "emailProvider"
+      ],
+      "description": "Contains classes ResendProvider and variables apiKey, defaultFrom, emailProvider.",
+      "lines_of_code": 54,
+      "metadata": {
+        "size_bytes": 1348,
+        "last_modified": "2025-10-06T15:32:38.468Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/libs/logger.ts",
+      "relative_path": "apps/email-service/src/libs/logger.ts",
+      "language": "typescript",
+      "imports": [
+        "winston"
+      ],
+      "exports": [
+        "logger"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ combine, timestamp, printf, colorize, errors }",
+        "logFormat",
+        "logger"
+      ],
+      "description": "Contains variables { combine, timestamp, printf, colorize, errors }, logFormat, logger.",
+      "lines_of_code": 19,
+      "metadata": {
+        "size_bytes": 608,
+        "last_modified": "2025-10-06T15:32:38.468Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/libs/redis.ts",
+      "relative_path": "apps/email-service/src/libs/redis.ts",
+      "language": "typescript",
+      "imports": [
+        "ioredis",
+        "bullmq"
+      ],
+      "exports": [
+        "redisConfig",
+        "bullmqConnection"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ REDIS_HOST = '127.0.0.1', REDIS_PORT = '6379', REDIS_PASSWORD = '', REDIS_DB = '0' }",
+        "redisConfig",
+        "bullmqConnection"
+      ],
+      "description": "Contains variables { REDIS_HOST = '127.0.0.1', REDIS_PORT = '6379', REDIS_PASSWORD = '', REDIS_DB = '0' }, redisConfig, bullmqConnection.",
+      "lines_of_code": 27,
+      "metadata": {
+        "size_bytes": 880,
+        "last_modified": "2025-10-06T15:32:38.468Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/libs/template.ts",
+      "relative_path": "apps/email-service/src/libs/template.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [
+        "renderTemplate",
+        "templates"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "renderTemplate",
+          "parameters": [
+            "templateName",
+            "data"
+          ],
+          "returnType": "string",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "templates"
+      ],
+      "description": "Contains functions renderTemplate and variables templates.",
+      "lines_of_code": 111,
+      "metadata": {
+        "size_bytes": 5869,
+        "last_modified": "2025-10-06T15:32:38.468Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/services/emailService.ts",
+      "relative_path": "apps/email-service/src/services/emailService.ts",
+      "language": "typescript",
+      "imports": [
+        "../libs/logger",
+        "../libs/emailProvider",
+        "../libs/template"
+      ],
+      "exports": [
+        "EmailService",
+        "emailService"
+      ],
+      "classes": [
+        {
+          "name": "EmailService",
+          "methods": [
+            "sendWelcomeEmail",
+            "sendPrePostNotification",
+            "sendPostSuccess",
+            "sendPostError",
+            "sendCustom",
+            "_send"
+          ],
+          "properties": [
+            "provider"
+          ],
+          "isExported": true
+        }
+      ],
+      "functions": [],
+      "variables": [
+        "emailService"
+      ],
+      "description": "Contains classes EmailService and variables emailService.",
+      "lines_of_code": 77,
+      "metadata": {
+        "size_bytes": 2746,
+        "last_modified": "2025-10-06T15:32:38.468Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/worker/send-email-dlq-worker.ts",
+      "relative_path": "apps/email-service/src/worker/send-email-dlq-worker.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/email-queue-types",
+        "bullmq",
+        "../libs/logger",
+        "../libs/redis",
+        "../services/emailService"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "MAX_DLQ_ATTEMPTS",
+        "dlqWorker"
+      ],
+      "description": "Contains variables MAX_DLQ_ATTEMPTS, dlqWorker.",
+      "lines_of_code": 70,
+      "metadata": {
+        "size_bytes": 2603,
+        "last_modified": "2025-10-06T15:32:38.468Z"
+      }
+    },
+    {
+      "file_path": "apps/email-service/src/worker/send-email-worker.ts",
+      "relative_path": "apps/email-service/src/worker/send-email-worker.ts",
+      "language": "typescript",
+      "imports": [
+        "bullmq",
+        "../libs/redis",
+        "@repo/email-queue-types",
+        "../libs/logger",
+        "../services/emailService"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "dlq",
+        "worker"
+      ],
+      "description": "Contains variables dlq, worker.",
+      "lines_of_code": 78,
+      "metadata": {
+        "size_bytes": 2751,
+        "last_modified": "2025-10-06T15:32:38.468Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/.eslist.json",
+      "relative_path": "apps/post-service/.eslist.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 39,
+      "metadata": {
+        "size_bytes": 1006,
+        "last_modified": "2025-10-06T15:32:38.469Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/README.md",
+      "relative_path": "apps/post-service/README.md",
+      "language": "markdown",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Markdown documentation file",
+      "lines_of_code": 115,
+      "metadata": {
+        "size_bytes": 1958,
+        "last_modified": "2025-10-06T15:32:38.469Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/commitlint.config.js",
+      "relative_path": "apps/post-service/commitlint.config.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "config"
+      ],
+      "description": "Contains variables config.",
+      "lines_of_code": 27,
+      "metadata": {
+        "size_bytes": 769,
+        "last_modified": "2025-10-06T15:32:38.469Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/docker-compose.yml",
+      "relative_path": "apps/post-service/docker-compose.yml",
+      "language": "yaml",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "YAML configuration file",
+      "lines_of_code": 30,
+      "metadata": {
+        "size_bytes": 531,
+        "last_modified": "2025-10-06T15:32:38.469Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/nodemon.json",
+      "relative_path": "apps/post-service/nodemon.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 10,
+      "metadata": {
+        "size_bytes": 223,
+        "last_modified": "2025-10-06T15:32:38.469Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/package.json",
+      "relative_path": "apps/post-service/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 73,
+      "metadata": {
+        "size_bytes": 2000,
+        "last_modified": "2025-10-06T15:32:38.469Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/app.ts",
+      "relative_path": "apps/post-service/src/app.ts",
+      "language": "typescript",
+      "imports": [
+        "libs/rate-limit",
+        "./config/env",
+        "./libs/winston",
+        "@repo/db",
+        "cookie-parser",
+        "express",
+        "helmet",
+        "libs/queue-services",
+        "middleware/arcject.middleware",
+        "middleware/error"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "app"
+      ],
+      "description": "Contains variables app.",
+      "lines_of_code": 61,
+      "metadata": {
+        "size_bytes": 1712,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/config/arcjet.ts",
+      "relative_path": "apps/post-service/src/config/arcjet.ts",
+      "language": "typescript",
+      "imports": [
+        "./env"
+      ],
+      "exports": [
+        "getAj"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "initializeArcjet",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        },
+        {
+          "name": "getAj",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "ajPromise"
+      ],
+      "description": "Contains functions initializeArcjet, getAj and variables ajPromise.",
+      "lines_of_code": 34,
+      "metadata": {
+        "size_bytes": 870,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/config/env.ts",
+      "relative_path": "apps/post-service/src/config/env.ts",
+      "language": "typescript",
+      "imports": [
+        "dotenv",
+        "path"
+      ],
+      "exports": [
+        "{ PORT, NODE_ENV, ARCJET_KEY, DATABASE_URL, GROQ_API_KEY }"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "isDev",
+        "envFile",
+        "{ PORT, NODE_ENV, ARCJET_KEY, DATABASE_URL, GROQ_API_KEY }"
+      ],
+      "description": "Contains variables isDev, envFile, { PORT, NODE_ENV, ARCJET_KEY, DATABASE_URL, GROQ_API_KEY }.",
+      "lines_of_code": 10,
+      "metadata": {
+        "size_bytes": 316,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/constants/common.ts",
+      "relative_path": "apps/post-service/src/constants/common.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/email-queue-types"
+      ],
+      "exports": [
+        "LOCAL_CRON",
+        "QUEUE",
+        "SYSTEM_CONFIG"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "LOCAL_CRON",
+        "QUEUE",
+        "SYSTEM_CONFIG"
+      ],
+      "description": "Contains variables LOCAL_CRON, QUEUE, SYSTEM_CONFIG.",
+      "lines_of_code": 28,
+      "metadata": {
+        "size_bytes": 795,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/database/account.ts",
+      "relative_path": "apps/post-service/src/database/account.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db"
+      ],
+      "exports": [
+        "getUserAccountWithId"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getUserAccountWithId",
+          "parameters": [
+            "id"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions getUserAccountWithId.",
+      "lines_of_code": 12,
+      "metadata": {
+        "size_bytes": 296,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/database/post.ts",
+      "relative_path": "apps/post-service/src/database/post.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "libs/winston"
+      ],
+      "exports": [
+        "getUserPostWithId",
+        "updatePost",
+        "createPost"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getUserPostWithId",
+          "parameters": [
+            "id",
+            "includeUser"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "updatePost",
+          "parameters": [
+            "id",
+            "data"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "createPost",
+          "parameters": [
+            "data"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions getUserPostWithId, updatePost, createPost.",
+      "lines_of_code": 42,
+      "metadata": {
+        "size_bytes": 1120,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/database/schedules.ts",
+      "relative_path": "apps/post-service/src/database/schedules.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "date-fns"
+      ],
+      "exports": [
+        "findActiveSchedulesForToday"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "findActiveSchedulesForToday",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions findActiveSchedulesForToday.",
+      "lines_of_code": 14,
+      "metadata": {
+        "size_bytes": 341,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/database/user-preset.ts",
+      "relative_path": "apps/post-service/src/database/user-preset.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "libs/winston"
+      ],
+      "exports": [
+        "getUserPresetWithUserId"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getUserPresetWithUserId",
+          "parameters": [
+            "userId"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions getUserPresetWithUserId.",
+      "lines_of_code": 13,
+      "metadata": {
+        "size_bytes": 345,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/helper/errorResponse.ts",
+      "relative_path": "apps/post-service/src/helper/errorResponse.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [
+        "ErrorResponse"
+      ],
+      "classes": [
+        {
+          "name": "ErrorResponse",
+          "methods": [],
+          "properties": [
+            "statusCode"
+          ],
+          "isExported": true
+        }
+      ],
+      "functions": [],
+      "variables": [],
+      "description": "Contains classes ErrorResponse.",
+      "lines_of_code": 10,
+      "metadata": {
+        "size_bytes": 203,
+        "last_modified": "2025-10-06T15:32:38.470Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/groq/generatePostService.ts",
+      "relative_path": "apps/post-service/src/libs/groq/generatePostService.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "config/env",
+        "../winston",
+        "./groqClient",
+        "./groqConfig",
+        "./types"
+      ],
+      "exports": [
+        "generatePostWithImageRecognition"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "generatePostWithImageRecognition",
+          "parameters": [
+            "payload"
+          ],
+          "returnType": "Promise<{ result?: GroqPostResponse; error?: GroqError }>",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions generatePostWithImageRecognition.",
+      "lines_of_code": 108,
+      "metadata": {
+        "size_bytes": 3573,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/groq/groqClient.ts",
+      "relative_path": "apps/post-service/src/libs/groq/groqClient.ts",
+      "language": "typescript",
+      "imports": [
+        "../winston",
+        "./types",
+        "@repo/db",
+        "groq-sdk"
+      ],
+      "exports": [
+        "GroqClient"
+      ],
+      "classes": [
+        {
+          "name": "GroqClient",
+          "methods": [
+            "generatePost",
+            "imageRecognition"
+          ],
+          "properties": [
+            "temperature",
+            "model"
+          ],
+          "isExported": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "buildUserPrompt",
+          "parameters": [
+            "user",
+            "user_preset",
+            "platform",
+            "postImagesDescription"
+          ],
+          "returnType": "string",
+          "isAsync": false,
+          "isExported": false
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions buildUserPrompt and classes GroqClient.",
+      "lines_of_code": 171,
+      "metadata": {
+        "size_bytes": 5642,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/groq/groqConfig.ts",
+      "relative_path": "apps/post-service/src/libs/groq/groqConfig.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db"
+      ],
+      "exports": [
+        "POST_GENERATION_SCHEMA",
+        "DEFAULT_SYSTEM_PROMPT",
+        "PLATFORM_CONFIGS"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "POST_GENERATION_SCHEMA",
+        "DEFAULT_SYSTEM_PROMPT",
+        "PLATFORM_CONFIGS"
+      ],
+      "description": "Contains variables POST_GENERATION_SCHEMA, DEFAULT_SYSTEM_PROMPT, PLATFORM_CONFIGS.",
+      "lines_of_code": 76,
+      "metadata": {
+        "size_bytes": 2085,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/groq/types.ts",
+      "relative_path": "apps/post-service/src/libs/groq/types.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Imports modules: @repo/db",
+      "lines_of_code": 43,
+      "metadata": {
+        "size_bytes": 818,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/post.ts",
+      "relative_path": "apps/post-service/src/libs/post.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "axios"
+      ],
+      "exports": [
+        "postClient"
+      ],
+      "classes": [
+        {
+          "name": "PostClient",
+          "methods": [
+            "postToInstagram",
+            "postToDevto",
+            "postToMedium",
+            "postToFacebook",
+            "postToX",
+            "postToLinkedIn"
+          ],
+          "properties": [],
+          "isExported": false
+        }
+      ],
+      "functions": [],
+      "variables": [
+        "postClient"
+      ],
+      "description": "Contains classes PostClient and variables postClient.",
+      "lines_of_code": 137,
+      "metadata": {
+        "size_bytes": 3785,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/queue-services.ts",
+      "relative_path": "apps/post-service/src/libs/queue-services.ts",
+      "language": "typescript",
+      "imports": [
+        "worker/scheduleMidNightWorker",
+        "scheduler/scheduleMidnightTask",
+        "worker/generateScheduledPostWorker",
+        "worker/postToPlatformWorker"
+      ],
+      "exports": [
+        "startQueueServices"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "startQueueServices"
+      ],
+      "description": "Contains variables startQueueServices.",
+      "lines_of_code": 12,
+      "metadata": {
+        "size_bytes": 492,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/rate-limit.ts",
+      "relative_path": "apps/post-service/src/libs/rate-limit.ts",
+      "language": "typescript",
+      "imports": [
+        "express-rate-limit"
+      ],
+      "exports": [
+        "limiter"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "limiter"
+      ],
+      "description": "Contains variables limiter.",
+      "lines_of_code": 11,
+      "metadata": {
+        "size_bytes": 345,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/redis.ts",
+      "relative_path": "apps/post-service/src/libs/redis.ts",
+      "language": "typescript",
+      "imports": [
+        "ioredis"
+      ],
+      "exports": [
+        "redisClient"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "redisClient"
+      ],
+      "description": "Contains variables redisClient.",
+      "lines_of_code": 23,
+      "metadata": {
+        "size_bytes": 518,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/libs/winston.ts",
+      "relative_path": "apps/post-service/src/libs/winston.ts",
+      "language": "typescript",
+      "imports": [
+        "winston"
+      ],
+      "exports": [
+        "logger"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "logger"
+      ],
+      "description": "Contains variables logger.",
+      "lines_of_code": 21,
+      "metadata": {
+        "size_bytes": 615,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/middleware/arcject.middleware.ts",
+      "relative_path": "apps/post-service/src/middleware/arcject.middleware.ts",
+      "language": "typescript",
+      "imports": [
+        "config/arcjet",
+        "express",
+        "helper/errorResponse"
+      ],
+      "exports": [
+        "arcjetMiddleware"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "arcjetMiddleware"
+      ],
+      "description": "Contains variables arcjetMiddleware.",
+      "lines_of_code": 24,
+      "metadata": {
+        "size_bytes": 794,
+        "last_modified": "2025-10-06T15:32:38.471Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/middleware/error.ts",
+      "relative_path": "apps/post-service/src/middleware/error.ts",
+      "language": "typescript",
+      "imports": [
+        "express",
+        "helper/errorResponse"
+      ],
+      "exports": [
+        "errorHandler"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "errorHandler"
+      ],
+      "description": "Contains variables errorHandler.",
+      "lines_of_code": 43,
+      "metadata": {
+        "size_bytes": 1292,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/queue/emailServiceQueue.ts",
+      "relative_path": "apps/post-service/src/queue/emailServiceQueue.ts",
+      "language": "typescript",
+      "imports": [
+        "constants/common",
+        "bullmq",
+        "libs/redis",
+        "@repo/email-queue-types"
+      ],
+      "exports": [
+        "emailServiceQueue"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "emailServiceQueue"
+      ],
+      "description": "Contains variables emailServiceQueue.",
+      "lines_of_code": 7,
+      "metadata": {
+        "size_bytes": 292,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/queue/postQueue.ts",
+      "relative_path": "apps/post-service/src/queue/postQueue.ts",
+      "language": "typescript",
+      "imports": [
+        "bullmq",
+        "constants/common",
+        "libs/redis",
+        "types/payload"
+      ],
+      "exports": [
+        "postQueue"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "postQueue"
+      ],
+      "description": "Contains variables postQueue.",
+      "lines_of_code": 9,
+      "metadata": {
+        "size_bytes": 282,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/scheduler/scheduleMidnightTask.ts",
+      "relative_path": "apps/post-service/src/scheduler/scheduleMidnightTask.ts",
+      "language": "typescript",
+      "imports": [
+        "config/env",
+        "../constants/common",
+        "queue/postQueue"
+      ],
+      "exports": [
+        "startScheduleMidNightTask"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "startScheduleMidNightTask"
+      ],
+      "description": "Contains variables startScheduleMidNightTask.",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 698,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/types/index.ts",
+      "relative_path": "apps/post-service/src/types/index.ts",
+      "language": "typescript",
+      "imports": [
+        "express"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Imports modules: express",
+      "lines_of_code": 6,
+      "metadata": {
+        "size_bytes": 102,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/types/payload.ts",
+      "relative_path": "apps/post-service/src/types/payload.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "File contains basic code structure",
+      "lines_of_code": 4,
+      "metadata": {
+        "size_bytes": 57,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/validation/schema.validation.ts",
+      "relative_path": "apps/post-service/src/validation/schema.validation.ts",
+      "language": "typescript",
+      "imports": [
+        "express",
+        "helper/errorResponse",
+        "joi",
+        "types"
+      ],
+      "exports": [
+        "validateSchema"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "validateSchema"
+      ],
+      "description": "Contains variables validateSchema.",
+      "lines_of_code": 14,
+      "metadata": {
+        "size_bytes": 442,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/worker/generateScheduledPostWorker.ts",
+      "relative_path": "apps/post-service/src/worker/generateScheduledPostWorker.ts",
+      "language": "typescript",
+      "imports": [
+        "bullmq",
+        "constants/common",
+        "database/post",
+        "database/user-preset",
+        "libs/groq/generatePostService",
+        "libs/redis",
+        "libs/winston",
+        "queue/emailServiceQueue",
+        "queue/postQueue",
+        "types/payload"
+      ],
+      "exports": [
+        "startGenerateScheduledPostWorker"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "startGenerateScheduledPostWorker"
+      ],
+      "description": "Contains variables startGenerateScheduledPostWorker.",
+      "lines_of_code": 83,
+      "metadata": {
+        "size_bytes": 3323,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/worker/postToPlatformWorker.ts",
+      "relative_path": "apps/post-service/src/worker/postToPlatformWorker.ts",
+      "language": "typescript",
+      "imports": [
+        "bullmq",
+        "constants/common",
+        "database/account",
+        "database/post",
+        "libs/post",
+        "libs/redis"
+      ],
+      "exports": [
+        "startPostToPlatformWorker"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "startPostToPlatformWorker"
+      ],
+      "description": "Contains variables startPostToPlatformWorker.",
+      "lines_of_code": 68,
+      "metadata": {
+        "size_bytes": 2133,
+        "last_modified": "2025-10-06T15:32:38.472Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/src/worker/scheduleMidNightWorker.ts",
+      "relative_path": "apps/post-service/src/worker/scheduleMidNightWorker.ts",
+      "language": "typescript",
+      "imports": [
+        "bullmq",
+        "database/post",
+        "database/schedules",
+        "date-fns",
+        "libs/redis",
+        "libs/winston",
+        "queue/postQueue",
+        "../constants/common"
+      ],
+      "exports": [
+        "startScheduleMidNightWorker"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "generateDraftForToday",
+        "startScheduleMidNightWorker"
+      ],
+      "description": "Contains variables generateDraftForToday, startScheduleMidNightWorker.",
+      "lines_of_code": 72,
+      "metadata": {
+        "size_bytes": 2376,
+        "last_modified": "2025-10-06T15:32:38.473Z"
+      }
+    },
+    {
+      "file_path": "apps/post-service/tsconfig.json",
+      "relative_path": "apps/post-service/tsconfig.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 109,
+      "metadata": {
+        "size_bytes": 11263,
+        "last_modified": "2025-10-06T15:32:38.473Z"
+      }
+    },
+    {
+      "file_path": "apps/web/README.md",
+      "relative_path": "apps/web/README.md",
+      "language": "markdown",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Markdown documentation file",
+      "lines_of_code": 110,
+      "metadata": {
+        "size_bytes": 3974,
+        "last_modified": "2025-10-06T15:32:38.473Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/(legal)/about/page.tsx",
+      "relative_path": "apps/web/app/(legal)/about/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "next",
+        "next/image",
+        "next/link",
+        "@/components/ui/button",
+        "@/components/ui/card",
+        "@/components/shared/navbar",
+        "@/components/shared/footer",
+        "lucide-react",
+        "react-icons/fa",
+        "react-icons/fa6",
+        "react-icons/ri",
+        "@/lib/constants"
+      ],
+      "exports": [
+        "AboutPage",
+        "metadata"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AboutPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "metadata",
+        "philosophyPoints",
+        "teamMembers"
+      ],
+      "description": "Contains functions AboutPage and variables metadata, philosophyPoints, teamMembers.",
+      "lines_of_code": 315,
+      "metadata": {
+        "size_bytes": 14317,
+        "last_modified": "2025-10-06T15:32:38.473Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/(legal)/privacy/page.tsx",
+      "relative_path": "apps/web/app/(legal)/privacy/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "next",
+        "@/components/shared/navbar",
+        "@/components/shared/footer",
+        "next/link",
+        "@/lib/constants"
+      ],
+      "exports": [
+        "PrivacyPage",
+        "metadata"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PrivacyPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "metadata"
+      ],
+      "description": "Contains functions PrivacyPage and variables metadata.",
+      "lines_of_code": 199,
+      "metadata": {
+        "size_bytes": 10956,
+        "last_modified": "2025-10-06T15:32:38.474Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/(legal)/terms/page.tsx",
+      "relative_path": "apps/web/app/(legal)/terms/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "next",
+        "@/components/shared/navbar",
+        "@/components/shared/footer",
+        "@/lib/constants",
+        "next/link"
+      ],
+      "exports": [
+        "TermsPage",
+        "metadata"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "TermsPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "metadata"
+      ],
+      "description": "Contains functions TermsPage and variables metadata.",
+      "lines_of_code": 172,
+      "metadata": {
+        "size_bytes": 9251,
+        "last_modified": "2025-10-06T15:32:38.474Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/_api_helper.ts",
+      "relative_path": "apps/web/app/api/_api_helper.ts",
+      "language": "typescript",
+      "imports": [
+        "next/server"
+      ],
+      "exports": [
+        "resolveAPIErrors",
+        "APIFault"
+      ],
+      "classes": [
+        {
+          "name": "APIFault",
+          "methods": [
+            "formatError"
+          ],
+          "properties": [
+            "name",
+            "message",
+            "statusCode",
+            "stack"
+          ],
+          "isExported": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "resolveAPIErrors",
+          "parameters": [
+            "error",
+            "route"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions resolveAPIErrors and classes APIFault.",
+      "lines_of_code": 46,
+      "metadata": {
+        "size_bytes": 1129,
+        "last_modified": "2025-10-06T15:32:38.474Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/assets/[id]/route.ts",
+      "relative_path": "apps/web/app/api/assets/[id]/route.ts",
+      "language": "typescript",
+      "imports": [
+        "next/server",
+        "@repo/db",
+        "@/data/user",
+        "@/lib/uploadthing-api"
+      ],
+      "exports": [
+        "PATCH",
+        "DELETE"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PATCH",
+          "parameters": [
+            "request",
+            "{ params }"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "DELETE",
+          "parameters": [
+            "request",
+            "{ params }"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions PATCH, DELETE.",
+      "lines_of_code": 91,
+      "metadata": {
+        "size_bytes": 2535,
+        "last_modified": "2025-10-06T15:32:38.474Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/auth/[...all]/route.ts",
+      "relative_path": "apps/web/app/api/auth/[...all]/route.ts",
+      "language": "typescript",
+      "imports": [
+        "@/lib/auth",
+        "better-auth/next-js"
+      ],
+      "exports": [
+        "{ POST, GET }"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ POST, GET }"
+      ],
+      "description": "Contains variables { POST, GET }.",
+      "lines_of_code": 5,
+      "metadata": {
+        "size_bytes": 143,
+        "last_modified": "2025-10-06T15:32:38.474Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/providers/route.ts",
+      "relative_path": "apps/web/app/api/providers/route.ts",
+      "language": "typescript",
+      "imports": [
+        "next/server",
+        "@/data/user",
+        "@repo/db"
+      ],
+      "exports": [
+        "GET"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions GET.",
+      "lines_of_code": 36,
+      "metadata": {
+        "size_bytes": 941,
+        "last_modified": "2025-10-06T15:32:38.475Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/schedules/route.ts",
+      "relative_path": "apps/web/app/api/schedules/route.ts",
+      "language": "typescript",
+      "imports": [
+        "@/data/user",
+        "@/lib/constants",
+        "@/lib/schemas",
+        "@repo/db",
+        "zod",
+        "next/server",
+        "@/data/server",
+        "@/lib/subscription-middleman"
+      ],
+      "exports": [
+        "POST",
+        "PATCH",
+        "DELETE"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "POST",
+          "parameters": [
+            "request"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "PATCH",
+          "parameters": [
+            "request"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "DELETE",
+          "parameters": [
+            "request"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions POST, PATCH, DELETE.",
+      "lines_of_code": 223,
+      "metadata": {
+        "size_bytes": 6744,
+        "last_modified": "2025-10-06T15:32:38.475Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/settings/route.ts",
+      "relative_path": "apps/web/app/api/settings/route.ts",
+      "language": "typescript",
+      "imports": [
+        "@/data/user",
+        "@repo/db",
+        "next/server",
+        "zod"
+      ],
+      "exports": [
+        "POST"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "POST",
+          "parameters": [
+            "request"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions POST.",
+      "lines_of_code": 58,
+      "metadata": {
+        "size_bytes": 1626,
+        "last_modified": "2025-10-06T15:32:38.475Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/uploadthing/core.ts",
+      "relative_path": "apps/web/app/api/uploadthing/core.ts",
+      "language": "typescript",
+      "imports": [
+        "@/data/user",
+        "@/lib/subscription-middleman",
+        "@repo/db",
+        "uploadthing/next",
+        "uploadthing/server"
+      ],
+      "exports": [
+        "ourFileRouter"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "f",
+        "ourFileRouter"
+      ],
+      "description": "Contains variables f, ourFileRouter.",
+      "lines_of_code": 73,
+      "metadata": {
+        "size_bytes": 2516,
+        "last_modified": "2025-10-06T15:32:38.475Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/uploadthing/route.ts",
+      "relative_path": "apps/web/app/api/uploadthing/route.ts",
+      "language": "typescript",
+      "imports": [
+        "uploadthing/next",
+        "./core"
+      ],
+      "exports": [
+        "{ GET, POST }"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "{ GET, POST }"
+      ],
+      "description": "Contains variables { GET, POST }.",
+      "lines_of_code": 12,
+      "metadata": {
+        "size_bytes": 253,
+        "last_modified": "2025-10-06T15:32:38.475Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/user/quota/route.ts",
+      "relative_path": "apps/web/app/api/user/quota/route.ts",
+      "language": "typescript",
+      "imports": [
+        "next/server",
+        "@/data/user",
+        "@repo/db"
+      ],
+      "exports": [
+        "GET"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions GET.",
+      "lines_of_code": 55,
+      "metadata": {
+        "size_bytes": 1408,
+        "last_modified": "2025-10-06T15:32:38.475Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/api/waitlist/route.ts",
+      "relative_path": "apps/web/app/api/waitlist/route.ts",
+      "language": "typescript",
+      "imports": [
+        "next/server",
+        "zod",
+        "@repo/db"
+      ],
+      "exports": [
+        "POST"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "POST"
+      ],
+      "description": "Contains variables POST.",
+      "lines_of_code": 32,
+      "metadata": {
+        "size_bytes": 1340,
+        "last_modified": "2025-10-06T15:32:38.475Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/auth/page.tsx",
+      "relative_path": "apps/web/app/auth/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/components/ui/button",
+        "@/components/ui/card",
+        "next/link",
+        "lucide-react",
+        "react-icons/fc",
+        "react-icons/bs",
+        "@/lib/auth-client",
+        "@/components/ui/sonner",
+        "sonner"
+      ],
+      "exports": [
+        "AuthPage"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "AuthPage"
+      ],
+      "description": "Contains variables AuthPage.",
+      "lines_of_code": 91,
+      "metadata": {
+        "size_bytes": 3170,
+        "last_modified": "2025-10-06T15:32:38.476Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/dashboard/activities/page.tsx",
+      "relative_path": "apps/web/app/dashboard/activities/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/shared/logs-view",
+        "@/data/posts",
+        "@/data/user",
+        "react"
+      ],
+      "exports": [
+        "ActivitiesPage"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ActivitiesPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ActivitiesPage.",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 518,
+        "last_modified": "2025-10-06T15:32:38.476Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/dashboard/gallery/page.tsx",
+      "relative_path": "apps/web/app/dashboard/gallery/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/components/ui/card",
+        "@/components/shared/upload-zone",
+        "@/data/server",
+        "@/components/gallery/assets-list"
+      ],
+      "exports": [
+        "GalleryPage",
+        "dynamic"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GalleryPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "dynamic"
+      ],
+      "description": "Contains functions GalleryPage and variables dynamic.",
+      "lines_of_code": 42,
+      "metadata": {
+        "size_bytes": 1542,
+        "last_modified": "2025-10-06T15:32:38.476Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/dashboard/layout.tsx",
+      "relative_path": "apps/web/app/dashboard/layout.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/shared/app-sidebar",
+        "@/components/shared/floating-trigger",
+        "@/components/ui/sidebar",
+        "react"
+      ],
+      "exports": [
+        "DashboardLayout"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "DashboardLayout",
+          "parameters": [
+            "{ children, activeItem }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions DashboardLayout.",
+      "lines_of_code": 20,
+      "metadata": {
+        "size_bytes": 570,
+        "last_modified": "2025-10-06T15:32:38.476Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/dashboard/page.tsx",
+      "relative_path": "apps/web/app/dashboard/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/dashboard/dashboard-client",
+        "@/data/server"
+      ],
+      "exports": [
+        "DashboardPage",
+        "dynamic"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "DashboardPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "dynamic"
+      ],
+      "description": "Contains functions DashboardPage and variables dynamic.",
+      "lines_of_code": 10,
+      "metadata": {
+        "size_bytes": 303,
+        "last_modified": "2025-10-06T15:32:38.476Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/dashboard/schedules/[scheduleId]/page.tsx",
+      "relative_path": "apps/web/app/dashboard/schedules/[scheduleId]/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/data/schedule",
+        "react",
+        "next/navigation",
+        "lucide-react",
+        "@/components/schedule/schedule-actions",
+        "date-fns",
+        "@/components/shared/breadcrumb",
+        "@/components/schedule/schedule-title"
+      ],
+      "exports": [
+        "ScheduleDetails"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ScheduleDetails",
+          "parameters": [
+            "{ params }"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "POST_STATUS_OPTIONS"
+      ],
+      "description": "Contains functions ScheduleDetails and variables POST_STATUS_OPTIONS.",
+      "lines_of_code": 190,
+      "metadata": {
+        "size_bytes": 9278,
+        "last_modified": "2025-10-06T15:32:38.477Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/dashboard/schedules/new/page.tsx",
+      "relative_path": "apps/web/app/dashboard/schedules/new/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "react-hook-form",
+        "@hookform/resolvers/zod",
+        "zod",
+        "date-fns",
+        "@/components/ui/button",
+        "@/components/ui/input",
+        "@/components/ui/card",
+        "@/components/ui/badge",
+        "lucide-react",
+        "@/components/ui/select",
+        "@/components/ui/form",
+        "@/components/ui/popover",
+        "@/components/ui/calendar",
+        "@/lib/utils",
+        "nextjs-toploader/app",
+        "@/lib/schemas",
+        "sonner",
+        "@/lib/hooks/use-providers",
+        "@/lib/hooks/use-quota",
+        "@/components/modals/quota-upgrade-modal",
+        "react-icons/bs"
+      ],
+      "exports": [
+        "NewSchedulePage"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "NewSchedulePage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "platformIcons",
+        "platformColors",
+        "platforms"
+      ],
+      "description": "Contains functions NewSchedulePage and variables platformIcons, platformColors, platforms.",
+      "lines_of_code": 494,
+      "metadata": {
+        "size_bytes": 20553,
+        "last_modified": "2025-10-06T15:32:38.477Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/dashboard/schedules/page.tsx",
+      "relative_path": "apps/web/app/dashboard/schedules/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/ui/button",
+        "@/components/ui/card",
+        "lucide-react",
+        "next/link",
+        "@/components/schedule/schedule-list",
+        "@/data/server",
+        "@/components/shared/loading-view",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "SchedulesPage",
+        "dynamic"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "SchedulesPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "dynamic"
+      ],
+      "description": "Contains functions SchedulesPage and variables dynamic.",
+      "lines_of_code": 45,
+      "metadata": {
+        "size_bytes": 1670,
+        "last_modified": "2025-10-06T15:32:38.477Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/error.tsx",
+      "relative_path": "apps/web/app/error.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "nextjs-toploader/app",
+        "lucide-react",
+        "@/lib/auth-client",
+        "next/link"
+      ],
+      "exports": [
+        "Error"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Error",
+          "parameters": [
+            "{ error, reset }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Error.",
+      "lines_of_code": 117,
+      "metadata": {
+        "size_bytes": 4343,
+        "last_modified": "2025-10-06T15:32:38.477Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/layout.tsx",
+      "relative_path": "apps/web/app/layout.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/ui/sonner",
+        "@/providers/query",
+        "@/providers/theme",
+        "@next/third-parties/google",
+        "@uploadthing/react/next-ssr-plugin",
+        "next",
+        "next/font/google",
+        "uploadthing/server",
+        "./globals.css",
+        "@/app/api/uploadthing/core",
+        "@/lib/constants",
+        "next/script",
+        "nextjs-toploader"
+      ],
+      "exports": [
+        "RootLayout",
+        "metadata",
+        "viewport"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "RootLayout",
+          "parameters": [
+            "{\n  children,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "fonts",
+        "metadata",
+        "viewport"
+      ],
+      "description": "Contains functions RootLayout and variables fonts, metadata, viewport.",
+      "lines_of_code": 130,
+      "metadata": {
+        "size_bytes": 3623,
+        "last_modified": "2025-10-06T15:32:38.477Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/page.tsx",
+      "relative_path": "apps/web/app/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/landing/feature",
+        "@/components/landing/pricing-2",
+        "react",
+        "../components/landing/header",
+        "../components/landing/hero",
+        "../components/landing/waitlist",
+        "@/components/landing/faq",
+        "@/components/shared/footer"
+      ],
+      "exports": [
+        "Home"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "Home"
+      ],
+      "description": "Contains variables Home.",
+      "lines_of_code": 25,
+      "metadata": {
+        "size_bytes": 668,
+        "last_modified": "2025-10-06T15:32:38.477Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/profile/page.tsx",
+      "relative_path": "apps/web/app/profile/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "react"
+      ],
+      "exports": [
+        "page"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "page",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions page.",
+      "lines_of_code": 8,
+      "metadata": {
+        "size_bytes": 92,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/settings/page.tsx",
+      "relative_path": "apps/web/app/settings/page.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "next/navigation",
+        "@/data/server",
+        "@/components/settings/settings-form",
+        "lucide-react",
+        "@/components/shared/breadcrumb"
+      ],
+      "exports": [
+        "SettingsPage",
+        "dynamic"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "SettingsPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "dynamic"
+      ],
+      "description": "Contains functions SettingsPage and variables dynamic.",
+      "lines_of_code": 37,
+      "metadata": {
+        "size_bytes": 1251,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/app/sitemap.ts",
+      "relative_path": "apps/web/app/sitemap.ts",
+      "language": "typescript",
+      "imports": [
+        "@/lib/constants",
+        "next"
+      ],
+      "exports": [
+        "sitemap"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "sitemap",
+          "parameters": [],
+          "returnType": "MetadataRoute.Sitemap",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "LAST_MODIFIED"
+      ],
+      "description": "Contains functions sitemap and variables LAST_MODIFIED.",
+      "lines_of_code": 70,
+      "metadata": {
+        "size_bytes": 1548,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/dashboard/dashboard-client.tsx",
+      "relative_path": "apps/web/components/dashboard/dashboard-client.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/lib/hooks/use-providers",
+        "@/lib/hooks/use-quota",
+        "@/components/onboarding/provider-onboarding",
+        "@/components/modals/quota-upgrade-modal",
+        "@/components/shared/logs-list",
+        "@/components/ui/button",
+        "@/components/ui/card",
+        "@/components/ui/badge",
+        "@/components/ui/progress",
+        "lucide-react",
+        "next/link",
+        "@/lib/constants",
+        "@/lib/auth-client",
+        "sonner"
+      ],
+      "exports": [
+        "DashboardClient",
+        "dynamic"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "DashboardClient",
+          "parameters": [
+            "{ initialData }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "dynamic",
+        "quickActions"
+      ],
+      "description": "Contains functions DashboardClient and variables dynamic, quickActions.",
+      "lines_of_code": 257,
+      "metadata": {
+        "size_bytes": 9881,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/gallery/asset-card.tsx",
+      "relative_path": "apps/web/components/gallery/asset-card.tsx",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "moment",
+        "../ui/card",
+        "../ui/button",
+        "../ui/switch",
+        "../ui/label",
+        "../ui/separator",
+        "lucide-react",
+        "react",
+        "@/lib/utils",
+        "sonner",
+        "@/components/ui/dialog"
+      ],
+      "exports": [
+        "AssetCard"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AssetCard",
+          "parameters": [
+            "{ asset, onAssetUpdate, onAssetDelete }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions AssetCard.",
+      "lines_of_code": 343,
+      "metadata": {
+        "size_bytes": 13186,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/gallery/assets-list.tsx",
+      "relative_path": "apps/web/components/gallery/assets-list.tsx",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "lucide-react",
+        "react",
+        "../ui/input",
+        "../ui/button",
+        "./asset-card",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "AssetsList"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AssetsList",
+          "parameters": [
+            "{ assets: initialAssets }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions AssetsList.",
+      "lines_of_code": 103,
+      "metadata": {
+        "size_bytes": 3507,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/faq.tsx",
+      "relative_path": "apps/web/components/landing/faq.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/ui/accordion",
+        "next/link"
+      ],
+      "exports": [
+        "FAQsTwo"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "FAQsTwo",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions FAQsTwo.",
+      "lines_of_code": 73,
+      "metadata": {
+        "size_bytes": 2992,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/feature.tsx",
+      "relative_path": "apps/web/components/landing/feature.tsx",
+      "language": "typescript",
+      "imports": [
+        "lucide-react",
+        "recharts",
+        "@/components/ui/chart",
+        "../shared/logo"
+      ],
+      "exports": [
+        "FeaturesSection"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "FeaturesSection",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "SchedulePreview",
+        "chartConfig",
+        "chartData",
+        "PostAnalyticsChart"
+      ],
+      "description": "Contains functions FeaturesSection and variables SchedulePreview, chartConfig, chartData, PostAnalyticsChart.",
+      "lines_of_code": 174,
+      "metadata": {
+        "size_bytes": 7075,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/footer.tsx",
+      "relative_path": "apps/web/components/landing/footer.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/ui/text-hover-effect",
+        "@/lib/constants",
+        "date-fns",
+        "next/link"
+      ],
+      "exports": [
+        "Footer"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Footer",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "links"
+      ],
+      "description": "Contains functions Footer and variables links.",
+      "lines_of_code": 31,
+      "metadata": {
+        "size_bytes": 656,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/header.tsx",
+      "relative_path": "apps/web/components/landing/header.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/shared/logo",
+        "@/components/ui/button",
+        "@/lib/constants",
+        "next/link",
+        "react"
+      ],
+      "exports": [
+        "Header"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Header",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Header.",
+      "lines_of_code": 86,
+      "metadata": {
+        "size_bytes": 2956,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/hero.tsx",
+      "relative_path": "apps/web/components/landing/hero.tsx",
+      "language": "typescript",
+      "imports": [
+        "framer-motion",
+        "next/font/google",
+        "next/image",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Hero"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ElegantShape",
+          "parameters": [
+            "{\n  className,\n  delay = 0,\n  width = 400,\n  height = 100,\n  rotate = 0,\n  gradient = 'from-white/[0.08]',\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": false
+        },
+        {
+          "name": "Hero",
+          "parameters": [
+            "{\n  badge = 'post0',\n  title1 = 'Your Socials',\n  title2 = 'On Autopilot',\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "pacifico"
+      ],
+      "description": "Contains functions ElegantShape, Hero and variables pacifico.",
+      "lines_of_code": 198,
+      "metadata": {
+        "size_bytes": 5761,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/how-it-works.tsx",
+      "relative_path": "apps/web/components/landing/how-it-works.tsx",
+      "language": "typescript",
+      "imports": [
+        "react"
+      ],
+      "exports": [
+        "HowItWorks"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "HowItWorks",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions HowItWorks.",
+      "lines_of_code": 8,
+      "metadata": {
+        "size_bytes": 104,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/pricing-2.tsx",
+      "relative_path": "apps/web/components/landing/pricing-2.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/ui/button",
+        "lucide-react",
+        "next/link"
+      ],
+      "exports": [
+        "Pricing"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Pricing",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Pricing.",
+      "lines_of_code": 88,
+      "metadata": {
+        "size_bytes": 3552,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/pricing-section.tsx",
+      "relative_path": "apps/web/components/landing/pricing-section.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/components/ui/button",
+        "@/components/ui/badge",
+        "@radix-ui/react-icons",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "PricingSection"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PricingSection",
+          "parameters": [
+            "{ tiers, className }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions PricingSection.",
+      "lines_of_code": 208,
+      "metadata": {
+        "size_bytes": 7276,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/pricing.tsx",
+      "relative_path": "apps/web/components/landing/pricing.tsx",
+      "language": "typescript",
+      "imports": [
+        "lucide-react",
+        "./pricing-section"
+      ],
+      "exports": [
+        "PricingSectionDemo"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PricingSectionDemo",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "defaultTiers"
+      ],
+      "description": "Contains functions PricingSectionDemo and variables defaultTiers.",
+      "lines_of_code": 87,
+      "metadata": {
+        "size_bytes": 2138,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/landing/waitlist.tsx",
+      "relative_path": "apps/web/components/landing/waitlist.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/components/ui/button",
+        "@/lib/utils",
+        "framer-motion",
+        "lucide-react",
+        "next-themes",
+        "next/font/google",
+        "react",
+        "react",
+        "@/lib/hooks/mutation",
+        "sonner",
+        "next/image"
+      ],
+      "exports": [
+        "WaitlistPage"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "WaitlistPage",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "brico",
+        "users"
+      ],
+      "description": "Contains functions WaitlistPage and variables brico, users.",
+      "lines_of_code": 289,
+      "metadata": {
+        "size_bytes": 12287,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/logos/launch-ui.tsx",
+      "relative_path": "apps/web/components/logos/launch-ui.tsx",
+      "language": "typescript",
+      "imports": [],
+      "exports": [
+        "LaunchUI"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "LaunchUI"
+      ],
+      "description": "Contains variables LaunchUI.",
+      "lines_of_code": 20,
+      "metadata": {
+        "size_bytes": 563,
+        "last_modified": "2025-10-06T15:32:38.479Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/modals/quota-upgrade-modal.tsx",
+      "relative_path": "apps/web/components/modals/quota-upgrade-modal.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/components/ui/dialog",
+        "@/components/ui/button",
+        "@/components/ui/badge",
+        "@/components/ui/card",
+        "lucide-react",
+        "@/lib/constants"
+      ],
+      "exports": [
+        "QuotaUpgradeModal"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "QuotaUpgradeModal",
+          "parameters": [
+            "{\n  isOpen,\n  onClose,\n  quotaType,\n  currentPlan,\n  onUpgrade,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions QuotaUpgradeModal.",
+      "lines_of_code": 129,
+      "metadata": {
+        "size_bytes": 4926,
+        "last_modified": "2025-10-06T15:32:38.480Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/onboarding/provider-onboarding.tsx",
+      "relative_path": "apps/web/components/onboarding/provider-onboarding.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/components/ui/card",
+        "@/components/ui/button",
+        "@/components/ui/badge",
+        "lucide-react",
+        "@/lib/constants",
+        "../shared/brand"
+      ],
+      "exports": [
+        "ProviderOnboarding"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProviderOnboarding",
+          "parameters": [
+            "{ connectedProviders, onConnect }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ProviderOnboarding.",
+      "lines_of_code": 116,
+      "metadata": {
+        "size_bytes": 5108,
+        "last_modified": "2025-10-06T15:32:38.480Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/schedule/schedule-actions.tsx",
+      "relative_path": "apps/web/components/schedule/schedule-actions.tsx",
+      "language": "typescript",
+      "imports": [
+        "date-fns",
+        "lucide-react",
+        "nextjs-toploader/app"
+      ],
+      "exports": [
+        "ScheduleActions"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ScheduleActions",
+          "parameters": [
+            "{\n  scheduleData,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "STATUS_OPTIONS",
+        "getStatusIcon",
+        "getStatusStyle"
+      ],
+      "description": "Contains functions ScheduleActions and variables STATUS_OPTIONS, getStatusIcon, getStatusStyle.",
+      "lines_of_code": 174,
+      "metadata": {
+        "size_bytes": 6776,
+        "last_modified": "2025-10-06T15:32:38.480Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/schedule/schedule-list.tsx",
+      "relative_path": "apps/web/components/schedule/schedule-list.tsx",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "react",
+        "../ui/button",
+        "lucide-react",
+        "next/link",
+        "../ui/card",
+        "../ui/input",
+        "date-fns"
+      ],
+      "exports": [
+        "ScheduleList"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ScheduleList",
+          "parameters": [
+            "{ schedules }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "statusColors"
+      ],
+      "description": "Contains functions ScheduleList and variables statusColors.",
+      "lines_of_code": 90,
+      "metadata": {
+        "size_bytes": 3382,
+        "last_modified": "2025-10-06T15:32:38.480Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/schedule/schedule-title.tsx",
+      "relative_path": "apps/web/components/schedule/schedule-title.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "../ui/button",
+        "lucide-react",
+        "nextjs-toploader/app",
+        "sonner"
+      ],
+      "exports": [
+        "ScheduleTitle"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ScheduleTitle",
+          "parameters": [
+            "scheduleData"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ScheduleTitle.",
+      "lines_of_code": 72,
+      "metadata": {
+        "size_bytes": 2037,
+        "last_modified": "2025-10-06T15:32:38.480Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/sections/footer/default.tsx",
+      "relative_path": "apps/web/components/sections/footer/default.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/lib/utils",
+        "../../logos/launch-ui",
+        "../../ui/footer",
+        "../../ui/mode-toggle"
+      ],
+      "exports": [
+        "FooterSection"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "FooterSection",
+          "parameters": [
+            "{\n  logo = <LaunchUI />,\n  name = \"Launch UI\",\n  columns = [\n    {\n      title: \"Product\",\n      links: [\n        { text: \"Changelog\", href: \"https://www.launchuicomponents.com/\" },\n        { text: \"Documentation\", href: \"https://www.launchuicomponents.com/\" },\n      ],\n    },\n    {\n      title: \"Company\",\n      links: [\n        { text: \"About\", href: \"https://www.launchuicomponents.com/\" },\n        { text: \"Careers\", href: \"https://www.launchuicomponents.com/\" },\n        { text: \"Blog\", href: \"https://www.launchuicomponents.com/\" },\n      ],\n    },\n    {\n      title: \"Contact\",\n      links: [\n        { text: \"Discord\", href: \"https://www.launchuicomponents.com/\" },\n        { text: \"Twitter\", href: \"https://www.launchuicomponents.com/\" },\n        { text: \"Github\", href: \"https://www.launchuicomponents.com/\" },\n      ],\n    },\n  ],\n  copyright = \"© 2025 Mikołaj Dobrucki. All rights reserved\",\n  policies = [\n    { text: \"Privacy Policy\", href: \"https://www.launchuicomponents.com/\" },\n    { text: \"Terms of Service\", href: \"https://www.launchuicomponents.com/\" },\n  ],\n  showModeToggle = true,\n  className,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions FooterSection.",
+      "lines_of_code": 112,
+      "metadata": {
+        "size_bytes": 3183,
+        "last_modified": "2025-10-06T15:32:38.480Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/settings/settings-form.tsx",
+      "relative_path": "apps/web/components/settings/settings-form.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/components/ui/button",
+        "@/components/ui/switch",
+        "@/components/ui/select",
+        "@/components/ui/card",
+        "@/components/ui/label",
+        "@/components/ui/separator",
+        "@/components/ui/badge",
+        "lucide-react",
+        "sonner",
+        "next-themes"
+      ],
+      "exports": [
+        "SettingsForm"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "SettingsForm",
+          "parameters": [
+            "{ initialData }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "THEME_OPTIONS",
+        "LANGUAGE_OPTIONS",
+        "TIMEZONE_OPTIONS"
+      ],
+      "description": "Contains functions SettingsForm and variables THEME_OPTIONS, LANGUAGE_OPTIONS, TIMEZONE_OPTIONS.",
+      "lines_of_code": 349,
+      "metadata": {
+        "size_bytes": 13131,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/app-sidebar.tsx",
+      "relative_path": "apps/web/components/shared/app-sidebar.tsx",
+      "language": "typescript",
+      "imports": [
+        "lucide-react",
+        "@/components/ui/sidebar",
+        "@/lib/constants",
+        "next/link",
+        "./brand",
+        "./profile-card"
+      ],
+      "exports": [
+        "AppSidebar"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AppSidebar",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "links"
+      ],
+      "description": "Contains functions AppSidebar and variables links.",
+      "lines_of_code": 86,
+      "metadata": {
+        "size_bytes": 2287,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/blur-fade.tsx",
+      "relative_path": "apps/web/components/shared/blur-fade.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "framer-motion"
+      ],
+      "exports": [
+        "BlurFade"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "BlurFade",
+          "parameters": [
+            "{\n  children,\n  className,\n  variant,\n  duration = 0.4,\n  delay = 0,\n  yOffset = 6,\n  inView = false,\n  inViewMargin = \"-50px\",\n  blur = \"6px\",\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions BlurFade.",
+      "lines_of_code": 67,
+      "metadata": {
+        "size_bytes": 1464,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/brand.tsx",
+      "relative_path": "apps/web/components/shared/brand.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/lib/utils",
+        "@/public/logo-light.png",
+        "next/image",
+        "next/link"
+      ],
+      "exports": [
+        "Brand"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Brand",
+          "parameters": [
+            "{\n  className,\n  onlyIcon = true,\n  textClassName,\n  containerClassName,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Brand.",
+      "lines_of_code": 30,
+      "metadata": {
+        "size_bytes": 811,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/breadcrumb.tsx",
+      "relative_path": "apps/web/components/shared/breadcrumb.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "next/link",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Breadcrumb",
+        "generateBreadcrumbs",
+        "BreadcrumbPresets"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Breadcrumb",
+          "parameters": [
+            "{\n  items,\n  separator = <ChevronRight className=\"w-4 h-4\" />,\n  showHome = true,\n  homeHref = '/dashboard',\n  className,\n  itemClassName,\n  separatorClassName,\n  currentClassName,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "generateBreadcrumbs",
+          "parameters": [
+            "pathname",
+            "customLabels"
+          ],
+          "returnType": "BreadcrumbItem[]",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "BreadcrumbPresets"
+      ],
+      "description": "Contains functions Breadcrumb, generateBreadcrumbs and variables BreadcrumbPresets.",
+      "lines_of_code": 145,
+      "metadata": {
+        "size_bytes": 4303,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/card.tsx",
+      "relative_path": "apps/web/components/shared/card.tsx",
+      "language": "typescript",
+      "imports": [
+        "motion/react",
+        "react",
+        "@/lib/utils",
+        "react-icons/go"
+      ],
+      "exports": [
+        "CardDemo",
+        "Card",
+        "CardTitle",
+        "CardDescription",
+        "CardSkeletonContainer",
+        "ClaudeLogo",
+        "OpenAILogo",
+        "GeminiLogo",
+        "MetaIconOutline"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "CardDemo",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "Skeleton",
+        "Sparkles",
+        "Card",
+        "CardTitle",
+        "CardDescription",
+        "CardSkeletonContainer",
+        "Container",
+        "ClaudeLogo",
+        "OpenAILogo",
+        "GeminiLogo",
+        "MetaIconOutline"
+      ],
+      "description": "Contains functions CardDemo and variables Skeleton, Sparkles, Card, CardTitle, CardDescription, CardSkeletonContainer, Container, ClaudeLogo, OpenAILogo, GeminiLogo, MetaIconOutline.",
+      "lines_of_code": 306,
+      "metadata": {
+        "size_bytes": 11620,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/floating-trigger.tsx",
+      "relative_path": "apps/web/components/shared/floating-trigger.tsx",
+      "language": "typescript",
+      "imports": [
+        "lucide-react",
+        "../ui/button",
+        "../ui/sidebar",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "FloatingTrigger"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "FloatingTrigger",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions FloatingTrigger.",
+      "lines_of_code": 41,
+      "metadata": {
+        "size_bytes": 1002,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/footer.tsx",
+      "relative_path": "apps/web/components/shared/footer.tsx",
+      "language": "typescript",
+      "imports": [
+        "next/link",
+        "./logo",
+        "../ui/text-hover-effect",
+        "react-icons/fa6",
+        "react-icons/fa"
+      ],
+      "exports": [
+        "Footer"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Footer",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "footerNavigation"
+      ],
+      "description": "Contains functions Footer and variables footerNavigation.",
+      "lines_of_code": 132,
+      "metadata": {
+        "size_bytes": 5097,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/loading-view.tsx",
+      "relative_path": "apps/web/components/shared/loading-view.tsx",
+      "language": "typescript",
+      "imports": [
+        "react"
+      ],
+      "exports": [
+        "LoadingView"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "LoadingView",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions LoadingView.",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 741,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/logo.tsx",
+      "relative_path": "apps/web/components/shared/logo.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/public/logo-light.png",
+        "next/image",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Logo"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Logo",
+          "parameters": [
+            "{ className }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Logo.",
+      "lines_of_code": 12,
+      "metadata": {
+        "size_bytes": 397,
+        "last_modified": "2025-10-06T15:32:38.481Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/logs-list.tsx",
+      "relative_path": "apps/web/components/shared/logs-list.tsx",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "react",
+        "date-fns",
+        "lucide-react",
+        "@/lib/utils",
+        "next/link"
+      ],
+      "exports": [
+        "LogsList",
+        "LogsStats",
+        "LogsFilter"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "LogsList",
+          "parameters": [
+            "{ logs, maxHeight = '600px' }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "LogsStats",
+          "parameters": [
+            "{ logs }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "LogsFilter",
+          "parameters": [
+            "{\n  selectedType,\n  onTypeChange,\n  selectedService,\n  onServiceChange,\n  services,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "LOG_TYPE_CONFIG"
+      ],
+      "description": "Contains functions LogsList, LogsStats, LogsFilter and variables LOG_TYPE_CONFIG.",
+      "lines_of_code": 260,
+      "metadata": {
+        "size_bytes": 8697,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/logs-view.tsx",
+      "relative_path": "apps/web/components/shared/logs-view.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "./logs-list",
+        "@repo/db"
+      ],
+      "exports": [
+        "LogsView"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "LogsView",
+          "parameters": [
+            "{ logs }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions LogsView.",
+      "lines_of_code": 48,
+      "metadata": {
+        "size_bytes": 1472,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/mode-switch.tsx",
+      "relative_path": "apps/web/components/shared/mode-switch.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "lucide-react",
+        "next-themes",
+        "@/components/ui/button",
+        "@/components/ui/tooltip",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "ThemeToggle"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ThemeToggle",
+          "parameters": [
+            "{\n  variant = 'ghost',\n  size = 'icon',\n  tooltipSide = 'right',\n  showLabel = false,\n  className = '',\n  iconClassName = '',\n  disableTooltip = false,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ThemeToggle.",
+      "lines_of_code": 138,
+      "metadata": {
+        "size_bytes": 4150,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/navbar.tsx",
+      "relative_path": "apps/web/components/shared/navbar.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "next/link",
+        "next/navigation",
+        "@/components/ui/button",
+        "lucide-react",
+        "./logo",
+        "@/lib/utils",
+        "@/lib/constants"
+      ],
+      "exports": [
+        "Navbar"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Navbar",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "navigation"
+      ],
+      "description": "Contains functions Navbar and variables navigation.",
+      "lines_of_code": 60,
+      "metadata": {
+        "size_bytes": 1778,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/profile-card.tsx",
+      "relative_path": "apps/web/components/shared/profile-card.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/lib/auth-client",
+        "react",
+        "@/components/ui/dropdown-menu",
+        "@/components/ui/avatar",
+        "@/components/ui/button",
+        "lucide-react",
+        "../ui/sidebar",
+        "@/lib/utils",
+        "next/link"
+      ],
+      "exports": [
+        "ProfileCard"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProfileCard",
+          "parameters": [
+            "{ icon = false, inSidebar = false }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ProfileCard.",
+      "lines_of_code": 123,
+      "metadata": {
+        "size_bytes": 3953,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/shared/upload-zone.tsx",
+      "relative_path": "apps/web/components/shared/upload-zone.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/lib/uploadthing",
+        "nextjs-toploader/app",
+        "sonner"
+      ],
+      "exports": [
+        "UploadArea"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "UploadArea",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions UploadArea.",
+      "lines_of_code": 33,
+      "metadata": {
+        "size_bytes": 1046,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/accordion.tsx",
+      "relative_path": "apps/web/components/ui/accordion.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-accordion",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Accordion",
+        "AccordionItem",
+        "AccordionTrigger",
+        "AccordionContent"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Accordion",
+          "parameters": [
+            "{\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AccordionItem",
+          "parameters": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AccordionTrigger",
+          "parameters": [
+            "{\n  className,\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AccordionContent",
+          "parameters": [
+            "{\n  className,\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Accordion, AccordionItem, AccordionTrigger, AccordionContent.",
+      "lines_of_code": 67,
+      "metadata": {
+        "size_bytes": 2053,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/alert-dialog.tsx",
+      "relative_path": "apps/web/components/ui/alert-dialog.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-alert-dialog",
+        "@/lib/utils",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "AlertDialog",
+        "AlertDialogPortal",
+        "AlertDialogOverlay",
+        "AlertDialogTrigger",
+        "AlertDialogContent",
+        "AlertDialogHeader",
+        "AlertDialogFooter",
+        "AlertDialogTitle",
+        "AlertDialogDescription",
+        "AlertDialogAction",
+        "AlertDialogCancel"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AlertDialog",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogTrigger",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogPortal",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogOverlay",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogContent",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogHeader",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogFooter",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogTitle",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogDescription",
+          "parameters": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogAction",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AlertDialogCancel",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel.",
+      "lines_of_code": 114,
+      "metadata": {
+        "size_bytes": 3753,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/avatar.tsx",
+      "relative_path": "apps/web/components/ui/avatar.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-avatar",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Avatar",
+        "AvatarImage",
+        "AvatarFallback"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Avatar",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AvatarImage",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "AvatarFallback",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Avatar, AvatarImage, AvatarFallback.",
+      "lines_of_code": 35,
+      "metadata": {
+        "size_bytes": 1023,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/badge.tsx",
+      "relative_path": "apps/web/components/ui/badge.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "class-variance-authority",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Badge",
+        "badgeVariants"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Badge",
+          "parameters": [
+            "{ className, variant, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "badgeVariants"
+      ],
+      "description": "Contains functions Badge and variables badgeVariants.",
+      "lines_of_code": 37,
+      "metadata": {
+        "size_bytes": 1129,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/button.tsx",
+      "relative_path": "apps/web/components/ui/button.tsx",
+      "language": "typescript",
+      "imports": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Button",
+        "buttonVariants"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "buttonVariants",
+        "Button"
+      ],
+      "description": "Contains variables buttonVariants, Button.",
+      "lines_of_code": 54,
+      "metadata": {
+        "size_bytes": 2057,
+        "last_modified": "2025-10-06T15:32:38.482Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/calendar.tsx",
+      "relative_path": "apps/web/components/ui/calendar.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "lucide-react",
+        "react-day-picker",
+        "@/lib/utils",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "Calendar",
+        "CalendarDayButton"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Calendar",
+          "parameters": [
+            "{\n  className,\n  classNames,\n  showOutsideDays = true,\n  captionLayout = 'label',\n  buttonVariant = 'ghost',\n  formatters,\n  components,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CalendarDayButton",
+          "parameters": [
+            "{ className, day, modifiers, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Calendar, CalendarDayButton.",
+      "lines_of_code": 159,
+      "metadata": {
+        "size_bytes": 7144,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/card.tsx",
+      "relative_path": "apps/web/components/ui/card.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Card",
+        "CardHeader",
+        "CardFooter",
+        "CardTitle",
+        "CardAction",
+        "CardDescription",
+        "CardContent"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Card",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CardHeader",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CardTitle",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CardDescription",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CardAction",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CardContent",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CardFooter",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter.",
+      "lines_of_code": 93,
+      "metadata": {
+        "size_bytes": 1989,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/chart.tsx",
+      "relative_path": "apps/web/components/ui/chart.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "recharts",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "ChartContainer",
+        "ChartTooltip",
+        "ChartTooltipContent",
+        "ChartLegend",
+        "ChartLegendContent",
+        "ChartStyle"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "useChart",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": false
+        },
+        {
+          "name": "ChartContainer",
+          "parameters": [
+            "{\n  id,\n  className,\n  children,\n  config,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "ChartTooltipContent",
+          "parameters": [
+            "{\n  active,\n  payload,\n  className,\n  indicator = \"dot\",\n  hideLabel = false,\n  hideIndicator = false,\n  label,\n  labelFormatter,\n  labelClassName,\n  formatter,\n  color,\n  nameKey,\n  labelKey,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "ChartLegendContent",
+          "parameters": [
+            "{\n  className,\n  hideIcon = false,\n  payload,\n  verticalAlign = \"bottom\",\n  nameKey,\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "getPayloadConfigFromPayload",
+          "parameters": [
+            "config",
+            "payload",
+            "key"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": false
+        }
+      ],
+      "variables": [
+        "THEMES",
+        "ChartContext",
+        "ChartStyle",
+        "ChartTooltip",
+        "ChartLegend"
+      ],
+      "description": "Contains functions useChart, ChartContainer, ChartTooltipContent, ChartLegendContent, getPayloadConfigFromPayload and variables THEMES, ChartContext, ChartStyle, ChartTooltip, ChartLegend.",
+      "lines_of_code": 354,
+      "metadata": {
+        "size_bytes": 9781,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/checkbox.tsx",
+      "relative_path": "apps/web/components/ui/checkbox.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-checkbox",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Checkbox"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Checkbox",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Checkbox.",
+      "lines_of_code": 30,
+      "metadata": {
+        "size_bytes": 1230,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/collapsible.tsx",
+      "relative_path": "apps/web/components/ui/collapsible.tsx",
+      "language": "typescript",
+      "imports": [
+        "@radix-ui/react-collapsible"
+      ],
+      "exports": [
+        "Collapsible",
+        "CollapsibleTrigger",
+        "CollapsibleContent"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Collapsible",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CollapsibleTrigger",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "CollapsibleContent",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Collapsible, CollapsibleTrigger, CollapsibleContent.",
+      "lines_of_code": 18,
+      "metadata": {
+        "size_bytes": 748,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/dialog.tsx",
+      "relative_path": "apps/web/components/ui/dialog.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-dialog",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Dialog",
+        "DialogClose",
+        "DialogContent",
+        "DialogDescription",
+        "DialogFooter",
+        "DialogHeader",
+        "DialogOverlay",
+        "DialogPortal",
+        "DialogTitle",
+        "DialogTrigger"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Dialog",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogTrigger",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogPortal",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogClose",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogOverlay",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogContent",
+          "parameters": [
+            "{ className, children, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogHeader",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogFooter",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogTitle",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DialogDescription",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Dialog, DialogTrigger, DialogPortal, DialogClose, DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription.",
+      "lines_of_code": 112,
+      "metadata": {
+        "size_bytes": 3781,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/dropdown-menu.tsx",
+      "relative_path": "apps/web/components/ui/dropdown-menu.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-dropdown-menu",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuPortal",
+        "DropdownMenuTrigger",
+        "DropdownMenuContent",
+        "DropdownMenuGroup",
+        "DropdownMenuLabel",
+        "DropdownMenuItem",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuRadioItem",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuSub",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuSubContent"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "DropdownMenu",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuPortal",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuTrigger",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuContent",
+          "parameters": [
+            "{\n  className,\n  sideOffset = 4,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuGroup",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuItem",
+          "parameters": [
+            "{\n  className,\n  inset,\n  variant = 'default',\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuCheckboxItem",
+          "parameters": [
+            "{\n  className,\n  children,\n  checked,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuRadioGroup",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuRadioItem",
+          "parameters": [
+            "{\n  className,\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuLabel",
+          "parameters": [
+            "{\n  className,\n  inset,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuSeparator",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuShortcut",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuSub",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuSubTrigger",
+          "parameters": [
+            "{\n  className,\n  inset,\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "DropdownMenuSubContent",
+          "parameters": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent.",
+      "lines_of_code": 220,
+      "metadata": {
+        "size_bytes": 8175,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/footer.tsx",
+      "relative_path": "apps/web/components/ui/footer.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Footer",
+        "FooterBottom",
+        "FooterColumn",
+        "FooterContent"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Footer",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "FooterContent",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "FooterColumn",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "FooterBottom",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Footer, FooterContent, FooterColumn, FooterBottom.",
+      "lines_of_code": 37,
+      "metadata": {
+        "size_bytes": 1128,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/form.tsx",
+      "relative_path": "apps/web/components/ui/form.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-label",
+        "@radix-ui/react-slot",
+        "react-hook-form",
+        "@/lib/utils",
+        "@/components/ui/label"
+      ],
+      "exports": [
+        "useFormField",
+        "Form",
+        "FormItem",
+        "FormLabel",
+        "FormControl",
+        "FormDescription",
+        "FormMessage",
+        "FormField"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "FormItem",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "FormLabel",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "FormControl",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "FormDescription",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "FormMessage",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "Form",
+        "FormFieldContext",
+        "FormField",
+        "useFormField",
+        "FormItemContext"
+      ],
+      "description": "Contains functions FormItem, FormLabel, FormControl, FormDescription, FormMessage and variables Form, FormFieldContext, FormField, useFormField, FormItemContext.",
+      "lines_of_code": 139,
+      "metadata": {
+        "size_bytes": 3673,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/input.tsx",
+      "relative_path": "apps/web/components/ui/input.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Input"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Input",
+          "parameters": [
+            "{ className, type, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Input.",
+      "lines_of_code": 23,
+      "metadata": {
+        "size_bytes": 905,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/label.tsx",
+      "relative_path": "apps/web/components/ui/label.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-label",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Label"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Label",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Label.",
+      "lines_of_code": 22,
+      "metadata": {
+        "size_bytes": 614,
+        "last_modified": "2025-10-06T15:32:38.483Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/mode-toggle.tsx",
+      "relative_path": "apps/web/components/ui/mode-toggle.tsx",
+      "language": "typescript",
+      "imports": [
+        "lucide-react",
+        "next-themes",
+        "react",
+        "react",
+        "./button",
+        "./dropdown-menu"
+      ],
+      "exports": [
+        "ModeToggle"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ModeToggle",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ModeToggle.",
+      "lines_of_code": 51,
+      "metadata": {
+        "size_bytes": 1300,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/popover.tsx",
+      "relative_path": "apps/web/components/ui/popover.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-popover",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Popover",
+        "PopoverTrigger",
+        "PopoverContent",
+        "PopoverAnchor"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Popover",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "PopoverTrigger",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "PopoverContent",
+          "parameters": [
+            "{\n  className,\n  align = 'center',\n  sideOffset = 4,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "PopoverAnchor",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Popover, PopoverTrigger, PopoverContent, PopoverAnchor.",
+      "lines_of_code": 43,
+      "metadata": {
+        "size_bytes": 1639,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/progress.tsx",
+      "relative_path": "apps/web/components/ui/progress.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-progress",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Progress"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "Progress"
+      ],
+      "description": "Contains variables Progress.",
+      "lines_of_code": 26,
+      "metadata": {
+        "size_bytes": 914,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/scroll-area.tsx",
+      "relative_path": "apps/web/components/ui/scroll-area.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-scroll-area",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "ScrollArea",
+        "ScrollBar"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ScrollArea",
+          "parameters": [
+            "{ className, children, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "ScrollBar",
+          "parameters": [
+            "{\n  className,\n  orientation = 'vertical',\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ScrollArea, ScrollBar.",
+      "lines_of_code": 46,
+      "metadata": {
+        "size_bytes": 1572,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/select.tsx",
+      "relative_path": "apps/web/components/ui/select.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-select",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Select",
+        "SelectContent",
+        "SelectGroup",
+        "SelectItem",
+        "SelectLabel",
+        "SelectScrollDownButton",
+        "SelectScrollUpButton",
+        "SelectSeparator",
+        "SelectTrigger",
+        "SelectValue"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Select",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectGroup",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectValue",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectTrigger",
+          "parameters": [
+            "{\n  className,\n  size = 'default',\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectContent",
+          "parameters": [
+            "{\n  className,\n  children,\n  position = 'popper',\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectLabel",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectItem",
+          "parameters": [
+            "{ className, children, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectSeparator",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectScrollUpButton",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SelectScrollDownButton",
+          "parameters": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton.",
+      "lines_of_code": 161,
+      "metadata": {
+        "size_bytes": 6202,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/separator.tsx",
+      "relative_path": "apps/web/components/ui/separator.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-separator",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Separator"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Separator",
+          "parameters": [
+            "{\n  className,\n  orientation = 'horizontal',\n  decorative = true,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Separator.",
+      "lines_of_code": 29,
+      "metadata": {
+        "size_bytes": 711,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/sheet.tsx",
+      "relative_path": "apps/web/components/ui/sheet.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-dialog",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Sheet",
+        "SheetTrigger",
+        "SheetClose",
+        "SheetContent",
+        "SheetHeader",
+        "SheetFooter",
+        "SheetTitle",
+        "SheetDescription"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Sheet",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SheetTrigger",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SheetClose",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SheetPortal",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": false
+        },
+        {
+          "name": "SheetOverlay",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": false
+        },
+        {
+          "name": "SheetContent",
+          "parameters": [
+            "{\n  className,\n  children,\n  side = 'right',\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SheetHeader",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SheetFooter",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SheetTitle",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SheetDescription",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Sheet, SheetTrigger, SheetClose, SheetPortal, SheetOverlay, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription.",
+      "lines_of_code": 104,
+      "metadata": {
+        "size_bytes": 4010,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/sidebar.tsx",
+      "relative_path": "apps/web/components/ui/sidebar.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "lucide-react",
+        "@/lib/hooks/use-mobile",
+        "@/lib/utils",
+        "@/components/ui/button",
+        "@/components/ui/input",
+        "@/components/ui/separator",
+        "@/components/ui/sheet",
+        "@/components/ui/skeleton",
+        "@/components/ui/tooltip"
+      ],
+      "exports": [
+        "Sidebar",
+        "SidebarContent",
+        "SidebarFooter",
+        "SidebarGroup",
+        "SidebarGroupAction",
+        "SidebarGroupContent",
+        "SidebarGroupLabel",
+        "SidebarHeader",
+        "SidebarInput",
+        "SidebarInset",
+        "SidebarMenu",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuButton",
+        "SidebarMenuItem",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubButton",
+        "SidebarMenuSubItem",
+        "SidebarProvider",
+        "SidebarRail",
+        "SidebarSeparator",
+        "SidebarTrigger",
+        "useSidebar"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "useSidebar",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarProvider",
+          "parameters": [
+            "{\n  defaultOpen = true,\n  open: openProp,\n  onOpenChange: setOpenProp,\n  className,\n  style,\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "Sidebar",
+          "parameters": [
+            "{\n  side = 'left',\n  variant = 'sidebar',\n  collapsible = 'offcanvas',\n  className,\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarTrigger",
+          "parameters": [
+            "{ className, onClick, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarRail",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarInset",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarInput",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarHeader",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarFooter",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarSeparator",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarContent",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarGroup",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarGroupLabel",
+          "parameters": [
+            "{\n  className,\n  asChild = false,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarGroupAction",
+          "parameters": [
+            "{\n  className,\n  asChild = false,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarGroupContent",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenu",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuItem",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuButton",
+          "parameters": [
+            "{\n  asChild = false,\n  isActive = false,\n  variant = 'default',\n  size = 'default',\n  tooltip,\n  className,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuAction",
+          "parameters": [
+            "{\n  className,\n  asChild = false,\n  showOnHover = false,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuBadge",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuSkeleton",
+          "parameters": [
+            "{\n  className,\n  showIcon = false,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuSub",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuSubItem",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "SidebarMenuSubButton",
+          "parameters": [
+            "{\n  asChild = false,\n  size = 'md',\n  isActive = false,\n  className,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "SIDEBAR_COOKIE_NAME",
+        "SIDEBAR_COOKIE_MAX_AGE",
+        "SIDEBAR_WIDTH",
+        "SIDEBAR_WIDTH_MOBILE",
+        "SIDEBAR_WIDTH_ICON",
+        "SIDEBAR_KEYBOARD_SHORTCUT",
+        "SidebarContext",
+        "sidebarMenuButtonVariants"
+      ],
+      "description": "Contains functions useSidebar, SidebarProvider, Sidebar, SidebarTrigger, SidebarRail, SidebarInset, SidebarInput, SidebarHeader, SidebarFooter, SidebarSeparator, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupAction, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction, SidebarMenuBadge, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton and variables SIDEBAR_COOKIE_NAME, SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_WIDTH, SIDEBAR_WIDTH_MOBILE, SIDEBAR_WIDTH_ICON, SIDEBAR_KEYBOARD_SHORTCUT, SidebarContext, sidebarMenuButtonVariants.",
+      "lines_of_code": 678,
+      "metadata": {
+        "size_bytes": 21539,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/skeleton.tsx",
+      "relative_path": "apps/web/components/ui/skeleton.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Skeleton"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Skeleton",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Skeleton.",
+      "lines_of_code": 8,
+      "metadata": {
+        "size_bytes": 247,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/sonner.tsx",
+      "relative_path": "apps/web/components/ui/sonner.tsx",
+      "language": "typescript",
+      "imports": [
+        "next-themes",
+        "sonner"
+      ],
+      "exports": [
+        "Toaster"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "Toaster"
+      ],
+      "description": "Contains variables Toaster.",
+      "lines_of_code": 26,
+      "metadata": {
+        "size_bytes": 571,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/switch.tsx",
+      "relative_path": "apps/web/components/ui/switch.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-switch",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Switch"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Switch",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Switch.",
+      "lines_of_code": 29,
+      "metadata": {
+        "size_bytes": 1181,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/tabs.tsx",
+      "relative_path": "apps/web/components/ui/tabs.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-tabs",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Tabs",
+        "TabsList",
+        "TabsTrigger",
+        "TabsContent"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Tabs",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "TabsList",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "TabsTrigger",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "TabsContent",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Tabs, TabsList, TabsTrigger, TabsContent.",
+      "lines_of_code": 43,
+      "metadata": {
+        "size_bytes": 1900,
+        "last_modified": "2025-10-06T15:32:38.484Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/text-hover-effect.tsx",
+      "relative_path": "apps/web/components/ui/text-hover-effect.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "framer-motion"
+      ],
+      "exports": [
+        "TextHoverEffect"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "TextHoverEffect"
+      ],
+      "description": "Contains variables TextHoverEffect.",
+      "lines_of_code": 111,
+      "metadata": {
+        "size_bytes": 3534,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/textarea.tsx",
+      "relative_path": "apps/web/components/ui/textarea.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Textarea"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Textarea",
+          "parameters": [
+            "{ className, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions Textarea.",
+      "lines_of_code": 19,
+      "metadata": {
+        "size_bytes": 764,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/toggle.tsx",
+      "relative_path": "apps/web/components/ui/toggle.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-toggle",
+        "class-variance-authority",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Toggle",
+        "toggleVariants"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Toggle",
+          "parameters": [
+            "{\n  className,\n  variant,\n  size,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "toggleVariants"
+      ],
+      "description": "Contains functions Toggle and variables toggleVariants.",
+      "lines_of_code": 42,
+      "metadata": {
+        "size_bytes": 1545,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components/ui/tooltip.tsx",
+      "relative_path": "apps/web/components/ui/tooltip.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "@radix-ui/react-tooltip",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Tooltip",
+        "TooltipTrigger",
+        "TooltipContent",
+        "TooltipProvider"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "TooltipProvider",
+          "parameters": [
+            "{ delayDuration = 0, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "Tooltip",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "TooltipTrigger",
+          "parameters": [
+            "{ ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "TooltipContent",
+          "parameters": [
+            "{\n  className,\n  sideOffset = 0,\n  children,\n  ...props\n}"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions TooltipProvider, Tooltip, TooltipTrigger, TooltipContent.",
+      "lines_of_code": 49,
+      "metadata": {
+        "size_bytes": 1861,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/components.json",
+      "relative_path": "apps/web/components.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 21,
+      "metadata": {
+        "size_bytes": 423,
+        "last_modified": "2025-10-06T15:32:38.478Z"
+      }
+    },
+    {
+      "file_path": "apps/web/data/gallery.ts",
+      "relative_path": "apps/web/data/gallery.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "./user"
+      ],
+      "exports": [
+        "fetchAssetCount"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "fetchAssetCount",
+          "parameters": [],
+          "returnType": "Promise<number>",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions fetchAssetCount.",
+      "lines_of_code": 38,
+      "metadata": {
+        "size_bytes": 719,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/data/posts.ts",
+      "relative_path": "apps/web/data/posts.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db"
+      ],
+      "exports": [
+        "fetchPostCount",
+        "fetchActivities"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "fetchPostCount",
+          "parameters": [
+            "userId"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "fetchActivities",
+          "parameters": [
+            "userId",
+            "limit"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions fetchPostCount, fetchActivities.",
+      "lines_of_code": 35,
+      "metadata": {
+        "size_bytes": 779,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/data/schedule.ts",
+      "relative_path": "apps/web/data/schedule.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db"
+      ],
+      "exports": [
+        "getScheduleById",
+        "fetchScheduleCount"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getScheduleById",
+          "parameters": [
+            "scheduleId"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "fetchScheduleCount",
+          "parameters": [
+            "userId"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions getScheduleById, fetchScheduleCount.",
+      "lines_of_code": 44,
+      "metadata": {
+        "size_bytes": 895,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/data/server.ts",
+      "relative_path": "apps/web/data/server.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "./user",
+        "@/lib/constants",
+        "./gallery",
+        "./schedule",
+        "./posts"
+      ],
+      "exports": [
+        "getDashboardData",
+        "getAssetData",
+        "getScheduleData",
+        "getUserSettingsData",
+        "logActivity"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getDashboardData",
+          "parameters": [],
+          "returnType": "Promise<DashBoardData | null>",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "getAssetData",
+          "parameters": [],
+          "returnType": "Promise<AssetData | null>",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "getScheduleData",
+          "parameters": [],
+          "returnType": "Promise<ScheduleData | null>",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "getUserSettingsData",
+          "parameters": [],
+          "returnType": "Promise<UserSettingsData | null>",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "logActivity",
+          "parameters": [
+            "{\n  message,\n  userId,\n  type = 'INFO',\n  scheduleId,\n}"
+          ],
+          "returnType": "Promise<ActivityLog | null>",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions getDashboardData, getAssetData, getScheduleData, getUserSettingsData, logActivity.",
+      "lines_of_code": 224,
+      "metadata": {
+        "size_bytes": 5079,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/data/user.ts",
+      "relative_path": "apps/web/data/user.ts",
+      "language": "typescript",
+      "imports": [
+        "@/lib/auth",
+        "@/lib/constants",
+        "@repo/db",
+        "next/headers"
+      ],
+      "exports": [
+        "serverAuth",
+        "getUserById",
+        "getUserByEmail"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "serverAuth",
+          "parameters": [
+            "req"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "getUserById",
+        "getUserByEmail"
+      ],
+      "description": "Contains functions serverAuth and variables getUserById, getUserByEmail.",
+      "lines_of_code": 75,
+      "metadata": {
+        "size_bytes": 1577,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/declarations.d.ts",
+      "relative_path": "apps/web/declarations.d.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "File contains basic code structure",
+      "lines_of_code": 2,
+      "metadata": {
+        "size_bytes": 60,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/auth-client.ts",
+      "relative_path": "apps/web/lib/auth-client.ts",
+      "language": "typescript",
+      "imports": [
+        "better-auth/react",
+        "@polar-sh/better-auth",
+        "better-auth/client/plugins",
+        "@/lib/auth"
+      ],
+      "exports": [
+        "authClient"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "authClient"
+      ],
+      "description": "Contains variables authClient.",
+      "lines_of_code": 9,
+      "metadata": {
+        "size_bytes": 365,
+        "last_modified": "2025-10-06T15:32:38.485Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/auth.ts",
+      "relative_path": "apps/web/lib/auth.ts",
+      "language": "typescript",
+      "imports": [
+        "better-auth",
+        "better-auth/adapters/prisma",
+        "better-auth/next-js",
+        "@repo/db",
+        "./constants",
+        "@polar-sh/better-auth",
+        "@/data/user",
+        "./polar",
+        "better-auth/plugins"
+      ],
+      "exports": [
+        "auth"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "setupNewAccount",
+          "parameters": [
+            "userId"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        },
+        {
+          "name": "setupFreeSubscription",
+          "parameters": [
+            "payload"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": false
+        }
+      ],
+      "variables": [
+        "auth"
+      ],
+      "description": "Contains functions setupNewAccount, setupFreeSubscription and variables auth.",
+      "lines_of_code": 186,
+      "metadata": {
+        "size_bytes": 5218,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/constants.ts",
+      "relative_path": "apps/web/lib/constants.ts",
+      "language": "typescript",
+      "imports": [
+        "react-icons/bs",
+        "react-icons/lib"
+      ],
+      "exports": [
+        "URN_PREFIX",
+        "DEFAULT_GALLERY_TITLE",
+        "APP_NAME",
+        "APP_DESCRIPTION",
+        "PRICING_PLANS",
+        "REQUIRED_PROVIDER_CONNECTION",
+        "SITE_CONFIG",
+        "ON_WAITING",
+        "BASE_URL"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "URN_PREFIX",
+        "DEFAULT_GALLERY_TITLE",
+        "APP_NAME",
+        "APP_DESCRIPTION",
+        "PRICING_PLANS",
+        "REQUIRED_PROVIDER_CONNECTION",
+        "SITE_CONFIG",
+        "ON_WAITING",
+        "BASE_URL"
+      ],
+      "description": "Contains variables URN_PREFIX, DEFAULT_GALLERY_TITLE, APP_NAME, APP_DESCRIPTION, PRICING_PLANS, REQUIRED_PROVIDER_CONNECTION, SITE_CONFIG, ON_WAITING, BASE_URL.",
+      "lines_of_code": 89,
+      "metadata": {
+        "size_bytes": 2372,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/get-query-client.ts",
+      "relative_path": "apps/web/lib/get-query-client.ts",
+      "language": "typescript",
+      "imports": [
+        "@tanstack/react-query"
+      ],
+      "exports": [
+        "getQueryClient"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "makeQueryClient",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": false
+        },
+        {
+          "name": "getQueryClient",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "browserQueryClient"
+      ],
+      "description": "Contains functions makeQueryClient, getQueryClient and variables browserQueryClient.",
+      "lines_of_code": 27,
+      "metadata": {
+        "size_bytes": 562,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/hooks/data-access/waitlist.ts",
+      "relative_path": "apps/web/lib/hooks/data-access/waitlist.ts",
+      "language": "typescript",
+      "imports": [
+        "axios"
+      ],
+      "exports": [
+        "createWaitlist"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "createWaitlist"
+      ],
+      "description": "Contains variables createWaitlist.",
+      "lines_of_code": 15,
+      "metadata": {
+        "size_bytes": 273,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/hooks/mutation.ts",
+      "relative_path": "apps/web/lib/hooks/mutation.ts",
+      "language": "typescript",
+      "imports": [
+        "@tanstack/react-query",
+        "./data-access/waitlist"
+      ],
+      "exports": [
+        "useCreateWaitlist"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "useCreateWaitlist"
+      ],
+      "description": "Contains variables useCreateWaitlist.",
+      "lines_of_code": 10,
+      "metadata": {
+        "size_bytes": 247,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/hooks/use-mobile.ts",
+      "relative_path": "apps/web/lib/hooks/use-mobile.ts",
+      "language": "typescript",
+      "imports": [
+        "react"
+      ],
+      "exports": [
+        "useIsMobile"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "useIsMobile",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "MOBILE_BREAKPOINT"
+      ],
+      "description": "Contains functions useIsMobile and variables MOBILE_BREAKPOINT.",
+      "lines_of_code": 20,
+      "metadata": {
+        "size_bytes": 576,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/hooks/use-providers.ts",
+      "relative_path": "apps/web/lib/hooks/use-providers.ts",
+      "language": "typescript",
+      "imports": [
+        "@tanstack/react-query"
+      ],
+      "exports": [
+        "useProviders"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "useProviders",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions useProviders.",
+      "lines_of_code": 25,
+      "metadata": {
+        "size_bytes": 523,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/hooks/use-quota.ts",
+      "relative_path": "apps/web/lib/hooks/use-quota.ts",
+      "language": "typescript",
+      "imports": [
+        "@tanstack/react-query"
+      ],
+      "exports": [
+        "useQuota"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "useQuota",
+          "parameters": [],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions useQuota.",
+      "lines_of_code": 30,
+      "metadata": {
+        "size_bytes": 571,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/polar.ts",
+      "relative_path": "apps/web/lib/polar.ts",
+      "language": "typescript",
+      "imports": [
+        "@polar-sh/sdk"
+      ],
+      "exports": [
+        "polarClient"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "polarClient"
+      ],
+      "description": "Contains variables polarClient.",
+      "lines_of_code": 10,
+      "metadata": {
+        "size_bytes": 452,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/schemas.ts",
+      "relative_path": "apps/web/lib/schemas.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db",
+        "zod"
+      ],
+      "exports": [
+        "createScheduleSchema"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "createScheduleSchema"
+      ],
+      "description": "Contains variables createScheduleSchema.",
+      "lines_of_code": 25,
+      "metadata": {
+        "size_bytes": 678,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/subscription-middleman.ts",
+      "relative_path": "apps/web/lib/subscription-middleman.ts",
+      "language": "typescript",
+      "imports": [
+        "@repo/db"
+      ],
+      "exports": [
+        "canCreateSchedule",
+        "canCreateAsset",
+        "canCreateGallery",
+        "canHavePostTimes"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "canCreateSchedule",
+          "parameters": [
+            "userId",
+            "subscriptionId"
+          ],
+          "returnType": "Promise<boolean>",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "canCreateAsset",
+          "parameters": [
+            "userId",
+            "subscriptionId",
+            "fileType"
+          ],
+          "returnType": "Promise<boolean>",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "canCreateGallery",
+          "parameters": [
+            "userId",
+            "subscriptionId"
+          ],
+          "returnType": "Promise<boolean>",
+          "isAsync": true,
+          "isExported": true
+        },
+        {
+          "name": "canHavePostTimes",
+          "parameters": [
+            "userId",
+            "subscriptionId",
+            "postTimes"
+          ],
+          "returnType": "Promise<boolean>",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions canCreateSchedule, canCreateAsset, canCreateGallery, canHavePostTimes.",
+      "lines_of_code": 115,
+      "metadata": {
+        "size_bytes": 2818,
+        "last_modified": "2025-10-06T15:32:38.486Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/uploadthing-api.ts",
+      "relative_path": "apps/web/lib/uploadthing-api.ts",
+      "language": "typescript",
+      "imports": [
+        "uploadthing/server"
+      ],
+      "exports": [
+        "utapi"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "utapi"
+      ],
+      "description": "Contains variables utapi.",
+      "lines_of_code": 8,
+      "metadata": {
+        "size_bytes": 138,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/uploadthing.ts",
+      "relative_path": "apps/web/lib/uploadthing.ts",
+      "language": "typescript",
+      "imports": [
+        "@/app/api/uploadthing/core",
+        "@uploadthing/react"
+      ],
+      "exports": [
+        "UploadButton",
+        "UploadDropzone"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "UploadButton",
+        "UploadDropzone"
+      ],
+      "description": "Contains variables UploadButton, UploadDropzone.",
+      "lines_of_code": 6,
+      "metadata": {
+        "size_bytes": 282,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/lib/utils.ts",
+      "relative_path": "apps/web/lib/utils.ts",
+      "language": "typescript",
+      "imports": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "exports": [
+        "cn",
+        "withRetry",
+        "delay"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "cn",
+          "parameters": [
+            "inputs"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        },
+        {
+          "name": "withRetry",
+          "parameters": [
+            "fn",
+            "maxRetries",
+            "retryDelay"
+          ],
+          "returnType": "Promise<T>",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "delay"
+      ],
+      "description": "Contains functions cn, withRetry and variables delay.",
+      "lines_of_code": 36,
+      "metadata": {
+        "size_bytes": 1047,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/middleware.ts",
+      "relative_path": "apps/web/middleware.ts",
+      "language": "typescript",
+      "imports": [
+        "@/routes",
+        "next/server",
+        "better-auth/cookies"
+      ],
+      "exports": [
+        "middleware",
+        "publicPaths",
+        "config"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "middleware",
+          "parameters": [
+            "req"
+          ],
+          "returnType": "unknown",
+          "isAsync": true,
+          "isExported": true
+        }
+      ],
+      "variables": [
+        "publicPaths",
+        "config"
+      ],
+      "description": "Contains functions middleware and variables publicPaths, config.",
+      "lines_of_code": 47,
+      "metadata": {
+        "size_bytes": 1377,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/next.config.ts",
+      "relative_path": "apps/web/next.config.ts",
+      "language": "typescript",
+      "imports": [
+        "next",
+        "@prisma/nextjs-monorepo-workaround-plugin"
+      ],
+      "exports": [
+        "nextConfig"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "nextConfig"
+      ],
+      "description": "Contains variables nextConfig.",
+      "lines_of_code": 26,
+      "metadata": {
+        "size_bytes": 640,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/package.json",
+      "relative_path": "apps/web/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 90,
+      "metadata": {
+        "size_bytes": 2754,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/provider/client-provider.tsx",
+      "relative_path": "apps/web/provider/client-provider.tsx",
+      "language": "typescript",
+      "imports": [
+        "@tanstack/react-query",
+        "react",
+        "@tanstack/react-query-devtools"
+      ],
+      "exports": [
+        "ClientProvider"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ClientProvider",
+          "parameters": [
+            "{ children }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ClientProvider.",
+      "lines_of_code": 16,
+      "metadata": {
+        "size_bytes": 486,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/providers/query.tsx",
+      "relative_path": "apps/web/providers/query.tsx",
+      "language": "typescript",
+      "imports": [
+        "@/lib/get-query-client",
+        "@tanstack/react-query",
+        "@tanstack/react-query-devtools"
+      ],
+      "exports": [
+        "QueryProvider"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "QueryProvider",
+          "parameters": [
+            "{ children }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions QueryProvider.",
+      "lines_of_code": 16,
+      "metadata": {
+        "size_bytes": 488,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/providers/theme.tsx",
+      "relative_path": "apps/web/providers/theme.tsx",
+      "language": "typescript",
+      "imports": [
+        "react",
+        "next-themes"
+      ],
+      "exports": [
+        "ThemeProvider"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ThemeProvider",
+          "parameters": [
+            "{ children, ...props }"
+          ],
+          "returnType": "unknown",
+          "isAsync": false,
+          "isExported": true
+        }
+      ],
+      "variables": [],
+      "description": "Contains functions ThemeProvider.",
+      "lines_of_code": 9,
+      "metadata": {
+        "size_bytes": 295,
+        "last_modified": "2025-10-06T15:32:38.487Z"
+      }
+    },
+    {
+      "file_path": "apps/web/routes.ts",
+      "relative_path": "apps/web/routes.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [
+        "publicRoutes",
+        "authRoutes",
+        "apiAuthPrefix",
+        "DEFAULT_LOGIN_REDIRECT"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "publicRoutes",
+        "authRoutes",
+        "apiAuthPrefix",
+        "DEFAULT_LOGIN_REDIRECT"
+      ],
+      "description": "Contains variables publicRoutes, authRoutes, apiAuthPrefix, DEFAULT_LOGIN_REDIRECT.",
+      "lines_of_code": 27,
+      "metadata": {
+        "size_bytes": 718,
+        "last_modified": "2025-10-06T15:32:38.489Z"
+      }
+    },
+    {
+      "file_path": "apps/web/tailwind.config.js",
+      "relative_path": "apps/web/tailwind.config.js",
+      "language": "javascript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "File contains basic code structure",
+      "lines_of_code": 24,
+      "metadata": {
+        "size_bytes": 557,
+        "last_modified": "2025-10-06T15:32:38.489Z"
+      }
+    },
+    {
+      "file_path": "apps/web/tsconfig.json",
+      "relative_path": "apps/web/tsconfig.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 34,
+      "metadata": {
+        "size_bytes": 643,
+        "last_modified": "2025-10-06T15:32:38.489Z"
+      }
+    },
+    {
+      "file_path": "apps/web/types.d.ts",
+      "relative_path": "apps/web/types.d.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "File contains basic code structure",
+      "lines_of_code": 20,
+      "metadata": {
+        "size_bytes": 421,
+        "last_modified": "2025-10-06T15:32:38.489Z"
+      }
+    },
+    {
+      "file_path": "docker-compose.yml",
+      "relative_path": "docker-compose.yml",
+      "language": "yaml",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "YAML configuration file",
+      "lines_of_code": 21,
+      "metadata": {
+        "size_bytes": 364,
+        "last_modified": "2025-10-06T15:32:38.491Z"
+      }
+    },
+    {
+      "file_path": "package.json",
+      "relative_path": "package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 32,
+      "metadata": {
+        "size_bytes": 644,
+        "last_modified": "2025-10-06T15:32:38.491Z"
+      }
+    },
+    {
+      "file_path": "packages/database/package.json",
+      "relative_path": "packages/database/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 22,
+      "metadata": {
+        "size_bytes": 450,
+        "last_modified": "2025-10-06T15:32:38.491Z"
+      }
+    },
+    {
+      "file_path": "packages/database/src/client.ts",
+      "relative_path": "packages/database/src/client.ts",
+      "language": "typescript",
+      "imports": [
+        "../generated/prisma"
+      ],
+      "exports": [
+        "prisma"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "globalForPrisma",
+        "prisma"
+      ],
+      "description": "Contains variables globalForPrisma, prisma.",
+      "lines_of_code": 8,
+      "metadata": {
+        "size_bytes": 270,
+        "last_modified": "2025-10-06T15:32:38.492Z"
+      }
+    },
+    {
+      "file_path": "packages/database/src/index.ts",
+      "relative_path": "packages/database/src/index.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [
+        "prisma"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Exports: prisma",
+      "lines_of_code": 3,
+      "metadata": {
+        "size_bytes": 141,
+        "last_modified": "2025-10-06T15:32:38.492Z"
+      }
+    },
+    {
+      "file_path": "packages/email-queue-types/index.ts",
+      "relative_path": "packages/email-queue-types/index.ts",
+      "language": "typescript",
+      "imports": [],
+      "exports": [
+        "EMAIL_SERVICE_NAME",
+        "SEND_EMAIL_QUEUE",
+        "SEND_EMAIL_JOB",
+        "SEND_EMAIL_DLQ"
+      ],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "EMAIL_SERVICE_NAME",
+        "SEND_EMAIL_QUEUE",
+        "SEND_EMAIL_JOB",
+        "SEND_EMAIL_DLQ"
+      ],
+      "description": "Contains variables EMAIL_SERVICE_NAME, SEND_EMAIL_QUEUE, SEND_EMAIL_JOB, SEND_EMAIL_DLQ.",
+      "lines_of_code": 21,
+      "metadata": {
+        "size_bytes": 634,
+        "last_modified": "2025-10-06T15:32:38.492Z"
+      }
+    },
+    {
+      "file_path": "packages/email-queue-types/package.json",
+      "relative_path": "packages/email-queue-types/package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 17,
+      "metadata": {
+        "size_bytes": 318,
+        "last_modified": "2025-10-06T15:32:38.492Z"
+      }
+    },
+    {
+      "file_path": "packages/email-queue-types/tsconfig.json",
+      "relative_path": "packages/email-queue-types/tsconfig.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 13,
+      "metadata": {
+        "size_bytes": 244,
+        "last_modified": "2025-10-06T15:32:38.492Z"
+      }
+    },
+    {
+      "file_path": "turbo.json",
+      "relative_path": "turbo.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "lines_of_code": 77,
+      "metadata": {
+        "size_bytes": 1854,
+        "last_modified": "2025-10-06T15:32:38.492Z"
+      }
+    }
+  ]
+}
