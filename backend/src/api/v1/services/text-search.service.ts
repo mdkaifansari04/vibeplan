@@ -1,48 +1,7 @@
 import pinecone from "../../../libs/pinecone";
 import { AnalysisResult } from "../controller/type";
 import { baseConfig } from "../../../libs/constant";
-
-interface TextRecord {
-  id: string;
-  metadata: {
-    type: string;
-    repo_name: string;
-    repo_url?: string;
-    branch?: string;
-    file_path?: string;
-    language?: string;
-    description?: string;
-    lines_of_code?: number;
-    functions?: number;
-    classes?: number;
-    content: string;
-    searchable_text: string;
-    total_files?: number;
-
-    complexity_score?: number;
-    has_issues?: boolean;
-    priority?: string;
-    summary_type?: string;
-    imports_count?: number;
-    exports_count?: number;
-    file_size?: number;
-    full_code?: string;
-
-    function_name?: string;
-    is_async?: boolean;
-    is_exported?: boolean;
-    parameter_count?: number;
-
-    class_name?: string;
-    methods_count?: number;
-    properties_count?: number;
-
-    issues_count?: number;
-    critical_issues?: number;
-    high_issues?: number;
-    issue_types?: string;
-  };
-}
+import { TextRecord } from "./types";
 
 export class TextSearchService {
   private readonly indexName = baseConfig.indexName;

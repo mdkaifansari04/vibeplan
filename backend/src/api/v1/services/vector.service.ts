@@ -1,47 +1,6 @@
 import pinecone from "../../../libs/pinecone";
 import { baseConfig } from "../../../libs/constant";
-
-interface TextRecord {
-  id: string;
-  metadata: {
-    type: string;
-    repo_name: string;
-    repo_url?: string;
-    branch?: string;
-    file_path?: string;
-    language?: string;
-    description?: string;
-    lines_of_code?: number;
-    functions?: number;
-    classes?: number;
-    content: string;
-    searchable_text: string;
-    total_files?: number;
-  };
-}
-
-interface RelevantContext {
-  files: Array<{
-    path: string;
-    content: string;
-    metadata: any;
-    similarity: number;
-    language?: string;
-    description?: string;
-  }>;
-  dependencyInfo: any;
-  repoStructure: any;
-  totalFilesFound: number;
-}
-
-interface ContextFile {
-  path: string;
-  content: string;
-  metadata: any;
-  similarity: number;
-  language?: string;
-  description?: string;
-}
+import { ContextFile, RelevantContext } from "./types";
 
 export class VectorService {
   private indexName = baseConfig.indexName;
