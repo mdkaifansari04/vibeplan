@@ -22,8 +22,8 @@ interface TextRecord {
 }
 
 export class TextSearchService {
-  private indexName = baseConfig.indexName;
-
+  private readonly indexName = baseConfig.indexName;
+  private readonly dimension = baseConfig.indexDimension; // Use a standard dimension for dummy vectors
   constructor() {}
 
   // Generate namespace from repo URL
@@ -67,7 +67,7 @@ export class TextSearchService {
       console.log(`Creating Pinecone index: ${this.indexName} (text-only)`);
       await pinecone.createIndex({
         name: this.indexName,
-        dimension: 1, // Minimal dimension since we're using metadata search
+        dimension: this.dimension, // Minimal dimension since we're using metadata search
         metric: "cosine",
         spec: {
           serverless: {
