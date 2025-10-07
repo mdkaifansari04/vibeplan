@@ -56,8 +56,6 @@ class IndexingController {
         await this.textSearchService.storeRepositoryAsText(analysisResult);
       }
 
-      // Generate dependency graph (always generate fresh graph)
-      console.log("Generating dependency graph...");
       const dependencyGraph = this.dependencyGraphService.generateDependencyGraph(analysisResult);
       fs.writeFile(`debug_dependency_graph_${namespace}.json`, JSON.stringify(dependencyGraph, null, 2));
 

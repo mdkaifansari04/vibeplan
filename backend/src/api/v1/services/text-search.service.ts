@@ -18,6 +18,29 @@ interface TextRecord {
     content: string;
     searchable_text: string;
     total_files?: number;
+    // Enhanced metadata for better chunking and search
+    complexity_score?: number;
+    has_issues?: boolean;
+    priority?: string;
+    summary_type?: string;
+    imports_count?: number;
+    exports_count?: number;
+    file_size?: number;
+    full_code?: string;
+    // Function-specific metadata
+    function_name?: string;
+    is_async?: boolean;
+    is_exported?: boolean;
+    parameter_count?: number;
+    // Class-specific metadata
+    class_name?: string;
+    methods_count?: number;
+    properties_count?: number;
+    // Issue-specific metadata
+    issues_count?: number;
+    critical_issues?: number;
+    high_issues?: number;
+    issue_types?: string;
   };
 }
 
@@ -213,16 +236,58 @@ export class TextSearchService {
       },
     });
 
-    // File records - prioritize significant files
+    // File records - prioritize significant files with enhanced metadata
     const significantFiles = analysisResult.files.filter((file) => this.isSignificantFile(file)).slice(0, 100); // Limit to 100 most significant files
 
     significantFiles.forEach((file, index) => {
       const functionNames = file.functions.map((f) => f.name).filter((name) => name !== "<anonymous>");
       const classNames = file.classes.map((c) => c.name);
 
-      const searchableContent = [file.file_path, file.language, file.description, ...functionNames, ...classNames, ...file.variables, ...file.imports, ...file.exports].filter(Boolean).join(" ");
+      // Enhanced searchable content with more metadata
+      const searchableContent = [
+        file.file_path,
+        file.language,
+        file.description,
+        ...functionNames,
+        ...classNames,
+        ...file.variables,
+        ...file.imports,
+        ...file.exports,
+        // Add enhanced analysis data
+        ...(file.analysis_enhanced?.semantic_tags || []),
+        ...(file.analysis_enhanced?.detected_issues.map((issue) => `${issue.type} ${issue.severity}`) || []),
+      ]
+        .filter(Boolean)
+        .join(" ");
 
-      const contentSummary = `File: ${file.file_path} (${file.language}). ${file.description}. ${file.lines_of_code} lines. Functions: ${functionNames.join(", ")}. Classes: ${classNames.join(", ")}.`;
+      // More detailed content summary with enhanced analysis
+      let contentSummary = `File: ${file.file_path} (${file.language}). ${file.description}. ${file.lines_of_code} lines.`;
+
+      if (functionNames.length > 0) {
+        contentSummary += ` Functions: ${functionNames.join(", ")}.`;
+      }
+
+      if (classNames.length > 0) {
+        contentSummary += ` Classes: ${classNames.join(", ")}.`;
+      }
+
+      // Add enhanced analysis insights
+      if (file.analysis_enhanced) {
+        if (file.analysis_enhanced.complexity_score > 10) {
+          contentSummary += ` High complexity (${file.analysis_enhanced.complexity_score}).`;
+        }
+
+        if (file.analysis_enhanced.detected_issues.length > 0) {
+          const criticalIssues = file.analysis_enhanced.detected_issues.filter((i) => i.severity === "critical");
+          if (criticalIssues.length > 0) {
+            contentSummary += ` Critical issues: ${criticalIssues.map((i) => i.type).join(", ")}.`;
+          }
+        }
+
+        if (file.analysis_enhanced.semantic_tags.length > 0) {
+          contentSummary += ` Tags: ${file.analysis_enhanced.semantic_tags.join(", ")}.`;
+        }
+      }
 
       records.push({
         id: `${analysisResult.repo_name}-file-${index}`,
@@ -237,8 +302,88 @@ export class TextSearchService {
           classes: file.classes.length,
           content: contentSummary,
           searchable_text: searchableContent.toLowerCase(),
+          // Add enhanced metadata for better chunking
+          complexity_score: file.analysis_enhanced?.complexity_score || 0,
+          has_issues: (file.analysis_enhanced?.detected_issues.length || 0) > 0,
+          priority: file.analysis_enhanced?.priority || "low",
+          summary_type: file.analysis_enhanced?.summary_type || "rule-based",
+          imports_count: file.imports.length,
+          exports_count: file.exports.length,
+          file_size: file.metadata?.size_bytes || 0,
+          // Store full content for AI phase generation if available
+          full_code: file.analysis_enhanced?.full_content || "",
         },
       });
+
+      // Create granular records for complex files with functions and classes
+      if (file.analysis_enhanced?.priority === "high" || file.analysis_enhanced?.priority === "critical") {
+        // Function-level records for complex files
+        file.functions.forEach((func, funcIndex) => {
+          if (func.name && func.name !== "<anonymous>") {
+            records.push({
+              id: `${analysisResult.repo_name}-func-${index}-${funcIndex}`,
+              metadata: {
+                type: "function",
+                repo_name: analysisResult.repo_name,
+                file_path: file.file_path,
+                language: file.language,
+                content: `Function: ${func.name} in ${file.file_path}. Parameters: ${func.parameters.join(", ")}. Return type: ${func.returnType}. ${func.isAsync ? "Async" : "Sync"} function.`,
+                searchable_text: `${func.name} function ${func.parameters.join(" ")} ${func.returnType} ${file.file_path}`.toLowerCase(),
+                function_name: func.name,
+                is_async: func.isAsync,
+                is_exported: func.isExported,
+                parameter_count: func.parameters.length,
+              },
+            });
+          }
+        });
+
+        // Class-level records for complex files
+        file.classes.forEach((cls, clsIndex) => {
+          if (cls.name) {
+            records.push({
+              id: `${analysisResult.repo_name}-class-${index}-${clsIndex}`,
+              metadata: {
+                type: "class",
+                repo_name: analysisResult.repo_name,
+                file_path: file.file_path,
+                language: file.language,
+                content: `Class: ${cls.name} in ${file.file_path}. Methods: ${cls.methods.join(", ")}. Properties: ${cls.properties.join(", ")}.`,
+                searchable_text: `${cls.name} class ${cls.methods.join(" ")} ${cls.properties.join(" ")} ${file.file_path}`.toLowerCase(),
+                class_name: cls.name,
+                methods_count: cls.methods.length,
+                properties_count: cls.properties.length,
+                is_exported: cls.isExported,
+              },
+            });
+          }
+        });
+      }
+
+      // Create issue-specific records for files with detected problems
+      if (file.analysis_enhanced?.detected_issues && file.analysis_enhanced.detected_issues.length > 0) {
+        const criticalIssues = file.analysis_enhanced.detected_issues.filter((issue) => issue.severity === "critical");
+        const highIssues = file.analysis_enhanced.detected_issues.filter((issue) => issue.severity === "high");
+
+        if (criticalIssues.length > 0 || highIssues.length > 0) {
+          const importantIssues = [...criticalIssues, ...highIssues];
+          records.push({
+            id: `${analysisResult.repo_name}-issues-${index}`,
+            metadata: {
+              type: "issues",
+              repo_name: analysisResult.repo_name,
+              file_path: file.file_path,
+              language: file.language,
+              content: `Issues found in ${file.file_path}: ${importantIssues.map((i) => `${i.severity} ${i.type} - ${i.description}`).join("; ")}.`,
+              searchable_text: `issues problems bugs ${importantIssues.map((i) => `${i.type} ${i.severity}`).join(" ")} ${file.file_path}`.toLowerCase(),
+              issues_count: importantIssues.length,
+              critical_issues: criticalIssues.length,
+              high_issues: highIssues.length,
+              issue_types: importantIssues.map((i) => i.type).join(","),
+            },
+          });
+        }
+      }
     });
 
     // Language-based summary records
@@ -260,13 +405,40 @@ export class TextSearchService {
       });
     });
 
-    console.log(`Created ${records.length} text records (${significantFiles.length} files + summaries)`);
+    console.log(`Created ${records.length} text records:
+    - ${significantFiles.length} file records
+    - ${records.filter((r) => r.metadata.type === "function").length} function records  
+    - ${records.filter((r) => r.metadata.type === "class").length} class records
+    - ${records.filter((r) => r.metadata.type === "issues").length} issue records
+    - ${Object.keys(languageStats).length} language summaries
+    - 1 repository overview`);
     return records;
   }
 
   // Check if file is significant for indexing
   private isSignificantFile(file: any): boolean {
-    return file.functions.length > 0 || file.classes.length > 0 || file.lines_of_code > 20 || ["typescript", "javascript", "python", "java"].includes(file.language) || file.file_path.includes("index") || file.file_path.includes("main") || file.file_path.includes("app") || file.file_path.includes("config") || file.file_path.includes("README");
+    // Always include files with enhanced analysis and priority
+    if (file.analysis_enhanced?.priority === "critical" || file.analysis_enhanced?.priority === "high") {
+      return true;
+    }
+
+    // Include files with AI summaries
+    if (file.analysis_enhanced?.summary_type === "ai-generated") {
+      return true;
+    }
+
+    // Include files with detected issues
+    if (file.analysis_enhanced?.detected_issues && file.analysis_enhanced.detected_issues.length > 0) {
+      return true;
+    }
+
+    // Include files with high complexity
+    if (file.analysis_enhanced?.complexity_score && file.analysis_enhanced.complexity_score > 10) {
+      return true;
+    }
+
+    // Original significance criteria
+    return file.functions.length > 0 || file.classes.length > 0 || file.lines_of_code > 20 || ["typescript", "javascript", "python", "java"].includes(file.language) || file.file_path.includes("index") || file.file_path.includes("main") || file.file_path.includes("app") || file.file_path.includes("config") || file.file_path.includes("README") || file.file_path.includes("component") || file.file_path.includes("service") || file.file_path.includes("controller") || file.file_path.includes("model") || file.file_path.includes("util") || file.file_path.includes("helper");
   }
 
   // Get language statistics
