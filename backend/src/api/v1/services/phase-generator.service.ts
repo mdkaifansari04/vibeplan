@@ -6,10 +6,7 @@ export class PhaseGeneratorService {
   constructor(private readonly llmService: LLMService = new LLMService(), private readonly vectorService: VectorService = new VectorService()) {}
 
   async analyzeUserPrompt(userPrompt: string): Promise<PromptAnalysis> {
-    console.log(`Analyzing user prompt: "${userPrompt}"`);
     const analysis = this.performRuleBasedAnalysis(userPrompt);
-
-    console.log(`Prompt analysis completed:`, analysis);
     return analysis;
   }
 

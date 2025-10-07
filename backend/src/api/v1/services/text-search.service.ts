@@ -2,11 +2,19 @@ import pinecone from "../../../libs/pinecone";
 import { AnalysisResult } from "../controller/type";
 import { baseConfig } from "../../../libs/constant";
 import { TextRecord } from "./types";
+import { file } from "bun";
+import OpenAI from "openai";
+import { getString } from "../../../libs/env";
 
 export class TextSearchService {
   private readonly indexName = baseConfig.indexName;
   private readonly dimension = baseConfig.indexDimension;
-  constructor() {}
+  private readonly openai: OpenAI;
+  constructor() {
+    this.openai = new OpenAI({
+      apiKey: getString("OPENAI_API_KEY"),
+    });
+  }
 
   generateNamespace(repoUrl: string, branch: string): string {
     const urlParts = repoUrl.replace(".git", "").split("/");
@@ -83,6 +91,19 @@ export class TextSearchService {
     }
   }
 
+  async getEmbedding(text: string) {
+    try {
+      const response = await this.openai.embeddings.create({
+        model: baseConfig.openai.embeddingModel,
+        input: text,
+      });
+      return response.data[0]?.embedding || new Array(this.dimension).fill(0);
+    } catch (error) {
+      console.error("Error fetching embedding:", error);
+      throw error;
+    }
+  }
+
   async storeRepositoryAsText(analysisResult: AnalysisResult): Promise<string> {
     const namespace = this.generateNamespace(analysisResult.repo_url, analysisResult.branch);
 
@@ -90,13 +111,29 @@ export class TextSearchService {
       console.log(`Storing repository as text records in namespace: ${namespace}`);
       const index = pinecone.index(this.indexName);
 
-      const records = this.createTextRecords(analysisResult);
-      console.log(`Created ${records.length} text records`);
+      // Create meaningful searchable text from repository data
+      const searchableText = [
+        analysisResult.repo_name,
+        Object.keys(this.getLanguageStats(analysisResult.files)).join(" "),
+        analysisResult.files
+          .slice(0, 10)
+          .map((f) => `${f.file_path} ${f.description || ""}`)
+          .join(" "),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .slice(0, 8000); // Limit to ~8k chars to avoid rate limits
 
+      console.log(`Generating embedding for searchable text (${searchableText.length} chars)...`);
+
+      const embedding = await this.getEmbedding(searchableText);
+      const records = this.createTextRecords(analysisResult);
+
+      console.log(`Created ${records.length} text records`);
       const dummyVector = new Array(1536).fill(0.1);
       const vectors = records.map((record) => ({
         id: record.id,
-        values: dummyVector,
+        values: embedding || dummyVector,
         metadata: record.metadata,
       }));
 

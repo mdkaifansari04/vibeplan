@@ -24,22 +24,22 @@ export class VectorService {
 
       case "refactor":
         searchQueries = [userPrompt, "code organization", "duplicate code", "complex functions", "coupling dependencies"];
-        topK = 15;
+        topK = 20;
         break;
 
       case "debug":
         searchQueries = [userPrompt, "error handling", "exception handling", "try catch", "validation"];
-        topK = 12;
+        topK = 20;
         break;
 
       case "feature":
         searchQueries = [userPrompt, "similar functionality", "existing patterns", "related components"];
-        topK = 15;
+        topK = 20;
         break;
 
       default:
         searchQueries = [userPrompt];
-        topK = 10;
+        topK = 20;
     }
 
     const allResults: any[] = [];
@@ -133,9 +133,6 @@ export class VectorService {
     }
   }
 
-  /**
-   * Get repository structure overview
-   */
   private async getRepoStructure(namespace: string): Promise<any> {
     try {
       const results = await pinecone
