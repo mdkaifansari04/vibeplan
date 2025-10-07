@@ -48,11 +48,7 @@ export class VectorService {
 
   constructor() {}
 
-  /**
-   * Find relevant context based on user prompt and query type
-   */
   async findRelevantContext(namespace: string, userPrompt: string, queryType: string): Promise<RelevantContext> {
-    // Different search strategies based on query type
     let searchQueries: string[] = [];
     let topK = 10;
 
@@ -107,14 +103,28 @@ export class VectorService {
             $and: [
               { type: { $ne: "summary" } }, // Exclude repo summaries
               {
-                $or: [{ searchable_text: { $regex: `(?i)${this.escapeRegex(query)}` } }, { file_path: { $regex: `(?i)${this.escapeRegex(query)}` } }, { description: { $regex: `(?i)${this.escapeRegex(query)}` } }, { language: { $eq: query.toLowerCase() } }],
+                $or: [
+                  { language: { $eq: query.toLowerCase() } },
+                  { file_path: { $exists: true } }, // Get all files when no specific match
+                ],
               },
             ],
           },
         });
 
         if (results.matches) {
-          allResults.push(...results.matches);
+          // Post-process to filter by query terms since Pinecone doesn't support regex
+          const filteredMatches = results.matches.filter((match) => {
+            const searchableText = (match.metadata?.searchable_text as string) || "";
+            const filePath = (match.metadata?.file_path as string) || "";
+            const description = (match.metadata?.description as string) || "";
+            const language = (match.metadata?.language as string) || "";
+
+            const queryLower = query.toLowerCase();
+            return searchableText.toLowerCase().includes(queryLower) || filePath.toLowerCase().includes(queryLower) || description.toLowerCase().includes(queryLower) || language.toLowerCase() === queryLower;
+          });
+
+          allResults.push(...filteredMatches);
         }
       } catch (error) {
         console.warn(`Search failed for query "${query}":`, error);
@@ -147,9 +157,7 @@ export class VectorService {
     };
   }
 
-  /**
-   * Remove duplicate results and rank by similarity
-   */
+  // remove duplicates
   private deduplicateResults(results: any[]): any[] {
     const seen = new Set<string>();
     const unique: any[] = [];
@@ -166,9 +174,7 @@ export class VectorService {
     return unique.sort((a, b) => (b.score || 0) - (a.score || 0));
   }
 
-  /**
-   * Get dependency information for the repository
-   */
+  // Get dependency information for the repository
   private async getDependencyInfo(namespace: string): Promise<any> {
     try {
       const results = await pinecone
@@ -210,16 +216,7 @@ export class VectorService {
     }
   }
 
-  /**
-   * Escape special regex characters
-   */
-  private escapeRegex(string: string): string {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  }
-
-  /**
-   * Get all files in a namespace for comprehensive analysis
-   */
+  //Get all files in a namespace for comprehensive analysis
   async getAllFiles(namespace: string, limit: number = 100): Promise<ContextFile[]> {
     try {
       const results = await pinecone

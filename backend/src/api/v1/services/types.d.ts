@@ -65,3 +65,65 @@ export interface Phase {
   category: "bug_fix" | "feature" | "refactor" | "improvement" | "documentation";
   reasoning: string;
 }
+
+export interface ReactFlowNode {
+  id: string;
+  type?: string;
+  position: { x: number; y: number };
+  data: {
+    label: string;
+    language?: string;
+    functions?: number;
+    classes?: number;
+    lines?: number;
+    fileType?: string;
+  };
+  sourcePosition?: string;
+  targetPosition?: string;
+}
+
+export interface ReactFlowEdge {
+  id: string;
+  source: string;
+  target: string;
+  type?: string;
+  label?: string;
+  animated?: boolean;
+}
+
+export interface DependencyGraph {
+  nodes: ReactFlowNode[];
+  edges: ReactFlowEdge[];
+  stats: {
+    totalFiles: number;
+    totalDependencies: number;
+    languages: string[];
+    entryPoints: string[];
+  };
+}
+
+export interface PhaseGenerationRequest {
+  namespace: string;
+  userPrompt: string;
+  contextType?: "specific" | "improvement" | "refactor" | "debug" | "feature";
+}
+
+export interface Phase {
+  id: string;
+  title: string;
+  description: string;
+  relevantFiles: string[];
+  dependencies: string[];
+  estimatedComplexity: "low" | "medium" | "high";
+  priority: "low" | "medium" | "high";
+  category: "bug_fix" | "feature" | "refactor" | "improvement" | "documentation";
+  reasoning: string;
+}
+
+export interface PromptAnalysis {
+  queryType: "specific" | "improvement" | "refactor" | "debug" | "feature";
+  intent: string;
+  targetAreas: string[];
+  complexity: "low" | "medium" | "high";
+  keywords: string[];
+}

@@ -2,7 +2,13 @@
 import Groq from "groq-sdk";
 import { getString } from "../../../libs/env";
 import { baseConfig } from "../../../libs/constant";
+import { PHASE_GENERATION_SYSTEM_PROMPT } from "../../../libs/prompt";
+import ErrorResponse from "../../../middleware/error-response";
+import { Phase, RelevantContext } from "./types";
 
+interface GeneratedPhaseResponse {
+  phases: Phase[];
+}
 export class LLMService {
   private groq: Groq;
 
@@ -12,25 +18,90 @@ export class LLMService {
     });
   }
 
-  async generatePhases(prompt: string, context: any): Promise<any> {
-    const systemPrompt = `You are a senior software architect...`;
+  private buildUserPrompt(prompt: string, context: RelevantContext): string {
+    let contextSummary = `Context Summary:\n- Total Files: ${context.totalFilesFound}\n`;
+    const languages = [...new Set(context.files.map((f: any) => f.language).filter(Boolean))];
 
-    const completion = await this.groq.chat.completions.create({
-      model: baseConfig.groq.model, // "llama-3.3-70b-versatile"
+    if (languages.length) {
+      contextSummary += `- Languages: ${languages.join(", ")}\n`;
+    }
+    const fileTypes = [...new Set(context.files.map((f: any) => f.path.split(".").pop()).filter(Boolean))];
+    if (fileTypes.length) {
+      contextSummary += `- File Types: ${fileTypes.join(", ")}\n`;
+    }
+
+    return `
+      You are an expert software developer and project planner. Based on the user prompt and the following context summary, generate a list of atomic development phases needed to implement the requested feature or change.
+
+      ${contextSummary}
+
+      User Prompt: ${prompt}
+
+      Instructions:
+      - Break down the implementation into clear, manageable phases.
+      - Each phase should have a unique ID, title, description, relevant files, dependencies, estimated complexity (low, medium, high), priority (low, medium, high), category (bug_fix, feature, refactor, improvement, documentation), and reasoning.
+      - Ensure phases are actionable and can be assigned to developers.
+
+      Provide the output in JSON format as an array of phases.
+    `;
+  }
+
+  async generatePhases(prompt: string, context: RelevantContext): Promise<Phase[]> {
+    const response = await this.groq.chat.completions.create({
+      model: baseConfig.groq.model,
       messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: prompt },
+        { role: "system", content: PHASE_GENERATION_SYSTEM_PROMPT },
+        { role: "user", content: this.buildUserPrompt(prompt, context) },
       ],
       temperature: 0.3,
       max_tokens: 4096,
-      response_format: { type: "json_object" }, // For structured output
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "phases",
+          schema: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                id: { type: "string" },
+                title: { type: "string" },
+                description: { type: "string" },
+                relevantFiles: {
+                  type: "array",
+                  items: { type: "string" },
+                },
+                dependencies: {
+                  type: "array",
+                  items: { type: "string" },
+                },
+                estimatedComplexity: {
+                  type: "string",
+                  enum: ["low", "medium", "high"],
+                },
+                priority: {
+                  type: "string",
+                  enum: ["low", "medium", "high"],
+                },
+                category: {
+                  type: "string",
+                  enum: ["bug_fix", "feature", "refactor", "improvement", "documentation"],
+                },
+                reasoning: { type: "string" },
+              },
+              required: ["id", "title", "description", "relevantFiles", "dependencies", "estimatedComplexity", "priority", "category", "reasoning"],
+              additionalProperties: false,
+            },
+          },
+        },
+      },
     });
 
-    const content = completion.choices[0]?.message?.content;
+    const content: GeneratedPhaseResponse = JSON.parse(response.choices[0]?.message?.content || "{}");
     if (!content) {
-      throw new Error("No content received from LLM");
+      throw new ErrorResponse("No content received from LLM", 500);
     }
-    return JSON.parse(content);
+    return content.phases || [];
   }
 
   async generateDetailedPlan(phase: any, files: any[]): Promise<string> {

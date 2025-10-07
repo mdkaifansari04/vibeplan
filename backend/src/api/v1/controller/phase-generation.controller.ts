@@ -3,32 +3,9 @@ import type { Response, NextFunction } from "express";
 import { CustomRequest } from "../../../types";
 import { VectorService } from "../services/vector.service";
 import { PhaseGeneratorService } from "../services/phase-generator.service";
-
-interface PhaseGenerationRequest {
-  namespace: string;
-  user_prompt: string;
-  context_type?: "specific" | "improvement" | "refactor" | "debug" | "feature";
-}
-
-interface Phase {
-  id: string;
-  title: string;
-  description: string;
-  relevantFiles: string[];
-  dependencies: string[];
-  estimatedComplexity: "low" | "medium" | "high";
-  priority: "low" | "medium" | "high";
-  category: "bug_fix" | "feature" | "refactor" | "improvement" | "documentation";
-  reasoning: string;
-}
-
-interface PromptAnalysis {
-  queryType: "specific" | "improvement" | "refactor" | "debug" | "feature";
-  intent: string;
-  targetAreas: string[];
-  complexity: "low" | "medium" | "high";
-  keywords: string[];
-}
+import { PhaseGenerationRequest } from "../services/types";
+import ErrorResponse from "../../../middleware/error-response";
+import { logger } from "../../../libs/logger";
 
 class PhaseGenerationController {
   private vectorService: VectorService;
@@ -41,37 +18,37 @@ class PhaseGenerationController {
 
   public generatePhases = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-      const { namespace, user_prompt, context_type }: PhaseGenerationRequest = req.value;
+      const { namespace, userPrompt, contextType }: PhaseGenerationRequest = req.value;
 
-      if (!namespace || !user_prompt) {
+      if (!namespace || !userPrompt) {
         return res.status(400).json({
           success: false,
-          message: "Both 'namespace' and 'user_prompt' are required",
+          message: "Both 'namespace' and 'userPrompt' are required",
         });
       }
 
       console.log(`Generating phases for namespace: ${namespace}`);
-      console.log(`User prompt: "${user_prompt}"`);
+      console.log(`User prompt: "${userPrompt}"`);
 
       // Step 1: Analyze user prompt and classify intent
-      const promptAnalysis = await this.phaseGenerator.analyzeUserPrompt(user_prompt);
+      const promptAnalysis = await this.phaseGenerator.analyzeUserPrompt(userPrompt);
       console.log(`Prompt analysis completed:`, promptAnalysis);
 
       // Step 2: Retrieve relevant context from Pinecone
       console.log(`Retrieving relevant context for query type: ${promptAnalysis.queryType}`);
-      const relevantContext = await this.vectorService.findRelevantContext(namespace, user_prompt, context_type || promptAnalysis.queryType);
+      const relevantContext = await this.vectorService.findRelevantContext(namespace, userPrompt, contextType || promptAnalysis.queryType);
 
       console.log(`Found ${relevantContext.files.length} relevant files`);
 
       // Step 3: Generate atomic phases using the phase generator
-      const phases = await this.phaseGenerator.generateAtomicPhases(user_prompt, relevantContext, promptAnalysis);
+      const phases = await this.phaseGenerator.generateAtomicPhases(userPrompt, relevantContext, promptAnalysis);
 
       console.log(`Generated ${phases.length} atomic phases`);
 
       // Step 4: Prepare response data
       const responseData = {
         namespace,
-        user_prompt,
+        userPrompt,
         prompt_analysis: promptAnalysis,
         phases,
         total_phases: phases.length,
@@ -102,37 +79,31 @@ class PhaseGenerationController {
         timestamp: new Date().toISOString(),
       });
     } catch (error) {
-      console.error("Phase generation error:", error);
-
-      res.status(500).json({
-        success: false,
-        message: "Failed to generate phases",
-        error: error instanceof Error ? error.message : "Unknown error occurred",
-        timestamp: new Date().toISOString(),
-      });
+      next(new ErrorResponse(`Phase generation failed : ${error}`, 500));
+      logger.error(`Phase generation failed : ${error}`);
     }
   };
 
   public analyzePrompt = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-      const { user_prompt }: { user_prompt: string } = req.value;
+      const { userPrompt }: { userPrompt: string } = req.value;
 
-      if (!user_prompt) {
+      if (!userPrompt) {
         return res.status(400).json({
           success: false,
-          message: "Field 'user_prompt' is required",
+          message: "Field 'userPrompt' is required",
         });
       }
 
-      console.log(`Analyzing prompt: "${user_prompt}"`);
+      console.log(`Analyzing prompt: "${userPrompt}"`);
 
       // Analyze the prompt without context
-      const promptAnalysis = await this.phaseGenerator.analyzeUserPrompt(user_prompt);
+      const promptAnalysis = await this.phaseGenerator.analyzeUserPrompt(userPrompt);
 
       res.json({
         success: true,
         data: {
-          user_prompt,
+          userPrompt,
           analysis: promptAnalysis,
         },
         message: "Prompt analysis completed",
@@ -152,23 +123,23 @@ class PhaseGenerationController {
 
   public getContextPreview = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-      const { namespace, user_prompt, context_type }: PhaseGenerationRequest = req.value;
+      const { namespace, userPrompt, contextType }: PhaseGenerationRequest = req.value;
 
-      if (!namespace || !user_prompt) {
+      if (!namespace || !userPrompt) {
         return res.status(400).json({
           success: false,
-          message: "Both 'namespace' and 'user_prompt' are required",
+          message: "Both 'namespace' and 'userPrompt' are required",
         });
       }
 
       console.log(`Getting context preview for namespace: ${namespace}`);
 
       // Get context without generating phases
-      const relevantContext = await this.vectorService.findRelevantContext(namespace, user_prompt, context_type || "improvement");
+      const relevantContext = await this.vectorService.findRelevantContext(namespace, userPrompt, contextType || "improvement");
 
       const contextPreview = {
         namespace,
-        user_prompt,
+        userPrompt,
         context_summary: {
           total_files_found: relevantContext.totalFilesFound,
           languages_found: [...new Set(relevantContext.files.map((f) => f.language).filter(Boolean))],

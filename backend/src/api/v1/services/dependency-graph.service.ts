@@ -1,40 +1,6 @@
 import { AnalysisResult } from "../controller/type";
+import { DependencyGraph, ReactFlowEdge, ReactFlowNode } from "./types";
 
-interface ReactFlowNode {
-  id: string;
-  type?: string;
-  position: { x: number; y: number };
-  data: {
-    label: string;
-    language?: string;
-    functions?: number;
-    classes?: number;
-    lines?: number;
-    fileType?: string;
-  };
-  sourcePosition?: string;
-  targetPosition?: string;
-}
-
-interface ReactFlowEdge {
-  id: string;
-  source: string;
-  target: string;
-  type?: string;
-  label?: string;
-  animated?: boolean;
-}
-
-interface DependencyGraph {
-  nodes: ReactFlowNode[];
-  edges: ReactFlowEdge[];
-  stats: {
-    totalFiles: number;
-    totalDependencies: number;
-    languages: string[];
-    entryPoints: string[];
-  };
-}
 
 export class DependencyGraphService {
   private readonly NODE_WIDTH = 200;

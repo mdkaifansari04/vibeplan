@@ -7,8 +7,8 @@ import { CustomRequest } from "../types";
 export const phaseGenerationValidation = (req: CustomRequest, res: Response, next: NextFunction) => {
   const schema = Joi.object({
     namespace: Joi.string().required().min(3).max(100),
-    user_prompt: Joi.string().required().min(5).max(1000),
-    context_type: Joi.string().optional().valid("specific", "improvement", "refactor", "debug", "feature"),
+    userPrompt: Joi.string().required().min(5).max(1000),
+    contextType: Joi.string().optional().valid("specific", "improvement", "refactor", "debug", "feature"),
   });
   validateSchema({ schema, req, next });
 };
