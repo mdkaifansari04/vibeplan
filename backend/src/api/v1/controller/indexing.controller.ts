@@ -6,14 +6,17 @@ import type { Response, NextFunction } from "express";
 import { CustomRequest } from "../../../types";
 import { AnalysisResult, FileInfo } from "./type";
 import { TextSearchService } from "../services/text-search.service";
+import { DependencyGraphService } from "../services/dependency-graph.service";
 
 class IndexingController {
   private readonly SKIP_DIRS = new Set(["node_modules", "dist", "build", ".git", ".next", "coverage", ".nuxt", "vendor", "__pycache__", ".pytest_cache", ".vscode", ".idea", "target", "bin", "obj", ".gradle", ".cache", ".expo", ".turbo", ".parcel-cache"]);
   private readonly INCLUDE_EXTENSIONS = new Set([".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs", ".py", ".java", ".go", ".rb", ".php", ".cpp", ".c", ".cs", ".swift", ".kt", ".rs", ".dart", ".scala", ".html", ".css", ".scss", ".json", ".yaml", ".yml", ".md"]);
   private textSearchService: TextSearchService;
+  private dependencyGraphService: DependencyGraphService;
 
   constructor() {
     this.textSearchService = new TextSearchService();
+    this.dependencyGraphService = new DependencyGraphService();
   }
 
   public indexCodeRepository = async (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -24,32 +27,47 @@ class IndexingController {
       const namespace = this.textSearchService.generateNamespace(repoUrl, branch);
       const namespaceExists = await this.textSearchService.namespaceExists(namespace);
 
+      let analysisResult: AnalysisResult;
+      let wasCached = false;
+
       if (namespaceExists) {
-        console.log(`Repository already indexed in namespace: ${namespace}`);
-        return res.json({
-          success: true,
-          data: namespace,
-          message: "Repository already indexed",
-          cached: true,
-        });
+        console.log(`Repository already indexed in namespace: ${namespace}. Generating dependency graph from cached data...`);
+        wasCached = true;
+
+        // Repository is cached, but we need the analysis result to generate dependency graph
+        // We need to re-analyze with minimal compute (no storing, just analysis)
+        console.log(`Re-analyzing repository for dependency graph: ${repoUrl} (branch: ${branch})`);
+        await this.cloneRepository(repoUrl, branch, tempDir);
+        const files = await this.getAllFiles(tempDir);
+        analysisResult = await this.analyzeRepository(files, repoUrl, branch, tempDir);
+      } else {
+        // Repository not cached, need to index first
+        console.log(`Processing repository: ${repoUrl} (branch: ${branch})`);
+        await this.cloneRepository(repoUrl, branch, tempDir);
+        const files = await this.getAllFiles(tempDir);
+        analysisResult = await this.analyzeRepository(files, repoUrl, branch, tempDir);
+
+        // Store repository using text search service
+        console.log("Storing repository data in Pinecone...");
+        await this.textSearchService.storeRepositoryAsText(analysisResult);
       }
 
-      // Process repository if not cached
-      console.log(`Processing repository: ${repoUrl} (branch: ${branch})`);
-      await this.cloneRepository(repoUrl, branch, tempDir);
-      const files = await this.getAllFiles(tempDir);
-      const result = await this.analyzeRepository(files, repoUrl, branch, tempDir);
-
-      // Store repository using text search service
-      console.log("Storing repository data in Pinecone...");
-      await this.textSearchService.storeRepositoryAsText(result);
+      // Generate dependency graph (always generate fresh graph)
+      console.log("Generating dependency graph...");
+      const dependencyGraph = this.dependencyGraphService.generateDependencyGraph(analysisResult);
 
       res.json({
         success: true,
-        data: namespace,
-        message: "Repository indexed successfully",
-        cached: false,
-        stats: result.stats,
+        data: {
+          namespace,
+          dependencyGraph,
+        },
+        message: wasCached ? "Repository was cached, dependency graph generated successfully" : "Repository indexed and dependency graph generated successfully",
+        cached: wasCached,
+        stats: {
+          repository: analysisResult.stats,
+          graph: dependencyGraph.stats,
+        },
       });
     } catch (error) {
       console.error("Error indexing repository:", error);
