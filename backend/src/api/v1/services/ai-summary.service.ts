@@ -27,10 +27,10 @@ interface BatchConfig {
 export class AISummaryService {
   private groq: Groq | null = null;
   private defaultConfig: BatchConfig = {
-    concurrency: 3, // Reduced from 10 to avoid token limits
+    concurrency: 3,
     rateLimitDelay: 20000, // 20 seconds between batches to respect TPM
     maxRetries: 3,
-    maxTokensPerMinute: 5500, // Leave buffer below 6000 TPM limit
+    maxTokensPerMinute: 5500, // buffer below 6000 TPM limit
     estimatedTokensPerRequest: 600, // More accurate: ~450 input + 150 output
   };
 
@@ -38,7 +38,8 @@ export class AISummaryService {
     this.groq = new Groq({ apiKey: getString("GROQ_API_KEY") });
   }
 
-  // using groq with token-aware rate limiting
+  // using groq with rate-limits
+  // ref: https://console.groq.com/docs/rate-limits
   async generateSummaries(files: FileForSummary[]): Promise<AISummaryResult[]> {
     const fileCount = files.length;
     const estimatedTokens = fileCount * this.defaultConfig.estimatedTokensPerRequest;
@@ -49,19 +50,14 @@ export class AISummaryService {
     if (fileCount === 0) {
       return [];
     } else if (estimatedTokens <= this.defaultConfig.maxTokensPerMinute && fileCount <= 7) {
-      // Very small: Can process in one batch within token limits
       console.log("📦 Processing small batch within token limits...");
       return await this.generateInParallel(files);
     } else {
-      // Any larger size: Use token-aware rate limited processing
       console.log("⏱️ Using token-aware rate limiting to respect TPM limits...");
       return await this.generateWithTokenAwareRateLimit(files);
     }
   }
 
-  /**
-   * Generate summaries in parallel for small repos
-   */
   private async generateInParallel(files: FileForSummary[]): Promise<AISummaryResult[]> {
     console.log(`Processing ${files.length} files in parallel...`);
 
@@ -77,15 +73,11 @@ export class AISummaryService {
     return await Promise.all(promises);
   }
 
-  /**
-   * Generate summaries with token-aware rate limiting
-   */
   private async generateWithTokenAwareRateLimit(files: FileForSummary[]): Promise<AISummaryResult[]> {
     const { maxTokensPerMinute, estimatedTokensPerRequest } = this.defaultConfig;
 
-    // Calculate how many files we can process per minute within token limits
     const filesPerMinute = Math.floor(maxTokensPerMinute / estimatedTokensPerRequest);
-    const batchSize = Math.max(1, Math.min(3, filesPerMinute)); // Max 3 concurrent, but respect token limits
+    const batchSize = Math.max(1, Math.min(3, filesPerMinute));
 
     console.log(`🎯 Token-aware processing: ${batchSize} files per batch, ${estimatedTokensPerRequest} tokens each`);
 
@@ -99,16 +91,14 @@ export class AISummaryService {
       const batchTokens = batch.length * estimatedTokensPerRequest;
       console.log(`Processing batch ${i + 1}/${batches.length} (${batch.length} files, ~${batchTokens} tokens)...`);
 
-      // Process batch sequentially to avoid token spikes
       const batchResults: AISummaryResult[] = [];
       for (const file of batch) {
         try {
           const result = await this.generateSingleSummary(file);
           batchResults.push(result);
 
-          // Small delay between individual requests within batch
           if (batch.indexOf(file) < batch.length - 1) {
-            await this.sleep(1000); // 1 second between requests
+            await this.sleep(1000);
           }
         } catch (error) {
           batchResults.push({
@@ -118,32 +108,27 @@ export class AISummaryService {
             error: error instanceof Error ? error.message : "Unknown error",
           });
 
-          // If we hit rate limits, wait longer
           if (error instanceof Error && error.message.includes("rate_limit_exceeded")) {
             console.log("⚠️ Rate limit hit, waiting 2 minutes...");
-            await this.sleep(120000); // 2 minutes
+            await this.sleep(120000);
           }
         }
       }
 
       results.push(...batchResults);
 
-      // Wait between batches to respect TPM limits
       if (i < batches.length - 1) {
         const waitTime = this.defaultConfig.rateLimitDelay;
         console.log(`⏳ Waiting ${waitTime / 1000}s before next batch to respect token limits...`);
         await this.sleep(waitTime);
       }
 
-      console.log(`✅ Batch ${i + 1} complete. Progress: ${results.length}/${files.length}`);
+      console.log(`Batch ${i + 1} complete. Progress: ${results.length}/${files.length}`);
     }
 
     return results;
   }
 
-  /**
-   * Generate summaries with rate limiting for medium repos
-   */
   private async generateWithRateLimit(files: FileForSummary[]): Promise<AISummaryResult[]> {
     const { concurrency, rateLimitDelay } = this.defaultConfig;
     const batches = this.chunkArray(files, concurrency);
@@ -157,7 +142,6 @@ export class AISummaryService {
 
       console.log(`Processing batch ${i + 1}/${batches.length} (${batch.length} files)...`);
 
-      // Process batch in parallel
       const batchPromises = batch.map((file) =>
         this.generateSingleSummary(file).catch((error) => ({
           path: file.path,
@@ -170,21 +154,17 @@ export class AISummaryService {
       const batchResults = await Promise.all(batchPromises);
       results.push(...batchResults);
 
-      // Rate limit protection: delay between batches
       if (i < batches.length - 1) {
         console.log(`⏳ Waiting ${rateLimitDelay}ms before next batch...`);
         await this.sleep(rateLimitDelay);
       }
 
-      console.log(`✅ Batch ${i + 1} complete. Progress: ${results.length}/${files.length}`);
+      console.log(`Batch ${i + 1} complete. Progress: ${results.length}/${files.length}`);
     }
 
     return results;
   }
 
-  /**
-   * Generate summaries in large chunks for huge repos
-   */
   private async generateInChunks(files: FileForSummary[]): Promise<AISummaryResult[]> {
     // For very large repos, process in smaller chunks with longer delays
     const chunkSize = 50;
@@ -212,9 +192,6 @@ export class AISummaryService {
     return results;
   }
 
-  /**
-   * Generate AI summary for a single file
-   */
   private generateSingleSummary = async (file: FileForSummary): Promise<AISummaryResult> => {
     if (!this.groq) {
       throw new Error("Groq client not initialized");
@@ -257,9 +234,6 @@ export class AISummaryService {
     }
   };
 
-  /**
-   * Build optimized prompt for file summary (token-efficient)
-   */
   private buildSummaryPrompt(file: FileForSummary): string {
     const { path, content, language, analysis } = file;
 
@@ -292,11 +266,9 @@ export class AISummaryService {
             Generate the technical description following the required format.`;
   }
 
-  // Helper: Build contextual information
   private buildFileContext(path: string, analysis: any): string {
     const contexts: string[] = [];
 
-    // Infer purpose from path
     if (path.includes("api/") || path.includes("route.")) {
       contexts.push("- API endpoint handling HTTP requests");
     } else if (path.includes("component") || path.endsWith(".tsx")) {
@@ -313,12 +285,10 @@ export class AISummaryService {
       contexts.push("- Custom React hook");
     }
 
-    // Add complexity warning
     if (analysis.complexity > 15) {
       contexts.push(`- HIGH COMPLEXITY WARNING: Cyclomatic complexity = ${analysis.complexity}`);
     }
 
-    // Add function/class info
     if (analysis.functions?.length > 0) {
       contexts.push(`- Exports: ${analysis.functions.slice(0, 5).join(", ")}`);
     }
@@ -326,14 +296,11 @@ export class AISummaryService {
     return contexts.length > 0 ? contexts.join("\n") : "- General purpose code file";
   }
 
-  // Helper: Smart code snippet preparation
   private prepareCodeSnippet(content: string, maxChars: number): string {
-    // If content is short, return all
     if (content.length <= maxChars) {
       return content;
     }
 
-    // Try to include full functions/classes
     const lines = content.split("\n");
     let snippet = "";
     let inFunction = false;
@@ -342,7 +309,6 @@ export class AISummaryService {
     for (const line of lines) {
       snippet += line + "\n";
 
-      // Track function boundaries
       if (line.includes("function ") || line.includes("const ") || line.includes("class ")) {
         inFunction = true;
       }
@@ -350,7 +316,6 @@ export class AISummaryService {
       braceCount += (line.match(/{/g) || []).length;
       braceCount -= (line.match(/}/g) || []).length;
 
-      // Stop at function boundary if over limit
       if (snippet.length > maxChars && !inFunction && braceCount === 0) {
         break;
       }
@@ -359,9 +324,6 @@ export class AISummaryService {
     return snippet.slice(0, maxChars * 1.2); // Allow 20% overflow to complete functions
   }
 
-  /**
-   * Determine the type of file for better prompts
-   */
   private determineFileType(path: string): string {
     if (path.includes("api/") || path.includes("route")) return "API endpoint";
     if (path.includes("service")) return "service class";
@@ -375,9 +337,6 @@ export class AISummaryService {
     return "code file";
   }
 
-  /**
-   * Utility function to split array into chunks
-   */
   private chunkArray<T>(array: T[], size: number): T[][] {
     const chunks: T[][] = [];
     for (let i = 0; i < array.length; i += size) {
@@ -386,32 +345,21 @@ export class AISummaryService {
     return chunks;
   }
 
-  /**
-   * Utility function for delays
-   */
   private sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  /**
-   * Validate that AI summaries are reasonable
-   */
   private validateSummary(summary: string, file: FileForSummary): boolean {
-    // Basic validation
     if (!summary || summary.length < 10) return false;
     if (summary.length > 1000) return false; // Too long
     if (summary.includes("I cannot") || summary.includes("I am unable")) return false;
 
-    // Should mention the file or its purpose
     const lowerSummary = summary.toLowerCase();
     const fileName = file.path.split("/").pop()?.toLowerCase() || "";
 
-    return true; // Basic validation for now
+    return true;
   }
 
-  /**
-   * Get processing statistics
-   */
   getProcessingStats(results: AISummaryResult[]): {
     total: number;
     successful: number;

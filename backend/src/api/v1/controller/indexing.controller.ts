@@ -9,6 +9,7 @@ import { TextSearchService } from "../services/text-search.service";
 import { DependencyGraphService } from "../services/dependency-graph.service";
 import fileAnalysisService from "../services/file-analysis.service";
 import aiSummaryService from "../services/ai-summary.service";
+import { logger } from "../../../libs/logger";
 
 class IndexingController {
   private readonly SKIP_DIRS = new Set(["node_modules", "dist", "build", ".git", ".next", "coverage", ".nuxt", "vendor", "__pycache__", ".pytest_cache", ".vscode", ".idea", "target", "bin", "obj", ".gradle", ".cache", ".expo", ".turbo", ".parcel-cache"]);
@@ -36,22 +37,18 @@ class IndexingController {
         console.log(`Repository already indexed in namespace: ${namespace}. Generating dependency graph from cached data...`);
         wasCached = true;
 
-        // Repository is cached, but we need the analysis result to generate dependency graph
-        // We need to re-analyze with minimal compute (no storing, just analysis)
         console.log(`Re-analyzing repository for dependency graph: ${repoUrl} (branch: ${branch})`);
         await this.cloneRepository(repoUrl, branch, tempDir);
         const files = await this.getAllFiles(tempDir);
-        analysisResult = await this.analyzeRepository(files, repoUrl, branch, tempDir, true); // Pass namespaceExists=true for lightweight mode
+        analysisResult = await this.analyzeRepository(files, repoUrl, branch, tempDir, true);
       } else {
-        // Repository not cached, need to index first
         console.log(`Processing repository: ${repoUrl} (branch: ${branch})`);
         await this.cloneRepository(repoUrl, branch, tempDir);
         const files = await this.getAllFiles(tempDir);
-        analysisResult = await this.analyzeRepository(files, repoUrl, branch, tempDir, false); // Pass namespaceExists=false for full analysis
+        analysisResult = await this.analyzeRepository(files, repoUrl, branch, tempDir, false);
 
         await fs.writeFile("debug_analysis.json", JSON.stringify(analysisResult, null, 2));
 
-        // Store repository using text search service
         console.log("Storing repository data in Pinecone...");
         await this.textSearchService.storeRepositoryAsText(analysisResult);
       }
@@ -72,7 +69,6 @@ class IndexingController {
           graph: dependencyGraph.stats,
           enhanced_analysis: wasCached
             ? {
-                // Lightweight stats for cached repositories
                 ai_summaries_generated: 0,
                 rule_based_summaries: analysisResult.files.length,
                 files_with_issues: 0,
@@ -80,7 +76,6 @@ class IndexingController {
                 high_priority_files: 0,
               }
             : {
-                // Full stats for newly analyzed repositories
                 ai_summaries_generated: analysisResult.files.filter((f) => f.analysis_enhanced?.summary_type === "ai-generated").length,
                 rule_based_summaries: analysisResult.files.filter((f) => f.analysis_enhanced?.summary_type === "rule-based").length,
                 files_with_issues: analysisResult.files.filter((f) => f.analysis_enhanced?.detected_issues.length).length,
@@ -202,9 +197,7 @@ class IndexingController {
       try {
         const sourceFile = project.addSourceFileAtPath(file.fullPath);
         validSourceFiles.push({ sourceFile, fileInfo: file });
-      } catch (error) {
-        // skipping files that can't be parsed
-      }
+      } catch (error) {}
     }
 
     const repoName = repoUrl.split("/").pop()?.replace(".git", "") || "unknown";
@@ -223,7 +216,6 @@ class IndexingController {
       files: [],
     };
 
-    // Step 1: Basic analysis with conditional enhanced metadata
     console.log(`🔍 Performing ${analysisMode} file analysis...`);
     const enhancedFiles: EnhancedFileData[] = [];
 
@@ -241,7 +233,7 @@ class IndexingController {
           classes: [] as any[],
           functions: [] as any[],
           variables: [] as string[],
-          description: "", // Will be filled by AI/rule-based summary
+          description: "",
           lines_of_code: 0,
           metadata: {
             size_bytes: stats.size,
@@ -257,7 +249,7 @@ class IndexingController {
                 priority: "low",
                 summary_type: "rule-based",
                 code_snippet: content.slice(0, 2000),
-                full_content: content.length < 40000 ? content : content.slice(0, 40000), // Pinecone metadata limit
+                full_content: content.length < 40000 ? content : content.slice(0, 40000),
               },
         };
 
@@ -267,13 +259,10 @@ class IndexingController {
           const sourceFile = sourceFileEntry.sourceFile;
 
           try {
-            // Analyze code file with ts-morph
             fileData.lines_of_code = sourceFile.getFullText().split("\n").length;
 
-            // Get imports
             fileData.imports = sourceFile.getImportDeclarations().map((imp) => imp.getModuleSpecifierValue());
 
-            // Get exports
             const exportedNames = new Set<string>();
 
             sourceFile.getExportDeclarations().forEach((exp) => {
@@ -297,7 +286,6 @@ class IndexingController {
 
             fileData.exports = Array.from(exportedNames);
 
-            // Get functions
             fileData.functions = sourceFile.getFunctions().map((func) => ({
               name: func.getName() || "<anonymous>",
               parameters: func.getParameters().map((p) => p.getName()),
@@ -306,7 +294,6 @@ class IndexingController {
               isExported: func.isExported(),
             }));
 
-            // Get classes
             fileData.classes = sourceFile.getClasses().map((cls) => ({
               name: cls.getName(),
               methods: cls.getMethods().map((m) => m.getName()),
@@ -314,17 +301,14 @@ class IndexingController {
               isExported: cls.isExported(),
             }));
 
-            // Get variables
             fileData.variables = sourceFile.getVariableDeclarations().map((v) => v.getName());
 
-            // Enhanced analysis - only for new repositories
             if (!namespaceExists && fileData.analysis_enhanced) {
               fileData.analysis_enhanced.complexity_score = fileAnalysisService["calculateComplexity"](fileData);
               fileData.analysis_enhanced.detected_issues = fileAnalysisService.detectCodeIssues(content, file.path);
               fileData.analysis_enhanced.semantic_tags = fileAnalysisService.generateSemanticTags(file.path, fileData, content);
               fileData.analysis_enhanced.needs_ai_summary = fileAnalysisService.shouldGenerateAISummary(file, fileData);
 
-              // Set priority based on issues and complexity
               if (fileData.analysis_enhanced.detected_issues.some((i) => i.severity === "critical")) {
                 fileData.analysis_enhanced.priority = "critical";
               } else if (fileData.analysis_enhanced.complexity_score > 15) {
@@ -334,13 +318,11 @@ class IndexingController {
               }
             }
 
-            // Generate rule-based summary - conditional based on mode
             fileData.description = namespaceExists ? this.generateDescription(fileData.functions, fileData.classes, fileData.variables, fileData.imports, fileData.exports) : fileAnalysisService.generateRuleBasedSummary(file, fileData);
           } catch (error) {
             fileData.description = "Could not analyze file content";
           }
         } else {
-          // Handle non-code files
           try {
             fileData.lines_of_code = namespaceExists ? 0 : content.split("\n").length;
 
@@ -354,7 +336,6 @@ class IndexingController {
               fileData.description = "Non-code file";
             }
 
-            // Enhanced analysis for non-code files - only for new repositories
             if (!namespaceExists && fileData.analysis_enhanced) {
               fileData.analysis_enhanced.detected_issues = fileAnalysisService.detectCodeIssues(content, file.path);
               fileData.analysis_enhanced.semantic_tags = fileAnalysisService.generateSemanticTags(file.path, fileData, content);
@@ -367,11 +348,11 @@ class IndexingController {
 
         enhancedFiles.push(fileData);
       } catch (error) {
-        // Skip files that can't be processed
+        // skip files
       }
     }
 
-    // Step 2: Generate AI summaries for critical files - only for new repositories
+    // generate AI summaries for critical files
     if (!namespaceExists) {
       const filesNeedingAI = enhancedFiles.filter((f) => f.analysis_enhanced?.needs_ai_summary);
       console.log(`🤖 ${filesNeedingAI.length} files need AI summaries out of ${enhancedFiles.length} total`);
@@ -388,9 +369,7 @@ class IndexingController {
           const summaryResults = await aiSummaryService.generateSummaries(filesForSummary);
           const stats = aiSummaryService.getProcessingStats(summaryResults);
 
-          console.log(`✅ AI Summary Stats: ${stats.successful}/${stats.total} successful (${stats.successRate.toFixed(1)}%)`);
-
-          // Update files with AI summaries
+          console.log(`AI Summary Stats: ${stats.successful}/${stats.total} successful (${stats.successRate.toFixed(1)}%)`);
           summaryResults.forEach((summaryResult) => {
             const file = enhancedFiles.find((f) => f.file_path === summaryResult.path);
             if (file && summaryResult.generated && summaryResult.summary) {
@@ -402,7 +381,7 @@ class IndexingController {
           });
         } catch (error) {
           console.error("Failed to generate AI summaries:", error);
-          console.log("⚠️ Continuing with rule-based summaries only");
+          logger.error("⚠️ Continuing with rule-based summaries only");
         }
       }
     } else {
@@ -459,7 +438,7 @@ class IndexingController {
         await fs.remove(tempDir);
       }
     } catch (error) {
-      // Ignore cleanup errors
+      logger.error("Clean up error");
     }
   }
 }

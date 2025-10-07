@@ -21,23 +21,14 @@ interface CodeIssue {
 }
 
 export class FileAnalysisService {
-  /**
-   * Determines if a file needs AI summary or can use rule-based summary
-   */
   shouldGenerateAISummary(file: FileInfo, analysis: any): boolean {
-    // Skip files that don't need AI analysis
     if (this.isExcludedFile(file.path)) return false;
 
-    // Generate AI summary for critical files
     return this.isComplexFile(analysis) || this.isSecuritySensitive(file.path) || this.isCoreBusinessLogic(file.path) || this.hasDetectedIssues(analysis);
   }
 
-  /**
-   * Files that should be excluded from AI analysis
-   */
   private isExcludedFile(path: string): boolean {
     const exclusions = [
-      // Test files
       path.includes("test"),
       path.includes("spec"),
       path.includes("__tests__"),
@@ -49,72 +40,51 @@ export class FileAnalysisService {
       path.endsWith(".config.js"),
       path.endsWith(".config.ts"),
 
-      // Documentation
+      //
       path.endsWith(".md"),
       path.endsWith(".txt"),
 
-      // Lock files and dependencies
       path.includes("package-lock.json"),
       path.includes("yarn.lock"),
       path.includes("pnpm-lock.yaml"),
 
-      // Build artifacts
       path.includes("dist/"),
       path.includes("build/"),
       path.includes(".next/"),
 
-      // Simple type definition files
       path.endsWith(".d.ts") && !path.includes("types"),
     ];
 
     return exclusions.some((condition) => condition);
   }
 
-  /**
-   * Check if file is complex enough to warrant AI analysis
-   */
   private isComplexFile(analysis: any): boolean {
     return analysis.lines_of_code > 200 || analysis.functions.length > 10 || analysis.classes.length > 3 || this.calculateComplexity(analysis) > 10;
   }
 
-  /**
-   * Check if file handles security-sensitive operations
-   */
   private isSecuritySensitive(path: string): boolean {
     const sensitivePatterns = ["api/", "auth", "login", "security", "middleware", "guard", "service/", "controller", "route", "handler", "validation"];
 
     return sensitivePatterns.some((pattern) => path.toLowerCase().includes(pattern.toLowerCase()));
   }
 
-  /**
-   * Check if file contains core business logic
-   */
   private isCoreBusinessLogic(path: string): boolean {
     const businessLogicPatterns = ["service", "controller", "model", "repository", "manager", "processor", "handler", "engine", "core", "business"];
 
     return businessLogicPatterns.some((pattern) => path.toLowerCase().includes(pattern.toLowerCase()));
   }
 
-  /**
-   * Check if file has detected code issues
-   */
   private hasDetectedIssues(analysis: any): boolean {
-    // This will be populated by static analysis
     return analysis.detectedIssues && analysis.detectedIssues.length > 0;
   }
 
-  /**
-   * Calculate rough complexity score
-   */
   private calculateComplexity(analysis: any): number {
     let complexity = 0;
 
-    // Base complexity from structure
     complexity += analysis.functions.length * 2;
     complexity += analysis.classes.length * 3;
     complexity += analysis.imports.length * 0.5;
 
-    // Add complexity for file size
     if (analysis.lines_of_code > 100) complexity += 2;
     if (analysis.lines_of_code > 300) complexity += 3;
     if (analysis.lines_of_code > 500) complexity += 5;
@@ -122,60 +92,47 @@ export class FileAnalysisService {
     return Math.round(complexity);
   }
 
-  /**
-   * Generate rule-based summary for files that don't need AI
-   */
   generateRuleBasedSummary(file: FileInfo, analysis: any): string {
     const path = file.path;
     const lang = file.extension;
 
-    // Configuration files
     if (path.includes("config") || path.endsWith(".json")) {
       return `Configuration file defining ${analysis.exports?.length || 0} settings and options`;
     }
 
-    // Type definition files
     if (path.includes("types") || path.includes("interface")) {
       return `Type definitions providing ${analysis.exports?.length || 0} interfaces and type declarations`;
     }
 
-    // React components
     if (lang === ".tsx" && analysis.exports?.length > 0) {
       return `React component: ${analysis.exports[0]} with ${analysis.functions?.length || 0} methods and ${analysis.classes?.length || 0} classes`;
     }
 
-    // API routes
     if (path.includes("api/") && (path.includes("route") || path.includes("handler"))) {
       const methods = this.extractApiMethods(analysis);
       return `API endpoint handling ${methods.length > 0 ? methods.join(", ") : "HTTP"} requests with ${analysis.functions?.length || 0} handlers`;
     }
 
-    // Service files
     if (path.includes("service")) {
       return `Service layer providing ${analysis.functions?.length || 0} business operations and ${analysis.classes?.length || 0} service classes`;
     }
 
-    // Utility files
     if (path.includes("util") || path.includes("helper")) {
       return `Utility module with ${analysis.functions?.length || 0} helper functions and ${analysis.exports?.length || 0} exports`;
     }
 
-    // Database/Model files
     if (path.includes("model") || path.includes("schema") || path.includes("database")) {
       return `Data layer defining ${analysis.classes?.length || 0} models and ${analysis.functions?.length || 0} database operations`;
     }
 
-    // Middleware
     if (path.includes("middleware")) {
       return `Middleware module with ${analysis.functions?.length || 0} middleware functions for request processing`;
     }
 
-    // Test files
     if (path.includes("test") || path.includes("spec")) {
       return `Test suite with ${analysis.functions?.length || 0} test cases for validation and quality assurance`;
     }
 
-    // Generic fallback based on file content
     const parts = [];
     if (analysis.functions?.length > 0) {
       parts.push(`${analysis.functions.length} functions`);
@@ -194,9 +151,6 @@ export class FileAnalysisService {
     return `${this.getLanguageName(lang)} module containing ${parts.join(", ")}`;
   }
 
-  /**
-   * Extract HTTP methods from API analysis
-   */
   private extractApiMethods(analysis: any): string[] {
     const methods = ["GET", "POST", "PUT", "DELETE", "PATCH"];
     const found = [];
@@ -214,12 +168,9 @@ export class FileAnalysisService {
       }
     }
 
-    return [...new Set(found)]; // Remove duplicates
+    return [...new Set(found)];
   }
 
-  /**
-   * Get human-readable language name
-   */
   private getLanguageName(extension: string): string {
     const languageMap: Record<string, string> = {
       ".ts": "TypeScript",
@@ -243,9 +194,6 @@ export class FileAnalysisService {
     return languageMap[extension] || "Code";
   }
 
-  /**
-   * Detect code issues through static analysis
-   */
   detectCodeIssues(content: string, path: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
 
@@ -277,7 +225,7 @@ export class FileAnalysisService {
       });
     }
 
-    // SQL injection risks
+    //
     if ((content.includes("SELECT") || content.includes("INSERT") || content.includes("UPDATE")) && (content.includes("${") || content.includes('" + ') || content.includes("' + "))) {
       issues.push({
         type: "security",
@@ -287,7 +235,6 @@ export class FileAnalysisService {
       });
     }
 
-    // Performance issues
     if (content.includes("for (") && content.includes("await ") && !content.includes("Promise.all")) {
       issues.push({
         type: "performance",
@@ -297,7 +244,6 @@ export class FileAnalysisService {
       });
     }
 
-    // Best practices
     if (!content.includes("try") && !content.includes("catch") && (content.includes("async ") || content.includes("await "))) {
       issues.push({
         type: "best-practice",
@@ -316,7 +262,6 @@ export class FileAnalysisService {
       });
     }
 
-    // TODO/FIXME comments
     if (content.match(/\/\/\s*(TODO|FIXME|XXX|HACK)/i)) {
       issues.push({
         type: "maintainability",
@@ -335,10 +280,8 @@ export class FileAnalysisService {
   generateSemanticTags(path: string, analysis: any, content: string): string[] {
     const tags = new Set<string>();
 
-    // Language tag
     tags.add(analysis.language);
 
-    // File type tags
     if (path.includes("api/")) tags.add("api");
     if (path.includes("component")) tags.add("component");
     if (path.includes("service")) tags.add("service");
@@ -348,7 +291,6 @@ export class FileAnalysisService {
     if (path.includes("auth")) tags.add("authentication");
     if (path.includes("database") || path.includes("db")) tags.add("database");
 
-    // Technology tags based on imports
     if (analysis.imports) {
       for (const imp of analysis.imports) {
         if (imp.includes("react")) tags.add("react");
@@ -362,7 +304,6 @@ export class FileAnalysisService {
       }
     }
 
-    // Content-based tags
     if (content.includes("SELECT") || content.includes("INSERT")) tags.add("sql");
     if (content.includes("fetch(") || content.includes("axios")) tags.add("http-client");
     if (content.includes("router") || content.includes("app.get")) tags.add("routing");
