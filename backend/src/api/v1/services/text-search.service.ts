@@ -5,15 +5,18 @@ import { TextRecord } from "./types";
 import { file } from "bun";
 import OpenAI from "openai";
 import { getString } from "../../../libs/env";
+import { EmbeddingService } from "./embedding.service";
 
 export class TextSearchService {
   private readonly indexName = baseConfig.indexName;
   private readonly dimension = baseConfig.indexDimension;
+  private readonly embeddingService: EmbeddingService;
   private readonly openai: OpenAI;
   constructor() {
     this.openai = new OpenAI({
       apiKey: getString("OPENAI_API_KEY"),
     });
+    this.embeddingService = new EmbeddingService();
   }
 
   generateNamespace(repoUrl: string, branch: string): string {
@@ -91,19 +94,6 @@ export class TextSearchService {
     }
   }
 
-  async getEmbedding(text: string) {
-    try {
-      const response = await this.openai.embeddings.create({
-        model: baseConfig.openai.embeddingModel,
-        input: text,
-      });
-      return response.data[0]?.embedding || new Array(this.dimension).fill(0);
-    } catch (error) {
-      console.error("Error fetching embedding:", error);
-      throw error;
-    }
-  }
-
   async storeRepositoryAsText(analysisResult: AnalysisResult): Promise<string> {
     const namespace = this.generateNamespace(analysisResult.repo_url, analysisResult.branch);
 
@@ -126,7 +116,7 @@ export class TextSearchService {
 
       console.log(`Generating embedding for searchable text (${searchableText.length} chars)...`);
 
-      const embedding = await this.getEmbedding(searchableText);
+      const embedding = await this.embeddingService.getEmbedding(searchableText);
       const records = this.createTextRecords(analysisResult);
 
       console.log(`Created ${records.length} text records`);
