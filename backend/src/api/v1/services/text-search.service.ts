@@ -95,7 +95,7 @@ export class TextSearchService {
   }
 
   async storeRepositoryAsText(analysisResult: AnalysisResult): Promise<string> {
-    const namespace = this.generateNamespace(analysisResult.repo_url, analysisResult.branch);
+    const namespace = this.generateNamespace(analysisResult.repoUrl, analysisResult.branch);
 
     try {
       console.log(`Storing repository as text records in namespace: ${namespace}`);
@@ -103,11 +103,11 @@ export class TextSearchService {
 
       // Create meaningful searchable text from repository data
       const searchableText = [
-        analysisResult.repo_name,
+        analysisResult.repoName,
         Object.keys(this.getLanguageStats(analysisResult.files)).join(" "),
         analysisResult.files
           .slice(0, 10)
-          .map((f) => `${f.file_path} ${f.description || ""}`)
+          .map((f) => `${f.filePath} ${f.description || ""}`)
           .join(" "),
       ]
         .filter(Boolean)
@@ -187,20 +187,20 @@ export class TextSearchService {
     const records: TextRecord[] = [];
 
     const languageStats = this.getLanguageStats(analysisResult.files);
-    const repoOverview = `Repository: ${analysisResult.repo_name}. ${analysisResult.stats.total_files} total files, ${analysisResult.stats.code_files} code files. Languages: ${Object.entries(languageStats)
+    const repoOverview = `Repository: ${analysisResult.repoName}. ${analysisResult.stats.totalFiles} total files, ${analysisResult.stats.codeFiles} code files. Languages: ${Object.entries(languageStats)
       .map(([lang, count]) => `${lang}(${count})`)
       .join(", ")}`;
 
     records.push({
-      id: `${analysisResult.repo_name}-overview`,
+      id: `${analysisResult.repoName}-overview`,
       metadata: {
         type: "repository_overview",
-        repo_name: analysisResult.repo_name,
-        repo_url: analysisResult.repo_url,
+        repoName: analysisResult.repoName,
+        repoUrl: analysisResult.repoUrl,
         branch: analysisResult.branch,
-        total_files: analysisResult.stats.total_files,
+        totalFiles: analysisResult.stats.totalFiles,
         content: repoOverview,
-        searchable_text: `${analysisResult.repo_name} repository overview statistics ${Object.keys(languageStats).join(" ")}`,
+        searchableText: `${analysisResult.repoName} repository overview statistics ${Object.keys(languageStats).join(" ")}`,
       },
     });
 
@@ -210,9 +210,9 @@ export class TextSearchService {
       const functionNames = file.functions.map((f) => f.name).filter((name) => name !== "<anonymous>");
       const classNames = file.classes.map((c) => c.name);
 
-      const searchableContent = [file.file_path, file.language, file.description, ...functionNames, ...classNames, ...file.variables, ...file.imports, ...file.exports, ...(file.analysis_enhanced?.semantic_tags || []), ...(file.analysis_enhanced?.detected_issues.map((issue) => `${issue.type} ${issue.severity}`) || [])].filter(Boolean).join(" ");
+      const searchableContent = [file.filePath, file.language, file.description, ...functionNames, ...classNames, ...file.variables, ...file.imports, ...file.exports, ...(file.analysisEnhanced?.semanticTags || []), ...(file.analysisEnhanced?.detectedIssues.map((issue) => `${issue.type} ${issue.severity}`) || [])].filter(Boolean).join(" ");
 
-      let contentSummary = `File: ${file.file_path} (${file.language}). ${file.description}. ${file.lines_of_code} lines.`;
+      let contentSummary = `File: ${file.filePath} (${file.language}). ${file.description}. ${file.linesOfCode} lines.`;
 
       if (functionNames.length > 0) {
         contentSummary += ` Functions: ${functionNames.join(", ")}.`;
@@ -222,65 +222,65 @@ export class TextSearchService {
         contentSummary += ` Classes: ${classNames.join(", ")}.`;
       }
 
-      if (file.analysis_enhanced) {
-        if (file.analysis_enhanced.complexity_score > 10) {
-          contentSummary += ` High complexity (${file.analysis_enhanced.complexity_score}).`;
+      if (file.analysisEnhanced) {
+        if (file.analysisEnhanced.complexityScore > 10) {
+          contentSummary += ` High complexity (${file.analysisEnhanced.complexityScore}).`;
         }
 
-        if (file.analysis_enhanced.detected_issues.length > 0) {
-          const criticalIssues = file.analysis_enhanced.detected_issues.filter((i) => i.severity === "critical");
+        if (file.analysisEnhanced.detectedIssues.length > 0) {
+          const criticalIssues = file.analysisEnhanced.detectedIssues.filter((i) => i.severity === "critical");
           if (criticalIssues.length > 0) {
             contentSummary += ` Critical issues: ${criticalIssues.map((i) => i.type).join(", ")}.`;
           }
         }
 
-        if (file.analysis_enhanced.semantic_tags.length > 0) {
-          contentSummary += ` Tags: ${file.analysis_enhanced.semantic_tags.join(", ")}.`;
+        if (file.analysisEnhanced.semanticTags.length > 0) {
+          contentSummary += ` Tags: ${file.analysisEnhanced.semanticTags.join(", ")}.`;
         }
       }
 
       records.push({
-        id: `${analysisResult.repo_name}-file-${index}`,
+        id: `${analysisResult.repoName}-file-${index}`,
         metadata: {
           type: "file",
-          repo_name: analysisResult.repo_name,
-          file_path: file.file_path,
+          repoName: analysisResult.repoName,
+          filePath: file.filePath,
           language: file.language,
           description: file.description,
-          lines_of_code: file.lines_of_code,
+          linesOfCode: file.linesOfCode,
           functions: file.functions.length,
           classes: file.classes.length,
           content: contentSummary,
-          searchable_text: searchableContent.toLowerCase(),
+          searchableText: searchableContent.toLowerCase(),
 
-          complexity_score: file.analysis_enhanced?.complexity_score || 0,
-          has_issues: (file.analysis_enhanced?.detected_issues.length || 0) > 0,
-          priority: file.analysis_enhanced?.priority || "low",
-          summary_type: file.analysis_enhanced?.summary_type || "rule-based",
-          imports_count: file.imports.length,
-          exports_count: file.exports.length,
-          file_size: file.metadata?.size_bytes || 0,
+          complexityScore: file.analysisEnhanced?.complexityScore || 0,
+          hasIssues: (file.analysisEnhanced?.detectedIssues.length || 0) > 0,
+          priority: file.analysisEnhanced?.priority || "low",
+          summaryType: file.analysisEnhanced?.summaryType || "rule-based",
+          importsCount: file.imports.length,
+          exportsCount: file.exports.length,
+          fileSize: file.metadata?.sizeBytes || 0,
 
-          full_code: file.analysis_enhanced?.full_content || "",
+          fullCode: file.analysisEnhanced?.fullContent || "",
         },
       });
 
-      if (file.analysis_enhanced?.priority === "high" || file.analysis_enhanced?.priority === "critical") {
+      if (file.analysisEnhanced?.priority === "high" || file.analysisEnhanced?.priority === "critical") {
         file.functions.forEach((func, funcIndex) => {
           if (func.name && func.name !== "<anonymous>") {
             records.push({
-              id: `${analysisResult.repo_name}-func-${index}-${funcIndex}`,
+              id: `${analysisResult.repoName}-func-${index}-${funcIndex}`,
               metadata: {
                 type: "function",
-                repo_name: analysisResult.repo_name,
-                file_path: file.file_path,
+                repoName: analysisResult.repoName,
+                filePath: file.filePath,
                 language: file.language,
-                content: `Function: ${func.name} in ${file.file_path}. Parameters: ${func.parameters.join(", ")}. Return type: ${func.returnType}. ${func.isAsync ? "Async" : "Sync"} function.`,
-                searchable_text: `${func.name} function ${func.parameters.join(" ")} ${func.returnType} ${file.file_path}`.toLowerCase(),
-                function_name: func.name,
-                is_async: func.isAsync,
-                is_exported: func.isExported,
-                parameter_count: func.parameters.length,
+                content: `Function: ${func.name} in ${file.filePath}. Parameters: ${func.parameters.join(", ")}. Return type: ${func.returnType}. ${func.isAsync ? "Async" : "Sync"} function.`,
+                searchableText: `${func.name} function ${func.parameters.join(" ")} ${func.returnType} ${file.filePath}`.toLowerCase(),
+                functionName: func.name,
+                isAsync: func.isAsync,
+                isExported: func.isExported,
+                parameterCount: func.parameters.length,
               },
             });
           }
@@ -289,43 +289,43 @@ export class TextSearchService {
         file.classes.forEach((cls, clsIndex) => {
           if (cls.name) {
             records.push({
-              id: `${analysisResult.repo_name}-class-${index}-${clsIndex}`,
+              id: `${analysisResult.repoName}-class-${index}-${clsIndex}`,
               metadata: {
                 type: "class",
-                repo_name: analysisResult.repo_name,
-                file_path: file.file_path,
+                repoName: analysisResult.repoName,
+                filePath: file.filePath,
                 language: file.language,
-                content: `Class: ${cls.name} in ${file.file_path}. Methods: ${cls.methods.join(", ")}. Properties: ${cls.properties.join(", ")}.`,
-                searchable_text: `${cls.name} class ${cls.methods.join(" ")} ${cls.properties.join(" ")} ${file.file_path}`.toLowerCase(),
-                class_name: cls.name,
-                methods_count: cls.methods.length,
-                properties_count: cls.properties.length,
-                is_exported: cls.isExported,
+                content: `Class: ${cls.name} in ${file.filePath}. Methods: ${cls.methods.join(", ")}. Properties: ${cls.properties.join(", ")}.`,
+                searchableText: `${cls.name} class ${cls.methods.join(" ")} ${cls.properties.join(" ")} ${file.filePath}`.toLowerCase(),
+                className: cls.name,
+                methodsCount: cls.methods.length,
+                propertiesCount: cls.properties.length,
+                isExported: cls.isExported,
               },
             });
           }
         });
       }
 
-      if (file.analysis_enhanced?.detected_issues && file.analysis_enhanced.detected_issues.length > 0) {
-        const criticalIssues = file.analysis_enhanced.detected_issues.filter((issue) => issue.severity === "critical");
-        const highIssues = file.analysis_enhanced.detected_issues.filter((issue) => issue.severity === "high");
+      if (file.analysisEnhanced?.detectedIssues && file.analysisEnhanced.detectedIssues.length > 0) {
+        const criticalIssues = file.analysisEnhanced.detectedIssues.filter((issue) => issue.severity === "critical");
+        const highIssues = file.analysisEnhanced.detectedIssues.filter((issue) => issue.severity === "high");
 
         if (criticalIssues.length > 0 || highIssues.length > 0) {
           const importantIssues = [...criticalIssues, ...highIssues];
           records.push({
-            id: `${analysisResult.repo_name}-issues-${index}`,
+            id: `${analysisResult.repoName}-issues-${index}`,
             metadata: {
               type: "issues",
-              repo_name: analysisResult.repo_name,
-              file_path: file.file_path,
+              repoName: analysisResult.repoName,
+              filePath: file.filePath,
               language: file.language,
-              content: `Issues found in ${file.file_path}: ${importantIssues.map((i) => `${i.severity} ${i.type} - ${i.description}`).join("; ")}.`,
-              searchable_text: `issues problems bugs ${importantIssues.map((i) => `${i.type} ${i.severity}`).join(" ")} ${file.file_path}`.toLowerCase(),
-              issues_count: importantIssues.length,
-              critical_issues: criticalIssues.length,
-              high_issues: highIssues.length,
-              issue_types: importantIssues.map((i) => i.type).join(","),
+              content: `Issues found in ${file.filePath}: ${importantIssues.map((i) => `${i.severity} ${i.type} - ${i.description}`).join("; ")}.`,
+              searchableText: `issues problems bugs ${importantIssues.map((i) => `${i.type} ${i.severity}`).join(" ")} ${file.filePath}`.toLowerCase(),
+              issuesCount: importantIssues.length,
+              criticalIssues: criticalIssues.length,
+              highIssues: highIssues.length,
+              issueTypes: importantIssues.map((i) => i.type).join(","),
             },
           });
         }
@@ -338,14 +338,14 @@ export class TextSearchService {
       const allClasses = languageFiles.flatMap((f) => f.classes.map((c) => c.name));
 
       records.push({
-        id: `${analysisResult.repo_name}-lang-${language}`,
+        id: `${analysisResult.repoName}-lang-${language}`,
         metadata: {
           type: "language_summary",
-          repo_name: analysisResult.repo_name,
+          repoName: analysisResult.repoName,
           language: language,
           content: `${language} files in repository: ${count} files. Functions: ${allFunctions.slice(0, 20).join(", ")}. Classes: ${allClasses.slice(0, 10).join(", ")}.`,
-          searchable_text: `${language} programming ${allFunctions.join(" ")} ${allClasses.join(" ")}`,
-          total_files: count,
+          searchableText: `${language} programming ${allFunctions.join(" ")} ${allClasses.join(" ")}`,
+          totalFiles: count,
         },
       });
     });

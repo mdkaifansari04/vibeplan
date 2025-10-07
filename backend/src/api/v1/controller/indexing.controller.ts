@@ -67,20 +67,20 @@ class IndexingController {
         stats: {
           repository: analysisResult.stats,
           graph: dependencyGraph.stats,
-          enhanced_analysis: wasCached
+          enhancedAnalysis: wasCached
             ? {
-                ai_summaries_generated: 0,
-                rule_based_summaries: analysisResult.files.length,
-                files_with_issues: 0,
-                critical_files: 0,
-                high_priority_files: 0,
+                aiSummariesGenerated: 0,
+                ruleBasedSummaries: analysisResult.files.length,
+                filesWithIssues: 0,
+                criticalFiles: 0,
+                highPriorityFiles: 0,
               }
             : {
-                ai_summaries_generated: analysisResult.files.filter((f) => f.analysis_enhanced?.summary_type === "ai-generated").length,
-                rule_based_summaries: analysisResult.files.filter((f) => f.analysis_enhanced?.summary_type === "rule-based").length,
-                files_with_issues: analysisResult.files.filter((f) => f.analysis_enhanced?.detected_issues.length).length,
-                critical_files: analysisResult.files.filter((f) => f.analysis_enhanced?.priority === "critical").length,
-                high_priority_files: analysisResult.files.filter((f) => f.analysis_enhanced?.priority === "high").length,
+                aiSummariesGenerated: analysisResult.files.filter((f) => f.analysisEnhanced?.summaryType === "ai-generated").length,
+                ruleBasedSummaries: analysisResult.files.filter((f) => f.analysisEnhanced?.summaryType === "rule-based").length,
+                filesWithIssues: analysisResult.files.filter((f) => f.analysisEnhanced?.detectedIssues.length).length,
+                criticalFiles: analysisResult.files.filter((f) => f.analysisEnhanced?.priority === "critical").length,
+                highPriorityFiles: analysisResult.files.filter((f) => f.analysisEnhanced?.priority === "high").length,
               },
         },
       });
@@ -203,15 +203,15 @@ class IndexingController {
     const repoName = repoUrl.split("/").pop()?.replace(".git", "") || "unknown";
 
     const result: AnalysisResult = {
-      repo_name: repoName,
-      repo_url: repoUrl.replace(".git", ""),
+      repoName: repoName,
+      repoUrl: repoUrl.replace(".git", ""),
       branch,
       stats: {
-        total_files: allFiles.length,
-        code_files: codeFiles.length,
-        analyzed_files: validSourceFiles.length,
-        skipped_dirs: Array.from(this.SKIP_DIRS),
-        included_extensions: Array.from(this.INCLUDE_EXTENSIONS),
+        totalFiles: allFiles.length,
+        codeFiles: codeFiles.length,
+        analyzedFiles: validSourceFiles.length,
+        skippedDirs: Array.from(this.SKIP_DIRS),
+        includedExtensions: Array.from(this.INCLUDE_EXTENSIONS),
       },
       files: [],
     };
@@ -225,8 +225,8 @@ class IndexingController {
         const content = namespaceExists ? "" : await fs.readFile(file.fullPath, "utf-8").catch(() => "");
 
         const fileData: EnhancedFileData = {
-          file_path: file.path,
-          relative_path: file.path,
+          filePath: file.path,
+          relativePath: file.path,
           language: this.getLanguage(file.extension),
           imports: [] as string[],
           exports: [] as string[],
@@ -234,22 +234,22 @@ class IndexingController {
           functions: [] as any[],
           variables: [] as string[],
           description: "",
-          lines_of_code: 0,
+          linesOfCode: 0,
           metadata: {
-            size_bytes: stats.size,
-            last_modified: stats.mtime.toISOString(),
+            sizeBytes: stats.size,
+            lastModified: stats.mtime.toISOString(),
           },
-          analysis_enhanced: namespaceExists
+          analysisEnhanced: namespaceExists
             ? undefined
             : {
-                complexity_score: 0,
-                detected_issues: [],
-                semantic_tags: [],
-                needs_ai_summary: false,
+                complexityScore: 0,
+                detectedIssues: [],
+                semanticTags: [],
+                needsAiSummary: false,
                 priority: "low",
-                summary_type: "rule-based",
-                code_snippet: content.slice(0, 2000),
-                full_content: content.length < 40000 ? content : content.slice(0, 40000),
+                summaryType: "rule-based",
+                codeSnippet: content.slice(0, 2000),
+                fullContent: content.length < 40000 ? content : content.slice(0, 40000),
               },
         };
 
@@ -259,7 +259,7 @@ class IndexingController {
           const sourceFile = sourceFileEntry.sourceFile;
 
           try {
-            fileData.lines_of_code = sourceFile.getFullText().split("\n").length;
+            fileData.linesOfCode = sourceFile.getFullText().split("\n").length;
 
             fileData.imports = sourceFile.getImportDeclarations().map((imp) => imp.getModuleSpecifierValue());
 
@@ -303,18 +303,18 @@ class IndexingController {
 
             fileData.variables = sourceFile.getVariableDeclarations().map((v) => v.getName());
 
-            if (!namespaceExists && fileData.analysis_enhanced) {
-              fileData.analysis_enhanced.complexity_score = fileAnalysisService["calculateComplexity"](fileData);
-              fileData.analysis_enhanced.detected_issues = fileAnalysisService.detectCodeIssues(content, file.path);
-              fileData.analysis_enhanced.semantic_tags = fileAnalysisService.generateSemanticTags(file.path, fileData, content);
-              fileData.analysis_enhanced.needs_ai_summary = fileAnalysisService.shouldGenerateAISummary(file, fileData);
+            if (!namespaceExists && fileData.analysisEnhanced) {
+              fileData.analysisEnhanced.complexityScore = fileAnalysisService["calculateComplexity"](fileData);
+              fileData.analysisEnhanced.detectedIssues = fileAnalysisService.detectCodeIssues(content, file.path);
+              fileData.analysisEnhanced.semanticTags = fileAnalysisService.generateSemanticTags(file.path, fileData, content);
+              fileData.analysisEnhanced.needsAiSummary = fileAnalysisService.shouldGenerateAISummary(file, fileData);
 
-              if (fileData.analysis_enhanced.detected_issues.some((i) => i.severity === "critical")) {
-                fileData.analysis_enhanced.priority = "critical";
-              } else if (fileData.analysis_enhanced.complexity_score > 15) {
-                fileData.analysis_enhanced.priority = "high";
-              } else if (fileData.analysis_enhanced.needs_ai_summary) {
-                fileData.analysis_enhanced.priority = "medium";
+              if (fileData.analysisEnhanced.detectedIssues.some((i) => i.severity === "critical")) {
+                fileData.analysisEnhanced.priority = "critical";
+              } else if (fileData.analysisEnhanced.complexityScore > 15) {
+                fileData.analysisEnhanced.priority = "high";
+              } else if (fileData.analysisEnhanced.needsAiSummary) {
+                fileData.analysisEnhanced.priority = "medium";
               }
             }
 
@@ -324,7 +324,7 @@ class IndexingController {
           }
         } else {
           try {
-            fileData.lines_of_code = namespaceExists ? 0 : content.split("\n").length;
+            fileData.linesOfCode = namespaceExists ? 0 : content.split("\n").length;
 
             if (file.extension === ".json") {
               fileData.description = "JSON configuration or data file";
@@ -336,10 +336,10 @@ class IndexingController {
               fileData.description = "Non-code file";
             }
 
-            if (!namespaceExists && fileData.analysis_enhanced) {
-              fileData.analysis_enhanced.detected_issues = fileAnalysisService.detectCodeIssues(content, file.path);
-              fileData.analysis_enhanced.semantic_tags = fileAnalysisService.generateSemanticTags(file.path, fileData, content);
-              fileData.analysis_enhanced.needs_ai_summary = fileAnalysisService.shouldGenerateAISummary(file, fileData);
+            if (!namespaceExists && fileData.analysisEnhanced) {
+              fileData.analysisEnhanced.detectedIssues = fileAnalysisService.detectCodeIssues(content, file.path);
+              fileData.analysisEnhanced.semanticTags = fileAnalysisService.generateSemanticTags(file.path, fileData, content);
+              fileData.analysisEnhanced.needsAiSummary = fileAnalysisService.shouldGenerateAISummary(file, fileData);
             }
           } catch (error) {
             fileData.description = "Could not read file content";
@@ -354,14 +354,14 @@ class IndexingController {
 
     // generate AI summaries for critical files
     if (!namespaceExists) {
-      const filesNeedingAI = enhancedFiles.filter((f) => f.analysis_enhanced?.needs_ai_summary);
+      const filesNeedingAI = enhancedFiles.filter((f) => f.analysisEnhanced?.needsAiSummary);
       console.log(`🤖 ${filesNeedingAI.length} files need AI summaries out of ${enhancedFiles.length} total`);
 
       if (filesNeedingAI.length > 0) {
         try {
           const filesForSummary = filesNeedingAI.map((f) => ({
-            path: f.file_path,
-            content: f.analysis_enhanced?.full_content || "",
+            path: f.filePath,
+            content: f.analysisEnhanced?.fullContent || "",
             language: f.language,
             analysis: f,
           }));
@@ -371,11 +371,11 @@ class IndexingController {
 
           console.log(`AI Summary Stats: ${stats.successful}/${stats.total} successful (${stats.successRate.toFixed(1)}%)`);
           summaryResults.forEach((summaryResult) => {
-            const file = enhancedFiles.find((f) => f.file_path === summaryResult.path);
+            const file = enhancedFiles.find((f) => f.filePath === summaryResult.path);
             if (file && summaryResult.generated && summaryResult.summary) {
               file.description = summaryResult.summary;
-              if (file.analysis_enhanced) {
-                file.analysis_enhanced.summary_type = "ai-generated";
+              if (file.analysisEnhanced) {
+                file.analysisEnhanced.summaryType = "ai-generated";
               }
             }
           });
@@ -396,8 +396,8 @@ class IndexingController {
     if (namespaceExists) {
       console.log(`📊 Lightweight Stats: ${enhancedFiles.length} files analyzed for dependency graph generation`);
     } else {
-      const filesNeedingAI = enhancedFiles.filter((f) => f.analysis_enhanced?.needs_ai_summary);
-      console.log(`📊 Enhanced Stats: ${enhancedFiles.length} files, ${filesNeedingAI.length} AI summaries, ${enhancedFiles.filter((f) => f.analysis_enhanced?.detected_issues.length).length} files with issues`);
+      const filesNeedingAI = enhancedFiles.filter((f) => f.analysisEnhanced?.needsAiSummary);
+      console.log(`📊 Enhanced Stats: ${enhancedFiles.length} files, ${filesNeedingAI.length} AI summaries, ${enhancedFiles.filter((f) => f.analysisEnhanced?.detectedIssues.length).length} files with issues`);
     }
 
     return result;

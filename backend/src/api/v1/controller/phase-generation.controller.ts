@@ -45,14 +45,14 @@ class PhaseGenerationController {
       const responseData = {
         namespace,
         userPrompt,
-        prompt_analysis: promptAnalysis,
+        promptAnalysis: promptAnalysis,
         phases,
-        total_phases: phases.length,
-        context_files_used: relevantContext.totalFilesFound,
-        context_summary: {
-          total_files_found: relevantContext.totalFilesFound,
-          languages_found: [...new Set(relevantContext.files.map((f) => f.language).filter(Boolean))],
-          file_types: [
+        totalPhases: phases.length,
+        contextFilesUsed: relevantContext.totalFilesFound,
+        contextSummary: {
+          totalFilesFound: relevantContext.totalFilesFound,
+          languagesFound: [...new Set(relevantContext.files.map((f) => f.language).filter(Boolean))],
+          fileTypes: [
             ...new Set(
               relevantContext.files.map((f) => {
                 const ext = f.path.split(".").pop();
@@ -60,7 +60,7 @@ class PhaseGenerationController {
               })
             ),
           ],
-          top_relevant_files: relevantContext.files.slice(0, 5).map((f) => ({
+          topRelevantFiles: relevantContext.files.slice(0, 5).map((f) => ({
             path: f.path,
             language: f.language,
             similarity: Math.round((f.similarity || 0) * 100) / 100,

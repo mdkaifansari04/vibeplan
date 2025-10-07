@@ -21,7 +21,7 @@ interface CodeIssue {
 }
 
 export class FileAnalysisService {
-  shouldGenerateAISummary(file: FileInfo, analysis: any): boolean {
+  public shouldGenerateAISummary(file: FileInfo, analysis: any): boolean {
     if (this.isExcludedFile(file.path)) return false;
 
     return this.isComplexFile(analysis) || this.isSecuritySensitive(file.path) || this.isCoreBusinessLogic(file.path) || this.hasDetectedIssues(analysis);
@@ -59,7 +59,7 @@ export class FileAnalysisService {
   }
 
   private isComplexFile(analysis: any): boolean {
-    return analysis.lines_of_code > 200 || analysis.functions.length > 10 || analysis.classes.length > 3 || this.calculateComplexity(analysis) > 10;
+    return analysis.linesOfCode > 200 || analysis.functions.length > 10 || analysis.classes.length > 3 || this.calculateComplexity(analysis) > 10;
   }
 
   private isSecuritySensitive(path: string): boolean {
@@ -85,9 +85,9 @@ export class FileAnalysisService {
     complexity += analysis.classes.length * 3;
     complexity += analysis.imports.length * 0.5;
 
-    if (analysis.lines_of_code > 100) complexity += 2;
-    if (analysis.lines_of_code > 300) complexity += 3;
-    if (analysis.lines_of_code > 500) complexity += 5;
+    if (analysis.linesOfCode > 100) complexity += 2;
+    if (analysis.linesOfCode > 300) complexity += 3;
+    if (analysis.linesOfCode > 500) complexity += 5;
 
     return Math.round(complexity);
   }

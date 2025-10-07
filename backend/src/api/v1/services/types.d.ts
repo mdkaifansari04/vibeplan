@@ -1,29 +1,12 @@
 export interface ChunkMetadata {
-  repo_name: string;
-  repo_url: string;
+  repoName: string;
+  repoUrl: string;
   branch: string;
-  file_path?: string;
-  chunk_type: "repo_summary" | "file_analysis" | "file_content";
+  filePath?: string;
+  chunkType: "repo_summary" | "file_analysis" | "file_content";
   language?: string;
-  chunk_index: number;
-  total_chunks: number;
-}
-
-export interface ProcessedChunk {
-  id: string;
-  content: string;
-  metadata: ChunkMetadata;
-}
-
-export interface ChunkMetadata {
-  repo_name: string;
-  repo_url: string;
-  branch: string;
-  file_path?: string;
-  chunk_type: "repo_summary" | "file_analysis" | "file_content";
-  language?: string;
-  chunk_index: number;
-  total_chunks: number;
+  chunkIndex: number;
+  totalChunks: number;
 }
 
 export interface ProcessedChunk {
@@ -108,80 +91,46 @@ export interface PhaseGenerationRequest {
   contextType?: "specific" | "improvement" | "refactor" | "debug" | "feature";
 }
 
-export interface Phase {
-  id: string;
-  title: string;
-  description: string;
-  relevantFiles: string[];
-  dependencies: string[];
-  estimatedComplexity: "low" | "medium" | "high";
-  priority: "low" | "medium" | "high";
-  category: "bug_fix" | "feature" | "refactor" | "improvement" | "documentation";
-  reasoning: string;
-}
-
-export interface PromptAnalysis {
-  queryType: "specific" | "improvement" | "refactor" | "debug" | "feature";
-  intent: string;
-  targetAreas: string[];
-  complexity: "low" | "medium" | "high";
-  keywords: string[];
-}
-
 export interface TextRecord {
   id: string;
   metadata: {
     type: string;
-    repo_name: string;
-    repo_url?: string;
+    repoName: string;
+    repoUrl?: string;
     branch?: string;
-    file_path?: string;
+    filePath?: string;
     language?: string;
     description?: string;
-    lines_of_code?: number;
+    linesOfCode?: number;
     functions?: number;
     classes?: number;
     content: string;
-    searchable_text: string;
-    total_files?: number;
+    searchableText: string;
+    totalFiles?: number;
 
-    complexity_score?: number;
-    has_issues?: boolean;
+    complexityScore?: number;
+    hasIssues?: boolean;
     priority?: string;
-    summary_type?: string;
-    imports_count?: number;
-    exports_count?: number;
-    file_size?: number;
-    full_code?: string;
+    summaryType?: string;
+    importsCount?: number;
+    exportsCount?: number;
+    fileSize?: number;
+    fullCode?: string;
 
-    function_name?: string;
-    is_async?: boolean;
-    is_exported?: boolean;
-    parameter_count?: number;
+    functionName?: string;
+    isAsync?: boolean;
+    isExported?: boolean;
+    parameterCount?: number;
 
-    class_name?: string;
-    methods_count?: number;
-    properties_count?: number;
+    className?: string;
+    methodsCount?: number;
+    propertiesCount?: number;
 
-    issues_count?: number;
-    critical_issues?: number;
-    high_issues?: number;
-    issue_types?: string;
+    issuesCount?: number;
+    criticalIssues?: number;
+    highIssues?: number;
+    issueTypes?: string;
   };
-}
-
-export interface RelevantContext {
-  files: Array<{
-    path: string;
-    content: string;
-    metadata: any;
-    similarity: number;
-    language?: string;
-    description?: string;
-  }>;
-  dependencyInfo: any;
-  repoStructure: any;
-  totalFilesFound: number;
 }
 
 export interface ContextFile {

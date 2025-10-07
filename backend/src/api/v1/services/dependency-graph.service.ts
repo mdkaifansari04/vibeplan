@@ -8,7 +8,7 @@ export class DependencyGraphService {
   private readonly NODE_SPACING = 250;
 
   generateDependencyGraph(analysisResult: AnalysisResult): DependencyGraph {
-    console.log(`Generating dependency graph for ${analysisResult.repo_name}`);
+    console.log(`Generating dependency graph for ${analysisResult.repoName}`);
 
     const dependencyMap = this.buildDependencyMap(analysisResult);
 
@@ -32,15 +32,15 @@ export class DependencyGraphService {
     const fileMap = new Map<string, any>();
 
     analysisResult.files.forEach((file) => {
-      fileMap.set(file.file_path, file);
-      dependencyMap.set(file.file_path, new Set<string>());
+      fileMap.set(file.filePath, file);
+      dependencyMap.set(file.filePath, new Set<string>());
     });
 
     analysisResult.files.forEach((file) => {
-      const dependencies = dependencyMap.get(file.file_path)!;
+      const dependencies = dependencyMap.get(file.filePath)!;
 
       file.imports.forEach((importPath) => {
-        const resolvedPath = this.resolveImportPath(file.file_path, importPath, fileMap);
+        const resolvedPath = this.resolveImportPath(file.filePath, importPath, fileMap);
         if (resolvedPath && fileMap.has(resolvedPath)) {
           dependencies.add(resolvedPath);
         }
@@ -98,11 +98,11 @@ export class DependencyGraphService {
     const nodes: ReactFlowNode[] = [];
 
     analysisResult.files.forEach((file) => {
-      const fileName = file.file_path.split("/").pop() || file.file_path;
-      const isEntryPoint = this.isEntryPoint(file.file_path, dependencyMap);
+      const fileName = file.filePath.split("/").pop() || file.filePath;
+      const isEntryPoint = this.isEntryPoint(file.filePath, dependencyMap);
 
       const node: ReactFlowNode = {
-        id: file.file_path,
+        id: file.filePath,
         type: isEntryPoint ? "input" : "default",
         position: { x: 0, y: 0 },
         data: {
@@ -110,7 +110,7 @@ export class DependencyGraphService {
           language: file.language,
           functions: file.functions.length,
           classes: file.classes.length,
-          lines: file.lines_of_code,
+          lines: file.linesOfCode,
           fileType: this.getFileType(file),
         },
         sourcePosition: "right",
@@ -225,7 +225,7 @@ export class DependencyGraphService {
 
   private calculateStats(analysisResult: AnalysisResult, edges: ReactFlowEdge[]) {
     const languages = [...new Set(analysisResult.files.map((f) => f.language))];
-    const entryPoints = analysisResult.files.filter((file) => !edges.some((edge) => edge.target === file.file_path)).map((file) => file.file_path);
+    const entryPoints = analysisResult.files.filter((file) => !edges.some((edge) => edge.target === file.filePath)).map((file) => file.filePath);
 
     return {
       totalFiles: analysisResult.files.length,
