@@ -2,7 +2,7 @@
 import Groq from "groq-sdk";
 import { getString } from "../../../libs/env";
 import { baseConfig } from "../../../libs/constant";
-import { PHASE_GENERATION_SYSTEM_PROMPT } from "../../../libs/prompt";
+import { PHASE_GENERATION_SYSTEM_PROMPT } from "../../../libs/prompt/phase-generation.prompt";
 import ErrorResponse from "../../../middleware/error-response";
 import { Phase, RelevantContext } from "./types";
 
