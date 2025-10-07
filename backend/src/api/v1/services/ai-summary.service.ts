@@ -237,11 +237,9 @@ export class AISummaryService {
   private buildSummaryPrompt(file: FileForSummary): string {
     const { path, content, language, analysis } = file;
 
-    // Determine file context
     const fileType = this.determineFileType(path);
     const fileContext = this.buildFileContext(path, analysis);
 
-    // Prepare code snippet (smart truncation)
     const codeSnippet = this.prepareCodeSnippet(content, 3000);
 
     return `Analyze this ${language} ${fileType} and generate a structured technical description.

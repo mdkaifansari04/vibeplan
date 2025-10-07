@@ -13,31 +13,26 @@ export class VectorService {
 
     switch (queryType) {
       case "specific":
-        // For specific queries, focus on exact matches
         searchQueries = [userPrompt];
         topK = 15;
         break;
 
       case "improvement":
-        // For improvements, look for patterns and anti-patterns
         searchQueries = [userPrompt, "performance optimization", "error handling", "code quality issues", "security vulnerabilities"];
         topK = 20;
         break;
 
       case "refactor":
-        // For refactoring, focus on structure and organization
         searchQueries = [userPrompt, "code organization", "duplicate code", "complex functions", "coupling dependencies"];
         topK = 15;
         break;
 
       case "debug":
-        // For debugging, look for error-prone areas
         searchQueries = [userPrompt, "error handling", "exception handling", "try catch", "validation"];
         topK = 12;
         break;
 
       case "feature":
-        // For features, understand existing patterns
         searchQueries = [userPrompt, "similar functionality", "existing patterns", "related components"];
         topK = 15;
         break;
@@ -47,32 +42,26 @@ export class VectorService {
         topK = 10;
     }
 
-    // Execute multiple searches and combine results
     const allResults: any[] = [];
     const index = pinecone.index(this.indexName);
 
     for (const query of searchQueries) {
       try {
-        // Search using metadata filtering (text-based search)
         const results = await index.namespace(namespace).query({
-          vector: new Array(1536).fill(0.1), // Dummy vector for metadata search
+          vector: new Array(1536).fill(0.1),
           topK: Math.ceil(topK / searchQueries.length),
           includeMetadata: true,
           filter: {
             $and: [
-              { type: { $ne: "summary" } }, // Exclude repo summaries
+              { type: { $ne: "summary" } },
               {
-                $or: [
-                  { language: { $eq: query.toLowerCase() } },
-                  { file_path: { $exists: true } }, // Get all files when no specific match
-                ],
+                $or: [{ language: { $eq: query.toLowerCase() } }, { file_path: { $exists: true } }],
               },
             ],
           },
         });
 
         if (results.matches) {
-          // Post-process to filter by query terms since Pinecone doesn't support regex
           const filteredMatches = results.matches.filter((match) => {
             const searchableText = (match.metadata?.searchable_text as string) || "";
             const filePath = (match.metadata?.file_path as string) || "";
@@ -87,21 +76,15 @@ export class VectorService {
         }
       } catch (error) {
         console.warn(`Search failed for query "${query}":`, error);
-        // Continue with other queries even if one fails
       }
     }
 
-    // Deduplicate and rank results
     const uniqueResults = this.deduplicateResults(allResults);
     const topResults = uniqueResults.slice(0, topK);
 
-    // Format results for LLM consumption
     const contextFiles: ContextFile[] = topResults.map((match) => ({
       path: match.metadata?.file_path || "unknown",
-      content:
-        typeof match.metadata?.content === "string"
-          ? match.metadata.content.slice(0, 1500) // Limit content size
-          : match.metadata?.searchable_text?.slice(0, 1500) || "No content available",
+      content: typeof match.metadata?.content === "string" ? match.metadata.content.slice(0, 1500) : match.metadata?.searchable_text?.slice(0, 1500) || "No content available",
       metadata: match.metadata || {},
       similarity: match.score || 0,
       language: match.metadata?.language,
@@ -116,7 +99,6 @@ export class VectorService {
     };
   }
 
-  // remove duplicates
   private deduplicateResults(results: any[]): any[] {
     const seen = new Set<string>();
     const unique: any[] = [];
@@ -129,18 +111,16 @@ export class VectorService {
       }
     }
 
-    // Sort by similarity score (descending)
     return unique.sort((a, b) => (b.score || 0) - (a.score || 0));
   }
 
-  // Get dependency information for the repository
   private async getDependencyInfo(namespace: string): Promise<any> {
     try {
       const results = await pinecone
         .index(this.indexName)
         .namespace(namespace)
         .query({
-          vector: new Array(1536).fill(0.1), // Dummy vector
+          vector: new Array(1536).fill(0.1),
           topK: 1,
           includeMetadata: true,
           filter: { type: "dependency_graph" },
@@ -162,7 +142,7 @@ export class VectorService {
         .index(this.indexName)
         .namespace(namespace)
         .query({
-          vector: new Array(1536).fill(0.1), // Dummy vector
+          vector: new Array(1536).fill(0.1),
           topK: 1,
           includeMetadata: true,
           filter: { type: "repo_summary" },
@@ -175,14 +155,13 @@ export class VectorService {
     }
   }
 
-  //Get all files in a namespace for comprehensive analysis
   async getAllFiles(namespace: string, limit: number = 100): Promise<ContextFile[]> {
     try {
       const results = await pinecone
         .index(this.indexName)
         .namespace(namespace)
         .query({
-          vector: new Array(1536).fill(0.1), // Dummy vector
+          vector: new Array(1536).fill(0.1),
           topK: limit,
           includeMetadata: true,
           filter: {
