@@ -77,3 +77,24 @@ export interface ProcessingStats {
   processingTimeMs: number;
   summaryStrategy: "parallel" | "rate-limited" | "chunked" | "batch-api";
 }
+
+export interface GeneratePlanPayload {
+  topRelevantFiles: {
+    path: string;
+    language: string;
+    similarity: number;
+  }[];
+  phase: Phase;
+}
+
+export interface Phase {
+  id: string;
+  title: string;
+  description: string;
+  relevantFiles: string[];
+  dependencies: string[];
+  estimatedComplexity: string;
+  priority: string;
+  category: string;
+  reasoning: string;
+}

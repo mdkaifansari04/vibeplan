@@ -26,7 +26,7 @@ export class VectorService {
         topK: topK * 2, // Get more results to filter from
         includeMetadata: true,
         filter: {
-          $and: [{ type: { $eq: "file" } }, { file_path: { $exists: true } }],
+          $and: [{ type: { $eq: "file" } }, { filePath: { $exists: true } }],
         },
       });
 
@@ -41,14 +41,14 @@ export class VectorService {
           topK: topK,
           includeMetadata: true,
           filter: {
-            $and: [{ type: { $eq: "file" } }, { file_path: { $exists: true } }],
+            $and: [{ type: { $eq: "file" } }, { filePath: { $exists: true } }],
           },
         });
 
         // Merge results, giving priority to primary search
         const fallbackMatches = fallbackResults.matches || [];
-        const existingPaths = new Set(allResults.map((r) => r.metadata?.file_path));
-        const newMatches = fallbackMatches.filter((match) => !existingPaths.has(match.metadata?.file_path));
+        const existingPaths = new Set(allResults.map((r) => r.metadata?.filePath));
+        const newMatches = fallbackMatches.filter((match) => !existingPaths.has(match.metadata?.filePath));
         allResults = [...allResults, ...newMatches];
       }
 
@@ -56,8 +56,8 @@ export class VectorService {
       const filteredResults = allResults.filter((match) => {
         if ((match.score || 0) < minSimilarity) return false;
 
-        const filePath = (match.metadata?.file_path as string) || "";
-        const searchableText = (match.metadata?.searchable_text as string) || "";
+        const filePath = (match.metadata?.filePath as string) || "";
+        const searchableText = (match.metadata?.searchableText as string) || "";
 
         // Filter out documentation-only files for technical queries
         const isDocFile = /\.(md|txt|rst|doc|pdf)$/i.test(filePath) || filePath.toLowerCase().includes("readme") || filePath.toLowerCase().includes("doc");
@@ -79,15 +79,15 @@ export class VectorService {
       console.log(`Vector search for "${userPrompt}": ${topResults.length} results found`);
       if (topResults.length > 0) {
         console.log("Top result:", {
-          path: topResults[0].metadata?.file_path,
+          path: topResults[0].metadata?.filePath,
           similarity: topResults[0].score,
           language: topResults[0].metadata?.language,
         });
       }
 
       const contextFiles: ContextFile[] = topResults.map((match) => ({
-        path: match.metadata?.file_path || "unknown",
-        content: typeof match.metadata?.content === "string" ? match.metadata.content.slice(0, 1500) : match.metadata?.searchable_text?.slice(0, 1500) || "No content available",
+        path: match.metadata?.filePath || "unknown",
+        content: typeof match.metadata?.content === "string" ? match.metadata.content.slice(0, 1500) : match.metadata?.searchableText?.slice(0, 1500) || "No content available",
         metadata: match.metadata || {},
         similarity: match.score || 0,
         language: match.metadata?.language,
@@ -175,8 +175,8 @@ export class VectorService {
       .map((result) => {
         let score = result.score || 0;
         const metadata = result.metadata || {};
-        const filePath = ((metadata.file_path as string) || "").toLowerCase();
-        const searchableText = ((metadata.searchable_text as string) || "").toLowerCase();
+        const filePath = ((metadata.filePath as string) || "").toLowerCase();
+        const searchableText = ((metadata.searchableText as string) || "").toLowerCase();
         const language = (metadata.language as string) || "";
 
         // Boost score based on file relevance
@@ -223,7 +223,7 @@ export class VectorService {
     const unique: any[] = [];
 
     for (const result of results) {
-      const key = result.metadata?.file_path;
+      const key = result.metadata?.filePath;
       if (key && !seen.has(key)) {
         seen.add(key);
         unique.push(result);
@@ -287,14 +287,14 @@ export class VectorService {
           topK: limit,
           includeMetadata: true,
           filter: {
-            $and: [{ type: { $ne: "summary" } }, { type: { $ne: "dependency_graph" } }, { file_path: { $exists: true } }],
+            $and: [{ type: { $ne: "summary" } }, { type: { $ne: "dependency_graph" } }, { filePath: { $exists: true } }],
           },
         });
 
       return (
         results.matches?.map((match) => ({
-          path: typeof match.metadata?.file_path === "string" ? match.metadata.file_path : "unknown",
-          content: typeof match.metadata?.content === "string" ? match.metadata.content.slice(0, 1000) : typeof match.metadata?.searchable_text === "string" ? match.metadata.searchable_text.slice(0, 1000) : "No content available",
+          path: typeof match.metadata?.filePath === "string" ? match.metadata.filePath : "unknown",
+          content: typeof match.metadata?.content === "string" ? match.metadata.content.slice(0, 1000) : typeof match.metadata?.searchableText === "string" ? match.metadata.searchableText.slice(0, 1000) : "No content available",
           metadata: match.metadata || {},
           similarity: match.score || 0,
           language: typeof match.metadata?.language === "string" ? match.metadata.language : undefined,

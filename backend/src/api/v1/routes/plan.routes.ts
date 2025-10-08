@@ -1,4 +1,5 @@
 import { Router } from "express";
+import PlanController from "../controller/plan.controller";
 
 const router = Router();
 

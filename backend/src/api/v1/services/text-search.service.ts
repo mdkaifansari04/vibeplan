@@ -159,7 +159,7 @@ export class TextSearchService {
         topK: limit,
         includeMetadata: true,
         filter: {
-          $or: [{ searchable_text: { $regex: `(?i)${query}` } }, { file_path: { $regex: `(?i)${query}` } }, { language: { $eq: query.toLowerCase() } }, { description: { $regex: `(?i)${query}` } }],
+          $or: [{ searchableText: { $regex: `(?i)${query}` } }, { filePath: { $regex: `(?i)${query}` } }, { language: { $eq: query.toLowerCase() } }, { description: { $regex: `(?i)${query}` } }],
         },
       });
 
@@ -168,13 +168,13 @@ export class TextSearchService {
           id: match.id,
           score: match.score,
           type: match.metadata?.type,
-          file_path: match.metadata?.file_path,
+          filePath: match.metadata?.filePath,
           language: match.metadata?.language,
           description: match.metadata?.description,
-          lines_of_code: match.metadata?.lines_of_code,
+          linesOfCode: match.metadata?.linesOfCode,
           functions: match.metadata?.functions,
           classes: match.metadata?.classes,
-          content_preview: typeof match.metadata?.content === "string" ? match.metadata.content.substring(0, 200) + "..." : "No content available",
+          contentPreview: typeof match.metadata?.content === "string" ? match.metadata.content.substring(0, 200) + "..." : "No content available",
         })) || []
       );
     } catch (error) {
@@ -361,23 +361,23 @@ export class TextSearchService {
   }
 
   private isSignificantFile(file: any): boolean {
-    if (file.analysis_enhanced?.priority === "critical" || file.analysis_enhanced?.priority === "high") {
+    if (file.analysisEnhanced?.priority === "critical" || file.analysisEnhanced?.priority === "high") {
       return true;
     }
 
-    if (file.analysis_enhanced?.summary_type === "ai-generated") {
+    if (file.analysisEnhanced?.summaryType === "ai-generated") {
       return true;
     }
 
-    if (file.analysis_enhanced?.detected_issues && file.analysis_enhanced.detected_issues.length > 0) {
+    if (file.analysisEnhanced?.detectedIssues && file.analysisEnhanced.detectedIssues.length > 0) {
       return true;
     }
 
-    if (file.analysis_enhanced?.complexity_score && file.analysis_enhanced.complexity_score > 10) {
+    if (file.analysisEnhanced?.complexityScore && file.analysisEnhanced.complexityScore > 10) {
       return true;
     }
 
-    return file.functions.length > 0 || file.classes.length > 0 || file.lines_of_code > 20 || ["typescript", "javascript", "python", "java"].includes(file.language) || file.file_path.includes("index") || file.file_path.includes("main") || file.file_path.includes("app") || file.file_path.includes("config") || file.file_path.includes("README") || file.file_path.includes("component") || file.file_path.includes("service") || file.file_path.includes("controller") || file.file_path.includes("model") || file.file_path.includes("util") || file.file_path.includes("helper");
+    return file.functions.length > 0 || file.classes.length > 0 || file.linesOfCode > 20 || ["typescript", "javascript", "python", "java"].includes(file.language) || file.filePath.includes("index") || file.filePath.includes("main") || file.filePath.includes("app") || file.filePath.includes("config") || file.filePath.includes("README") || file.filePath.includes("component") || file.filePath.includes("service") || file.filePath.includes("controller") || file.filePath.includes("model") || file.filePath.includes("util") || file.filePath.includes("helper");
   }
 
   private getLanguageStats(files: any[]): Record<string, number> {

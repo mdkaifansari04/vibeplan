@@ -5,6 +5,7 @@ import { baseConfig } from "../../../libs/constant";
 import { PHASE_GENERATION_SYSTEM_PROMPT } from "../../../libs/prompt/phase-generation.prompt";
 import ErrorResponse from "../../../middleware/error-response";
 import { Phase, RelevantContext } from "./types";
+import { GeneratePlanPayload } from "../controller/type";
 
 interface GeneratedPhaseResponse {
   phases: Phase[];
@@ -104,7 +105,7 @@ export class LLMService {
     return content.phases || [];
   }
 
-  async generateDetailedPlan(phase: any, files: any[]): Promise<string> {
+  async generateDetailedPlan({ phase, topRelevantFiles }: GeneratePlanPayload): Promise<string> {
     const prompt = `
       Generate a detailed implementation plan for this phase:
       
@@ -112,13 +113,12 @@ export class LLMService {
       Description: ${phase.description}
       
       Relevant files:
-      ${files
+      ${topRelevantFiles
         .map(
           (f) => `
         File: ${f.path}
         Content:
         \`\`\`
-        ${f.content.slice(0, 3000)}
         \`\`\`
       `
         )
