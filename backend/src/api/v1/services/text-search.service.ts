@@ -6,6 +6,7 @@ import { file } from "bun";
 import OpenAI from "openai";
 import { getString } from "../../../libs/env";
 import { EmbeddingService } from "./embedding.service";
+import ErrorResponse from "../../../middleware/error-response";
 
 export class TextSearchService {
   private readonly indexName = baseConfig.indexName;
@@ -23,13 +24,16 @@ export class TextSearchService {
     const urlParts = repoUrl.replace(".git", "").split("/");
     const username = urlParts[urlParts.length - 2];
     const repoName = urlParts[urlParts.length - 1];
+    console.log(`Generated namespace: ${username}-${repoName}-${branch}`);
+
     return `${username}-${repoName}-${branch}`;
   }
 
   async namespaceExists(namespace: string): Promise<boolean> {
     try {
       const indexes = await pinecone.listIndexes();
-      const indexExists = indexes.indexes?.some((idx) => idx.name === this.indexName);
+      const indexExists = indexes.indexes?.find((idx) => idx.name === this.indexName);
+      console.log("indexExists", indexes);
 
       if (!indexExists) {
         console.log(`Pinecone index '${this.indexName}' does not exist. Creating it...`);
@@ -39,7 +43,8 @@ export class TextSearchService {
 
       const index = pinecone.index(this.indexName);
       const stats = await index.namespace(namespace).describeIndexStats();
-      return stats.totalRecordCount ? stats.totalRecordCount > 0 : false;
+      if (!stats.namespaces) throw new ErrorResponse("No namespaces found", 404);
+      return namespace in stats.namespaces;
     } catch (error: any) {
       if (error.status === 404) {
         console.log(`Pinecone index '${this.indexName}' not found. Creating it...`);

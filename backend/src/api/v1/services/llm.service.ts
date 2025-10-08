@@ -8,10 +8,26 @@ import { Phase, RelevantContext } from "./types";
 import { GeneratePlanPayload, PayloadPhase, RelevantFile } from "../controller/type";
 import { VectorService } from "./vector.service";
 import { EmbeddingService } from "./embedding.service";
+import { logger } from "../../../libs/logger";
+import z from "zod";
 
-interface GeneratedPhaseResponse {
-  phases: Phase[];
-}
+export const phaseSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  relevantFiles: z.array(z.string()),
+  dependencies: z.array(z.string()),
+  estimatedComplexity: z.enum(["low", "medium", "high"]),
+  priority: z.enum(["low", "medium", "high"]),
+  category: z.enum(["bug_fix", "feature", "refactor", "improvement", "documentation"]),
+  reasoning: z.string(),
+});
+
+export const phasesSchema = z.object({
+  phases: z.array(phaseSchema),
+});
+
+type phaseResponse = z.infer<typeof phasesSchema>;
 
 interface DetailedPlanResponse {
   plan: string;
@@ -60,66 +76,38 @@ export class LLMService {
   }
 
   async generatePhases(prompt: string, context: RelevantContext): Promise<Phase[]> {
-    const response = await this.groq.chat.completions.create({
-      model: baseConfig.groq.model,
-      messages: [
-        { role: "system", content: PHASE_GENERATION_SYSTEM_PROMPT },
-        { role: "user", content: this.buildUserPromptForPhases(prompt, context) },
-      ],
-      temperature: 0.3,
-      max_tokens: 4096,
-      response_format: {
-        type: "json_schema",
-        json_schema: {
-          name: "phases",
-          schema: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                id: { type: "string" },
-                title: { type: "string" },
-                description: { type: "string" },
-                relevantFiles: {
-                  type: "array",
-                  items: { type: "string" },
-                },
-                dependencies: {
-                  type: "array",
-                  items: { type: "string" },
-                },
-                estimatedComplexity: {
-                  type: "string",
-                  enum: ["low", "medium", "high"],
-                },
-                priority: {
-                  type: "string",
-                  enum: ["low", "medium", "high"],
-                },
-                category: {
-                  type: "string",
-                  enum: ["bug_fix", "feature", "refactor", "improvement", "documentation"],
-                },
-                reasoning: { type: "string" },
-              },
-              required: ["id", "title", "description", "relevantFiles", "dependencies", "estimatedComplexity", "priority", "category", "reasoning"],
-              additionalProperties: false,
-            },
+    try {
+      const response = await this.groq.chat.completions.create({
+        model: baseConfig.groq.model,
+        messages: [
+          { role: "system", content: PHASE_GENERATION_SYSTEM_PROMPT },
+          { role: "user", content: this.buildUserPromptForPhases(prompt, context) },
+        ],
+        temperature: 0.3,
+        max_tokens: 4096,
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "phaseResponse",
+            schema: z.toJSONSchema(phaseSchema),
           },
         },
-      },
-    });
+      });
 
-    const content: GeneratedPhaseResponse = JSON.parse(response.choices[0]?.message?.content || "{}");
-    if (!content) {
-      throw new ErrorResponse("No content received from LLM", 500);
+      const content: phaseResponse = JSON.parse(response.choices[0]?.message?.content || "{}");
+      if (!content) {
+        throw new ErrorResponse("No content received from LLM", 500);
+      }
+      return content.phases || [];
+    } catch (error) {
+      throw new ErrorResponse("Failed to generate phases", 500);
+      logger.error(`[LLM Service]: Error => ${error}`);
     }
-    return content.phases || [];
   }
 
   async generateDetailedPlan({ phase, topRelevantFiles, namespace }: GeneratePlanPayload): Promise<DetailedPlanResponse> {
     try {
-      const searchQuery = `${phase.title} ${phase.category} ${phase.description.substring(0, 100)}`;
+      const searchQuery = `${phase.title} ${phase.category} ${phase.description.substring(0, 100)} ${topRelevantFiles.map((f) => f.path).join(" ")}`;
       console.log("Vector search for:", searchQuery);
 
       const relevantContext = await this.vectorService.findRelevantContext(namespace, searchQuery, "feature");
