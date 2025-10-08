@@ -10,6 +10,7 @@ import { VectorService } from "./vector.service";
 import { EmbeddingService } from "./embedding.service";
 import { logger } from "../../../libs/logger";
 import z from "zod";
+import { PLAN_GENERATION_PROMPT } from "../../../libs/prompt/plan-generation.prompt";
 
 export const phaseSchema = z.object({
   id: z.string(),
@@ -118,11 +119,11 @@ export class LLMService {
       const completion = await this.groq.chat.completions.create({
         model: baseConfig.groq.model,
         messages: [
-          { role: "system", content: "You are a software development assistant. Generate concise implementation plans and instructions." },
+          { role: "system", content: PLAN_GENERATION_PROMPT },
           { role: "user", content: userPrompt },
         ],
         temperature: 0.3,
-        max_tokens: 2000,
+        max_tokens: 12000,
         response_format: {
           type: "json_schema",
           json_schema: {
@@ -132,8 +133,7 @@ export class LLMService {
               properties: {
                 plan: {
                   type: "string",
-                  description: "Concise implementation plan (max 800 characters)",
-                  maxLength: 800,
+                  description: "Descriptive implementation plan for LLM",
                 },
                 instruction: {
                   type: "string",
@@ -163,9 +163,9 @@ export class LLMService {
 
   private buildSimpleUserPrompt(phase: PayloadPhase, relevantContext: RelevantContext, topRelevantFiles: RelevantFile[]): string {
     const contextFiles = relevantContext.files.slice(0, 3);
-    const filesList = contextFiles.length > 0 ? contextFiles.map((f) => `- ${f.path} (${f.language})`).join("\n") : "No relevant files found";
+    const filesList = contextFiles.length > 0 ? contextFiles.map((f) => `- ${f.path} (${f.language}). (${f.metadata?.fullCode})`).join("\n") : "No relevant files found";
 
-    return `Generate a concise implementation plan for this phase:
+    return `Generate a descriptive implementation plan for this phase:
             **Phase:** ${phase.title}
             **Category:** ${phase.category}
             **Priority:** ${phase.priority}
@@ -178,7 +178,6 @@ export class LLMService {
             ${filesList}
 
             Requirements:
-            - Keep the instruction under 600 characters
             - Focus on key implementation steps
             - Be specific and actionable
 

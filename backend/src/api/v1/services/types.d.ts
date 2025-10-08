@@ -27,7 +27,7 @@ export interface RelevantContext {
   files: Array<{
     path: string;
     content: string;
-    metadata: any;
+    metadata: { fullCode: string };
     similarity: number;
     language?: string;
     description?: string;
