@@ -64,7 +64,6 @@ export const GithubStarsButton = ({
             }}
           />
         </span>
-        <NumberFlow value={starNumber} isolate={true} trend={0} spinTiming={{ duration: 1500, easing: "ease-in-out" }} className="z-20 dark:text-neutral-500 text-neutral-400 text-xs font-semibold tracking-tighter" />
         {children && <span className="bg-linear-to-b ml-1.5 dark:from-white dark:to-white/50 from-neutral-950 to-neutral-950/50 bg-clip-text text-xs text-transparent group-hover:scale-105 transition transform-gpu">{children}</span>}
       </span>
     </Link>

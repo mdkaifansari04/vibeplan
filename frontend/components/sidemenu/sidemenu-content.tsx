@@ -47,9 +47,9 @@ export function SidemenuContent({ className }: Readonly<{ className?: string }>)
     <div className={cn("", className)}>
       <div className="w-full">
         <div className="flex items-center justify-between px-4 py-4">
-          <Link className="group flex w-fit items-center gap-x-2.5 transition-transform hover:scale-105" href="/" title="Cuicui - The all in one React component library">
+          <Link className="group flex w-fit items-center gap-x-2.5 transition-transform hover:scale-105" href="/" title="Vibeplan - A vibe coding planning agent">
             <span aria-hidden="true" className="sr-only">
-              Cuicui - Best all in one React component library
+              Vibeplan - A vibe coding planning agent
             </span>
           </Link>
           <NewThemeSwitch />
