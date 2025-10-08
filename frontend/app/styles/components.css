@@ -1,0 +1,80 @@
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+.cuicui-default-style {
+  h1 {
+    @apply header-1;
+  }
+  h2 {
+    @apply header-2;
+  }
+  h3 {
+    @apply header-3;
+  }
+  h4 {
+    @apply header-4;
+  }
+  h5 {
+    @apply header-5;
+  }
+  h6 {
+    @apply header-6;
+  }
+  p {
+    @apply body-1;
+  }
+  a {
+    @apply inline-link;
+  }
+  ol {
+    @apply ul-md;
+  }
+  ul {
+    @apply ul-md;
+  }
+  label {
+    @apply label-md;
+  }
+  button {
+    @apply buttom-md;
+  }
+  input[type="text"] {
+    @apply input-md;
+  }
+  input[type="range"] {
+    @apply input-slider;
+  }
+  input[type="checkbox"] {
+    @apply input-checkbox;
+  }
+  textarea {
+    @apply textarea-md;
+  }
+  section {
+    @apply section-default;
+  }
+  code {
+    @apply code;
+  }
+  pre {
+    @apply pre;
+  }
+  select {
+    @apply select-md;
+  }
+}

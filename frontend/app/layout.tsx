@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Sidemenu from "@/components/sidemenu/sidemenu";
+import StarCuicuiGithubButton from "@/components/sidemenu/start-github-button";
+import { AddressBar } from "@/components/shared/address-bar";
+import "./styles/globals.css";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,10 +18,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="mx-auto max-w-(--breakpoint-2xl)">
+            <Sidemenu />
+            <div className="lg:ml-80">
+              <AddressBar />
+              <main className=" p-4 pt-12 md:p-6">
+                <div className="space-y-10 pb-20">{children}</div>
+              </main>
+              <div className="flex sm:hidden fixed bottom-6 left-2">
+                <StarCuicuiGithubButton />
+              </div>
+            </div>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
