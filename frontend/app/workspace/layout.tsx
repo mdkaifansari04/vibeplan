@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Sidemenu from "@/components/sidemenu/sidemenu";
 import StarCuicuiGithubButton from "@/components/sidemenu/start-github-button";
 import { AddressBar } from "@/components/shared/address-bar";
-import "./styles/globals.css";
 
 export default function RootLayout({
   children,

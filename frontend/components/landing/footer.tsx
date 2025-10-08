@@ -1,21 +1,32 @@
+"use client";
+import { usePathname } from "next/navigation";
 import { StickyFooter } from ".././shared/sticky-footer";
+import { BackgroundBeams } from "../ui/background-beams";
+import { Button } from "../ui/liquid-glass-button";
 
-export function PreviewStickyFooter() {
+export function Footer() {
+  const pathname = usePathname().split("/");
+  if (pathname.length > 2) return null;
   return (
-    <div className="w-full">
-      <div className="h-[150dvh] w-full">
+    <div className="relative w-full">
+      <div className="relative h-[120dvh] w-full">
+        <BackgroundBeams /> 
         <div className="bg-neutral-200 dark:bg-neutral-800  rounded-3xl h-full flex flex-col items-center justify-center">
-          <p className="text-xl uppercase text-neutral-950 dark:text-neutral-200 font-medium">Some content</p>
+          <h3 className="text-7xl font-bold mb-4">Plan Smarter. Ship Faster.</h3>
+          <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8">Join developers who stopped wrestling with AI agents and started planning with precision.</p>
+          <Button size="lg" className="text-lg px-10 py-6">
+            Start Analyzing — No Signup Required
+          </Button>
         </div>
       </div>
-      <StickyFooter heightValue="100dvh" className="text-neutral-900 dark:text-neutral-100">
+      <StickyFooter heightValue="80dvh" className="text-neutral-900 dark:text-neutral-100">
         <Content />
       </StickyFooter>
     </div>
   );
 }
 
-export default PreviewStickyFooter;
+export default Footer;
 
 export function Content() {
   return (
@@ -25,21 +36,17 @@ export function Content() {
           <h3 className="mb-2 uppercase text-neutral-500">About</h3>
           <p>Home</p>
           <p>Projects</p>
-          <p>Our Mission</p>
-          <p>Contact Us</p>
         </div>
 
         <div className="flex flex-col gap-2">
           <h3 className="mb-2 uppercase text-neutral-500">Education</h3>
           <p>News</p>
           <p>Learn</p>
-          <p>Certification</p>
-          <p>Publications</p>
         </div>
       </div>
 
       <div className="flex justify-between flex-col gap-4 sm:flex-row items-end">
-        <h1 className="text-[14vw] leading-[0.8] mt-10">Sticky Footer</h1>
+        <h1 className="text-[14vw] leading-[0.8] mt-10">Vibe Plan.</h1>
         <p>©copyright</p>
       </div>
     </div>
