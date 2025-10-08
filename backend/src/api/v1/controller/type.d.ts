@@ -78,16 +78,18 @@ export interface ProcessingStats {
   summaryStrategy: "parallel" | "rate-limited" | "chunked" | "batch-api";
 }
 
+export interface RelevantFile {
+  path: string;
+  language: string;
+  similarity: number;
+}
 export interface GeneratePlanPayload {
-  topRelevantFiles: {
-    path: string;
-    language: string;
-    similarity: number;
-  }[];
-  phase: Phase;
+  namespace: string;
+  topRelevantFiles: RelevantFile[];
+  phase: PayloadPhase;
 }
 
-export interface Phase {
+export interface PayloadPhase {
   id: string;
   title: string;
   description: string;

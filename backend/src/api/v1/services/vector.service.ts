@@ -12,18 +12,16 @@ export class VectorService {
 
   async findRelevantContext(namespace: string, userPrompt: string, queryType: string): Promise<RelevantContext> {
     const index = pinecone.index(this.indexName);
-    const minSimilarity = 0.1; // Minimum similarity threshold
-    let topK = 20; // Increased for better results
+    const minSimilarity = 0.1;
+    let topK = 20;
 
-    // Enhanced query expansion based on type
     const expandedQuery = this.expandQuery(userPrompt, queryType);
 
     try {
-      // Primary search with expanded query
       const queryEmbedding = await this.embeddingService.getEmbedding(expandedQuery);
       const results = await index.namespace(namespace).query({
         vector: queryEmbedding,
-        topK: topK * 2, // Get more results to filter from
+        topK: topK * 2,
         includeMetadata: true,
         filter: {
           $and: [{ type: { $eq: "file" } }, { filePath: { $exists: true } }],
@@ -32,7 +30,6 @@ export class VectorService {
 
       let allResults = results.matches || [];
 
-      // Fallback search with original query if primary didn't return enough results
       if (allResults.length < 5 && expandedQuery !== userPrompt) {
         console.log("Primary search returned few results, trying fallback...");
         const fallbackEmbedding = await this.embeddingService.getEmbedding(userPrompt);
@@ -45,26 +42,21 @@ export class VectorService {
           },
         });
 
-        // Merge results, giving priority to primary search
         const fallbackMatches = fallbackResults.matches || [];
         const existingPaths = new Set(allResults.map((r) => r.metadata?.filePath));
         const newMatches = fallbackMatches.filter((match) => !existingPaths.has(match.metadata?.filePath));
         allResults = [...allResults, ...newMatches];
       }
 
-      // Filter by similarity threshold and remove low-quality results
       const filteredResults = allResults.filter((match) => {
         if ((match.score || 0) < minSimilarity) return false;
 
         const filePath = (match.metadata?.filePath as string) || "";
         const searchableText = (match.metadata?.searchableText as string) || "";
 
-        // Filter out documentation-only files for technical queries
         const isDocFile = /\.(md|txt|rst|doc|pdf)$/i.test(filePath) || filePath.toLowerCase().includes("readme") || filePath.toLowerCase().includes("doc");
 
-        // For technical queries, prefer code files unless it's explicitly a documentation query
         if (this.isTechnicalQuery(userPrompt, queryType) && isDocFile) {
-          // Only keep doc files if they have substantial technical content
           const technicalKeywords = ["api", "implementation", "algorithm", "architecture", "design"];
           return technicalKeywords.some((keyword) => searchableText.toLowerCase().includes(keyword) || filePath.toLowerCase().includes(keyword));
         }
@@ -115,7 +107,6 @@ export class VectorService {
     const prompt = userPrompt.toLowerCase();
     let expandedTerms: string[] = [userPrompt];
 
-    // Add context-specific terms based on query type and content
     switch (queryType) {
       case "improvement":
         if (prompt.includes("process") || prompt.includes("scheduling")) {
@@ -144,7 +135,6 @@ export class VectorService {
         break;
     }
 
-    // Add semantic alternatives for common terms
     if (prompt.includes("scheduling")) {
       expandedTerms.push("scheduler", "cron", "job", "task", "queue", "worker");
     }
@@ -179,7 +169,6 @@ export class VectorService {
         const searchableText = ((metadata.searchableText as string) || "").toLowerCase();
         const language = (metadata.language as string) || "";
 
-        // Boost score based on file relevance
         if (prompt.includes("scheduling") || prompt.includes("process")) {
           if (filePath.includes("scheduler") || filePath.includes("queue") || filePath.includes("job") || filePath.includes("task") || filePath.includes("worker") || filePath.includes("cron")) {
             score += 0.3;
@@ -189,7 +178,6 @@ export class VectorService {
           }
         }
 
-        // Boost implementation files over config/docs for technical queries
         if (this.isTechnicalQuery(userPrompt, queryType)) {
           const isImplementationFile = /\.(js|ts|py|java|go|cpp|c|php|rb)$/i.test(filePath);
           const isConfigFile = /\.(json|yaml|yml|xml|ini|env)$/i.test(filePath);
@@ -202,15 +190,13 @@ export class VectorService {
           }
         }
 
-        // Language-specific boosts
         if (language === "typescript" || language === "javascript") {
           score += 0.05;
         }
 
-        // File size/content quality indicators
         const contentLength = searchableText.length;
         if (contentLength > 500 && contentLength < 10000) {
-          score += 0.05; // Sweet spot for meaningful content
+          score += 0.05;
         }
 
         return { ...result, score };
@@ -235,7 +221,6 @@ export class VectorService {
 
   private async getDependencyInfo(namespace: string): Promise<any> {
     try {
-      // Use a generic embedding for dependency information
       const queryEmbedding = await this.embeddingService.getEmbedding("dependencies package.json requirements");
       const results = await pinecone
         .index(this.indexName)
@@ -256,7 +241,6 @@ export class VectorService {
 
   private async getRepoStructure(namespace: string): Promise<any> {
     try {
-      // Use a generic embedding for repository structure
       const queryEmbedding = await this.embeddingService.getEmbedding("repository structure project overview");
       const results = await pinecone
         .index(this.indexName)
@@ -277,7 +261,6 @@ export class VectorService {
 
   async getAllFiles(namespace: string, limit: number = 100): Promise<ContextFile[]> {
     try {
-      // Use a broad embedding to get all files
       const queryEmbedding = await this.embeddingService.getEmbedding("code files source implementation");
       const results = await pinecone
         .index(this.indexName)

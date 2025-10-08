@@ -1,6 +1,7 @@
 import express, { type Request, type Response } from "express";
 import config, { getString, getNumber } from "./libs/env";
 import router from "./api/v1/routes";
+import { errorHandler } from "./middleware/error-handler";
 
 const app = express();
 const PORT = getNumber("PORT", 5000);
@@ -13,14 +14,8 @@ app.get("/health", (_: Request, res: Response) => {
 });
 
 app.use("/api/v1", router);
-
-app.use((err: any, req: Request, res: Response, next: Function) => {
-  console.error(err);
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || "Internal Server Error",
-  });
-});
+//global error handler
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
