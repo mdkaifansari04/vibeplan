@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import { PhaseCard } from "./phase-card";
+import { EditPhaseModal } from "./edit-modal";
 
-type Phase = {
+export type Phase = {
   id: string;
   title: string;
   description: string;
@@ -33,6 +34,29 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
     }
     return map;
   }, [plans]);
+  const [editOpen, setEditOpen] = React.useState(false);
+  const [editingId, setEditingId] = React.useState<string | null>(null);
+  const [saving, setSaving] = React.useState(false);
+
+  const [localPhases, setLocalPhases] = React.useState<Phase[]>(phases);
+  React.useEffect(() => setLocalPhases(phases), [phases]);
+
+  const editingPhase = React.useMemo(() => localPhases.find((p) => p.id === editingId) || null, [localPhases, editingId]);
+
+  const handleEditPhase = (phase: Phase) => {
+    setEditingId(phase.id);
+    setEditOpen(true);
+  };
+
+  const handleSaveDescription = async (next: string) => {
+    setSaving(true);
+    try {
+      setLocalPhases((prev) => prev.map((p) => (p.id === editingId ? { ...p, description: next } : p)));
+      // Hook: persist to backend here if needed
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <aside aria-label="Phases" className={["sticky top-0 h-[100svh] w-1/4 min-w-[320px] shrink-0 border-l border-border bg-sidebar p-3", "overflow-y-auto", className || ""].join(" ")}>
@@ -43,8 +67,9 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
 
       <div className="flex flex-col gap-3">
         {phases.map((phase) => (
-          <PhaseCard key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={onGeneratePlan} onOpenPlan={onOpenPlan} />
+          <PhaseCard onEditPhase={handleEditPhase} key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={onGeneratePlan} onOpenPlan={onOpenPlan} />
         ))}
+        <EditPhaseModal open={editOpen && !!editingPhase} onOpenChange={setEditOpen} title={editingPhase?.title || ""} description={editingPhase?.description || ""} onSave={handleSaveDescription} saving={saving} />
       </div>
     </aside>
   );
