@@ -3,7 +3,7 @@ import { Figtree } from "next/font/google";
 import Sidemenu from "@/components/sidemenu/sidemenu";
 import StarCuicuiGithubButton from "@/components/sidemenu/start-github-button";
 import { AddressBar } from "@/components/shared/address-bar";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/provider/theme-provider";
 import { Header } from "@/components/shared/header";
 import { Toaster } from "@/components/ui/toaster";
 import "./styles/globals.css";
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${figtree.className} antialiased smooth-scroll`}>
         <ClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

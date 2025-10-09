@@ -18,19 +18,45 @@ const menuItems = [
 export const Header = () => {
   const [menuState, setMenuState] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
   const isAnalyzePage = pathSegments[pathSegments.length - 1] === "analyze";
+  const shouldHideHeader = pathSegments.length > 1;
 
-  if (pathSegments.length > 1) return null;
+  // Handle mounting to prevent hydration issues
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   React.useEffect(() => {
+    if (!mounted) return;
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [mounted]);
+
+  // Return null only after mounting to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <header>
+        <nav className="fixed left-0 w-full z-20 px-2">
+          <div className="mx-auto mt-2 max-w-6xl px-6 lg:px-12">
+            <div className="relative flex flex-wrap items-center justify-between gap-6 lg:gap-0 py-2">
+              <div className="flex w-full justify-between lg:w-auto">
+                <Logo />
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+    );
+  }
+
+  if (shouldHideHeader) return null;
 
   return (
     <header>
