@@ -3,7 +3,6 @@ import type { DependencyGraphData } from "@/components/container/depedency-graph
 import { Position } from "@xyflow/react";
 
 export default function GraphTransformTestComponent() {
-  // Test with sample data similar to your structure
   const testData: DependencyGraphData = {
     nodes: [
       {

@@ -1,4 +1,4 @@
-import { ApiResponse, IndexRepositoryResponse } from "./type.d";
+import { ApiResponse, IndexRepositoryResponse, GeneratePhaseRequest, GeneratePhaseResponse } from "./type.d";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -7,5 +7,10 @@ const axiosInstance = axios.create({
 
 export const indexRepository = async (repoUrl: string) => {
   const { data } = await axiosInstance.post<ApiResponse<IndexRepositoryResponse>>("/indexing", { repoUrl });
+  return data.data;
+};
+
+export const generatePhases = async (request: GeneratePhaseRequest) => {
+  const { data } = await axiosInstance.post<ApiResponse<GeneratePhaseResponse>>("/phases/generate", request);
   return data.data;
 };

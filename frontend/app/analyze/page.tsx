@@ -63,12 +63,12 @@ export default function AnalyzePage() {
   }, [isAnalyzing, currentStep]);
 
   const handleAnalyze = () => {
+    setIsAnalyzing(true);
     if (!isValidUrl) {
       setShowError(true);
       return;
     }
 
-    setIsAnalyzing(true);
     indexRepository(url, {
       onSuccess: (data) => {
         setCurrentStep(ANALYSIS_STEPS.length - 1);
@@ -77,13 +77,15 @@ export default function AnalyzePage() {
       },
       onError: (error) => {
         console.error("Indexing error:", error);
-        setIsAnalyzing(false);
         setCurrentStep(0);
         toast({
           title: "Analysis failed",
           description: "An unexpected error occurred. Please try again.",
           variant: "destructive",
         });
+      },
+      onSettled: () => {
+        setIsAnalyzing(false);
       },
     });
   };
@@ -128,7 +130,7 @@ export default function AnalyzePage() {
 
               <ModernSimpleInput id="github-url-input" value={url} onChange={(e) => setUrl(e.target.value)} onKeyDown={(e) => e.key === "Enter" && isValidUrl && handleAnalyze()} placeholder="https://github.com/username/repository" className={cn("pl-12 pr-40 h-16 text-lg transition-all duration-300", "focus:shadow-lg focus:shadow-blue-500/20", showError && "border-red-500 focus-visible:border-red-500 animate-shake")} />
 
-              <Button onClick={handleAnalyze} disabled={!isValidUrl} className={cn("absolute right-2 top-1/2 -translate-y-1/2 px-6 py-3 h-12 transition-transform ease-in-out hover:scale-[1.02]")}>
+              <Button onClick={() => handleAnalyze()} disabled={!isValidUrl} className={cn("absolute right-2 top-1/2 -translate-y-1/2 px-6 py-3 h-12 transition-transform ease-in-out hover:scale-[1.02]")}>
                 Analyze <span className="ml-2">→</span>
               </Button>
             </div>

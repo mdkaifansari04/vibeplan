@@ -1,15 +1,11 @@
-import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
-import Sidemenu from "@/components/sidemenu/sidemenu";
-import StarCuicuiGithubButton from "@/components/sidemenu/start-github-button";
-import { AddressBar } from "@/components/shared/address-bar";
-import { ThemeProvider } from "@/provider/theme-provider";
+import Footer from "@/components/landing/footer";
 import { Header } from "@/components/shared/header";
 import { Toaster } from "@/components/ui/toaster";
-import "./styles/globals.css";
-import { StickyFooter } from "@/components/shared/sticky-footer";
-import Footer from "@/components/landing/footer";
 import { ClientProvider } from "@/provider/client-provider";
+import { ThemeProvider } from "@/provider/theme-provider";
+import type { Metadata } from "next";
+import { Figtree } from "next/font/google";
+import "./styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Vibe Plan",

@@ -1,17 +1,16 @@
-import Link from "next/link";
+"use client";
 
-import Image from "next/image";
 import Byline from "./byline";
 
-import { NewThemeSwitch } from "./new-theme-selector";
-import NewSectionSelector from "./new-section-selector";
-import { NavigationSidemenuAnimatedBackground } from "./navigation-animated-background";
-import { GlobalNavItem } from "./navigation-item";
-import StarCuicuiGithubButton from "./start-github-button";
-import { ScrollArea, ScrollAreaViewport } from "@radix-ui/react-scroll-area";
 import { cn } from "@/lib/utils";
-import Logo from "../ui/logo";
+import { useMessages } from "@/store/messages";
+import { ScrollArea, ScrollAreaViewport } from "@radix-ui/react-scroll-area";
+import { Bot } from "lucide-react";
 import AIInput from "../input/ai-input";
+import Logo from "../ui/logo";
+import MessageComponent from "../ui/message";
+import { NewThemeSwitch } from "./new-theme-selector";
+import StarCuicuiGithubButton from "./start-github-button";
 
 export const firstMenuSection = {
   name: "Info",
@@ -45,6 +44,8 @@ export const lastChangelogDate = new Date("2025-02-07T23:00:00.000Z");
 export function SidemenuContent({ className }: Readonly<{ className?: string }>) {
   const today = new Date();
   const isNew = lastChangelogDate ? lastChangelogDate > new Date(today.setDate(today.getDate() - 7)) : false;
+  const messages = useMessages();
+
   return (
     <div className={cn("", className)}>
       <div className="w-full">
@@ -54,17 +55,29 @@ export function SidemenuContent({ className }: Readonly<{ className?: string }>)
         </div>
         <StarCuicuiGithubButton />
       </div>
-      <div className="w-full mt-8">
-        <NavigationSidemenuAnimatedBackground>
-          <p>hi</p>
-        </NavigationSidemenuAnimatedBackground>
-      </div>
+
       <ScrollArea className="w-full h-full mt-4">
         <ScrollAreaViewport className="h-full" id="sidemenu-container">
-          {/* messages */}
+          <div className="px-2 pb-4">
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
+                  <Bot className="w-8 h-8 text-gray-400 dark:text-gray-500" />
+                </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">No messages yet</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">Start a conversation below</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {messages.map((message) => (
+                  <MessageComponent key={message.id} message={message} />
+                ))}
+              </div>
+            )}
+          </div>
         </ScrollAreaViewport>
       </ScrollArea>
-      <AIInput />
+      {/* <AIInput /> */}
       <Byline />
     </div>
   );

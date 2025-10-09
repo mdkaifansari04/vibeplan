@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Sidemenu from "@/components/sidemenu/sidemenu";
-import StarCuicuiGithubButton from "@/components/sidemenu/start-github-button";
 import { AddressBar } from "@/components/shared/address-bar";
 
 export default function RootLayout({

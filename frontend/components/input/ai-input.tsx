@@ -1,5 +1,11 @@
-import React from "react";
-import { Image, BarChart2, MoreHorizontal, Send } from "lucide-react";
+"use client";
+import React, { use, useState } from "react";
+import { Image, BarChart2, MoreHorizontal, Send, LoaderCircle } from "lucide-react";
+import { useGeneratePhases } from "@/hooks/mutation";
+import { useParams } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
+import { usePhaseActions } from "@/store/phase";
+import { useMessagesActions } from "@/store/messages";
 
 interface CreativeCardProps {
   placeholder?: string;
@@ -7,6 +13,86 @@ interface CreativeCardProps {
 }
 
 const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creative idea here...✨", tags = ["Generate Image", "Analyze Data", "Explore More"] }) => {
+  const { mutate: generatePhase, isPending } = useGeneratePhases();
+  const { setPhases } = usePhaseActions();
+  const { addMessage, updateMessage } = useMessagesActions();
+  const params = useParams();
+  const namespace = params.namespace as string;
+  const [inputValue, setInputValue] = useState("");
+
+  const handleGeneratePhase = () => {
+    const userPrompt = inputValue.trim();
+    if (!userPrompt) return;
+
+    // Add user message
+    const userMessageId = `user_${Date.now()}`;
+    addMessage({
+      content: userPrompt,
+      type: "user",
+    });
+
+    // Add AI response message with pending status
+    const aiMessageId = `ai_${Date.now()}`;
+    addMessage({
+      content: "Generating phases for your request...",
+      type: "ai",
+      status: "pending",
+    });
+
+    generatePhase(
+      {
+        namespace,
+        userPrompt,
+        contextType: "improvement",
+      },
+      {
+        onSuccess: (data) => {
+          toast({
+            title: "Phases Generated",
+            description: "New phases have been generated based on your request.",
+            duration: 5000,
+          });
+
+          // Update phases store
+          const transformedPhases = data.phases.map((phase) => ({
+            ...phase,
+            category: (phase.category as "feature" | "improvement" | "documentation" | "bug") || "improvement",
+          }));
+          setPhases(transformedPhases);
+
+          // Update AI message with success
+          updateMessage(aiMessageId, {
+            content: `Successfully generated ${data.phases.length} phases for your project. Check the phases panel to see the detailed breakdown.`,
+            status: "success",
+          });
+
+          // Clear input
+          setInputValue("");
+        },
+        onError: (error) => {
+          toast({
+            title: "Error",
+            description: error?.message || "Something went wrong while generating phases.",
+            duration: 5000,
+            variant: "destructive",
+          });
+
+          // Update AI message with error
+          updateMessage(aiMessageId, {
+            content: "Sorry, I encountered an error while generating phases. Please try again.",
+            status: "error",
+          });
+        },
+      }
+    );
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleGeneratePhase();
+    }
+  };
   return (
     <div className="w-full flex flex-col items-center mx-auto max-w-[350px] pb-1.5">
       <div className="w-full  p-[2px] overflow-hidden">
@@ -14,7 +100,7 @@ const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creativ
 
         <div className="w-full flex flex-col dark:bg-black/50 bg-white/20 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
           <div className="w-full relative flex">
-            <textarea id="chat_bot" name="chat_bot" placeholder={placeholder} className="bg-transparent rounded-xl border-none outline-none ring-0 w-full h-14 text-gray-900 dark:text-white font-sans text-sm font-medium p-3 resize-none placeholder-gray-600 dark:placeholder-gray-400 scrollbar-thin scrollbar-thumb-gray-500 dark:scrollbar-thumb-gray-700 scrollbar-thumb-rounded hover:scrollbar-thumb-gray-700 transition-all focus:ring-0 focus:outline-none focus:border-none focus-visible:ring-0 focus-visible:outline-none focus-visible:border-none active:ring-0 active:outline-none active:border-none" />
+            <textarea id="chat_bot" name="chat_bot" placeholder={placeholder} value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyPress={handleKeyPress} disabled={isPending} className="bg-transparent rounded-xl border-none outline-none ring-0 w-full h-14 text-gray-900 dark:text-white font-sans text-sm font-medium p-3 resize-none placeholder-gray-600 dark:placeholder-gray-400 scrollbar-thin scrollbar-thumb-gray-500 dark:scrollbar-thumb-gray-700 scrollbar-thumb-rounded hover:scrollbar-thumb-gray-700 transition-all focus:ring-0 focus:outline-none focus:border-none focus-visible:ring-0 focus-visible:outline-none focus-visible:border-none active:ring-0 active:outline-none active:border-none disabled:opacity-50" />
           </div>
 
           <div className="w-full flex justify-end items-end p-3">
@@ -30,10 +116,8 @@ const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creativ
               </button>
             </div> */}
 
-            <button className="flex p-1 bg-gradient-to-t dark:from-gray-800 dark:via-gray-600 dark:to-gray-800 from-gray-400 via-gray-300 to-gray-500 rounded-lg shadow-inner border-none outline-none cursor-pointer transition-all duration-150 active:scale-95">
-              <i className="w-8 h-8 p-2 dark:bg-black/10 bg-white/20 rounded-lg backdrop-blur-sm text-gray-500 dark:text-gray-400 flex items-center justify-center">
-                <Send size={20} className="transition-all duration-300 hover:text-gray-100 dark:hover:text-white hover:drop-shadow-[0_0_5px_#fff]" />
-              </i>
+            <button onClick={() => handleGeneratePhase()} disabled={isPending || !inputValue.trim()} className="flex p-1 bg-gradient-to-t dark:from-gray-800 dark:via-gray-600 dark:to-gray-800 from-gray-400 via-gray-300 to-gray-500 rounded-lg shadow-inner border-none outline-none cursor-pointer transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+              <i className="w-8 h-8 p-2 dark:bg-black/10 bg-white/20 rounded-lg backdrop-blur-sm text-gray-500 dark:text-gray-400 flex items-center justify-center">{isPending ? <LoaderCircle className="w-4 h-4 animate-spin" /> : <Send size={20} className="transition-all duration-300 hover:text-gray-100 dark:hover:text-white hover:drop-shadow-[0_0_5px_#fff]" />}</i>
             </button>
           </div>
         </div>

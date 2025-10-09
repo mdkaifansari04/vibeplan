@@ -1,18 +1,17 @@
 "use client";
 
 import DependencyGraphSection from "@/components/container/depedency-graph/dependecy-graph-section";
-import { Phase, PhaseSidebar } from "@/components/container/phase/phase-section";
-import React, { useState, useEffect } from "react";
-import type { DependencyGraphData } from "@/components/container/depedency-graph/types";
+import { PhaseSidebar } from "@/components/container/phase/phase-section";
 import { PlanModal } from "@/components/container/phase/plan-modal";
-import { EditPhaseModal } from "@/components/container/phase/edit-modal";
-import { useDependencyData, useDependencyActions, useDependencyLoading } from "@/store/dependency-graph";
-import { usePhases, usePhaseActions, usePhaseLoading } from "@/store/phase";
-import { usePlans, usePlanActions, usePlansForPhase } from "@/store/plan";
 import { CircularBarsSpinnerLoader } from "@/components/ui/loader";
+import { useGeneratePhases } from "@/hooks/mutation";
+import { useDependencyActions, useDependencyData, useDependencyLoading } from "@/store/dependency-graph";
+import { usePhaseActions, usePhaseLoading, usePhases } from "@/store/phase";
+import { usePlanActions, usePlans } from "@/store/plan";
+import { useParams } from "next/navigation";
+import React from "react";
 
 function Page() {
-  // Store hooks
   const dependencyData = useDependencyData();
   const isDependencyLoading = useDependencyLoading();
   const { setDependencyData, setLoading: setDependencyLoading } = useDependencyActions();
@@ -24,13 +23,12 @@ function Page() {
   const plans = usePlans();
   const { setPlans, updatePlan } = usePlanActions();
 
+  const { mutateAsync, isPending: isGenerating } = useGeneratePhases();
+
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<{ phaseId: string; index: number } | null>(null);
 
-  const handleGeneratePlan = (phaseId: string) => {
-    console.log("[v0] Generate plan clicked for:", phaseId);
-    // TODO: Integrate your plan generation here
-  };
+  const handleGeneratePlan = async (phaseId: string) => {};
 
   const handleOpenPlan = (phaseId: string, index: number) => {
     setSelected({ phaseId, index });
@@ -53,6 +51,7 @@ function Page() {
       </div>
     );
   }
+  console.log("dep", dependencyData);
 
   return (
     <div className="w-full flex gap-2">

@@ -47,7 +47,7 @@ export function AddressBar() {
 
               <div className="font-medium text-sm tracking-tight">
                 <Link className="px-2 text-neutral-400 transition-opacity hover:opacity-70" href="/">
-                  cuicui.day
+                  vibeplan
                 </Link>
                 {pathname ? (
                   <>

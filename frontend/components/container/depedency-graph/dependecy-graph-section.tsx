@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useEffect, useState } from "react";
 import { ReactFlow, MiniMap, Controls, Background, useNodesState, useEdgesState, BackgroundVariant, Panel, type NodeTypes, type ColorMode } from "@xyflow/react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/liquid-glass-button";
-import { GraphPresets } from "@/lib/graph-transform";
+import { GraphPresets } from "@/lib/graph-transform-improved";
 import "./index.css";
 import "@xyflow/react/dist/style.css";
 
@@ -12,7 +12,6 @@ import FileNode from "./file-node";
 import FolderNode from "./folder-node";
 import type { AppNode, AppEdge, DependencyGraphData } from "./types";
 
-// Node types configuration
 const nodeTypes: NodeTypes = {
   file: FileNode,
   folder: FolderNode,
@@ -33,9 +32,18 @@ function DependencyGraphSection({ data }: DependencyGraphSectionProps) {
   const [isLocked, setIsLocked] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>("overview");
 
-  // Transform data based on selected view mode
   const transformedData = useMemo(() => {
     if (!data) return null;
+
+    // Debug: Log raw data received
+    console.log("Raw data received:", {
+      nodes: data.nodes.length,
+      edges: data.edges.length,
+      sampleNode: data.nodes[0],
+      sampleEdge: data.edges[0],
+      nodeIds: data.nodes.slice(0, 5).map((n) => n.id),
+      edgeIds: data.edges.slice(0, 5).map((e) => `${e.source} -> ${e.target}`),
+    });
 
     switch (viewMode) {
       case "overview":
@@ -63,9 +71,11 @@ function DependencyGraphSection({ data }: DependencyGraphSectionProps) {
 
   useEffect(() => {
     if (transformedData?.nodes) {
+      console.log("Setting nodes:", transformedData.nodes.length, "nodes");
       setNodes(transformedData.nodes);
     }
     if (transformedData?.edges) {
+      console.log("Setting edges:", transformedData.edges.length, "edges");
       setEdges(transformedData.edges);
     }
   }, [transformedData, setNodes, setEdges]);
@@ -83,17 +93,14 @@ function DependencyGraphSection({ data }: DependencyGraphSectionProps) {
     setTheme(event.target.value);
   };
 
-  // Toggle lock function
   const toggleLock = () => {
     setIsLocked((prev) => !prev);
   };
 
-  // Handle view mode change
   const handleViewModeChange = (mode: ViewMode) => {
     setViewMode(mode);
   };
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <div className="w-full h-full rounded-xl flex items-center justify-center bg-neutral-100 dark:bg-neutral-900">
@@ -109,7 +116,6 @@ function DependencyGraphSection({ data }: DependencyGraphSectionProps) {
         <Controls />
         <MiniMap nodeClassName={nodeClassName} zoomable pannable className={`border rounded-lg ${colorMode === "dark" ? "bg-gray-800 border-gray-600" : "bg-gray-50 border-gray-200"}`} />
 
-        {/* View Mode Selector Panel */}
         <Panel position="top-left" className={`p-3 rounded-lg border shadow-sm ${colorMode === "dark" ? "bg-gray-800 border-gray-600" : "bg-white border-gray-200"}`}>
           <div className="space-y-2">
             <h4 className={`text-xs font-medium ${colorMode === "dark" ? "text-gray-200" : "text-gray-700"}`}>View Mode</h4>
@@ -123,7 +129,6 @@ function DependencyGraphSection({ data }: DependencyGraphSectionProps) {
           </div>
         </Panel>
 
-        {/* Theme Selector Panel */}
         <Panel position="top-right" className={`rounded-lg border shadow-sm ${colorMode === "dark" ? "bg-gray-800 border-gray-600" : "bg-white border-gray-200"}`}>
           <select value={theme} onChange={handleThemeChange} className={`px-3 py-2 rounded text-sm border-none outline-none cursor-pointer ${colorMode === "dark" ? "bg-gray-700 text-white" : "bg-gray-100 text-gray-900"}`}>
             <option value="light">Light</option>
@@ -131,14 +136,12 @@ function DependencyGraphSection({ data }: DependencyGraphSectionProps) {
           </select>
         </Panel>
 
-        {/* Lock/Unlock Toggle Button */}
         <Panel position="bottom-right" className={`rounded-lg border shadow-sm ${colorMode === "dark" ? "bg-gray-800 border-gray-600" : "bg-white border-gray-200"}`}>
           <button onClick={toggleLock} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${isLocked ? (colorMode === "dark" ? "bg-blue-600 text-white hover:bg-blue-700" : "bg-blue-500 text-white hover:bg-blue-600") : colorMode === "dark" ? "bg-gray-700 text-gray-300 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}>
             {isLocked ? "🔒 Locked" : "🔓 Unlocked"}
           </button>
         </Panel>
 
-        {/* Stats Panel */}
         {transformedData?.stats && (
           <Panel position="bottom-left" className={`p-4 rounded-lg shadow-lg border ${colorMode === "dark" ? "bg-gray-800 border-gray-600 text-white" : "bg-white border-gray-200 text-gray-900"}`}>
             <h3 className={`font-bold text-sm mb-2 ${colorMode === "dark" ? "text-gray-100" : "text-gray-800"}`}>Graph Stats ({viewMode})</h3>

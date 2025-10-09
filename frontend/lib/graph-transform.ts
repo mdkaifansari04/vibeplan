@@ -1,21 +1,17 @@
 import type { AppNode, AppEdge, DependencyGraphData, DependencyGraphStats, FileNodeData, FolderNodeData } from "@/components/container/depedency-graph/types";
 
 export interface GraphTransformOptions {
-  // Hierarchy options
   groupByFolders: boolean;
   maxFolderDepth: number;
   showOnlyImportantFiles: boolean;
 
-  // Layout options
   nodeSpacing: { x: number; y: number };
   levelSpacing: number;
 
-  // Filtering options
-  minConnections: number; // Only show files with at least N connections
+  minConnections: number;
   excludeFileTypes: string[];
   includeOnlyFileTypes?: string[];
 
-  // Visual options
   showStats: boolean;
   compactMode: boolean;
 }
@@ -32,25 +28,17 @@ export const defaultTransformOptions: GraphTransformOptions = {
   compactMode: false,
 };
 
-/**
- * Transform raw dependency data into a clean, hierarchical graph
- */
 export function transformToCleanGraph(rawData: DependencyGraphData, options: Partial<GraphTransformOptions> = {}): DependencyGraphData {
   const opts = { ...defaultTransformOptions, ...options };
 
-  // Step 1: Filter and categorize nodes
   const filteredNodes = filterImportantNodes(rawData.nodes, rawData.edges, opts);
 
-  // Step 2: Create folder hierarchy if enabled
   const hierarchicalNodes = opts.groupByFolders ? createFolderHierarchy(filteredNodes, opts) : filteredNodes;
 
-  // Step 3: Apply intelligent layout
   const layoutNodes = applyIntelligentLayout(hierarchicalNodes, rawData.edges, opts);
 
-  // Step 4: Filter and clean edges
   const cleanEdges = filterAndCleanEdges(rawData.edges, layoutNodes, opts);
 
-  // Step 5: Update stats
   const updatedStats = updateStats(rawData.stats, layoutNodes, cleanEdges);
 
   return {
@@ -60,11 +48,7 @@ export function transformToCleanGraph(rawData: DependencyGraphData, options: Par
   };
 }
 
-/**
- * Filter nodes to show only important/connected files
- */
 function filterImportantNodes(nodes: AppNode[], edges: AppEdge[], options: GraphTransformOptions): AppNode[] {
-  // Count connections for each node
   const connectionCount = new Map<string, number>();
 
   edges.forEach((edge) => {
@@ -73,25 +57,20 @@ function filterImportantNodes(nodes: AppNode[], edges: AppEdge[], options: Graph
   });
 
   return nodes.filter((node) => {
-    // Type guard to check if this is a FileNode
     const isFileNode = node.type === "file" && "fileType" in node.data;
     const isFolderNode = node.type === "folder" && "path" in node.data;
 
-    // Skip built-in nodes that don't have our custom data
     if (!isFileNode && !isFolderNode) return false;
 
-    // Filter by file type (only for file nodes)
     if (isFileNode) {
       const fileData = node.data as FileNodeData;
       if (options.excludeFileTypes.includes(fileData.fileType)) return false;
       if (options.includeOnlyFileTypes && !options.includeOnlyFileTypes.includes(fileData.fileType)) return false;
     }
 
-    // Filter by connections
     const connections = connectionCount.get(node.id) || 0;
     if (connections < options.minConnections) return false;
 
-    // If showing only important files, prioritize entry points and highly connected files
     if (options.showOnlyImportantFiles) {
       if (isFileNode) {
         const fileData = node.data as FileNodeData;
@@ -101,7 +80,6 @@ function filterImportantNodes(nodes: AppNode[], edges: AppEdge[], options: Graph
 
         return isEntryPoint || isHighlyConnected || isImportantFile;
       } else if (isFolderNode) {
-        // Always keep folder nodes if they have connections
         return connections >= 1;
       }
     }
@@ -110,15 +88,11 @@ function filterImportantNodes(nodes: AppNode[], edges: AppEdge[], options: Graph
   });
 }
 
-/**
- * Create folder hierarchy and group related files
- */
 function createFolderHierarchy(nodes: AppNode[], options: GraphTransformOptions): AppNode[] {
   const folderMap = new Map<string, AppNode[]>();
   const folderNodes: AppNode[] = [];
   const fileNodes: AppNode[] = [];
 
-  // Group files by folder
   nodes.forEach((node) => {
     const pathParts = node.id.split("/");
     if (pathParts.length > 1) {
@@ -127,7 +101,6 @@ function createFolderHierarchy(nodes: AppNode[], options: GraphTransformOptions)
       if (!folderMap.has(folderPath)) {
         folderMap.set(folderPath, []);
 
-        // Create folder node
         const folderNode: AppNode = {
           id: `folder-${folderPath}`,
           type: "folder",
@@ -148,7 +121,6 @@ function createFolderHierarchy(nodes: AppNode[], options: GraphTransformOptions)
     }
   });
 
-  // Update folder child counts
   folderNodes.forEach((folder) => {
     const folderData = folder.data as FolderNodeData;
     const folderPath = folderData.path;
@@ -156,7 +128,6 @@ function createFolderHierarchy(nodes: AppNode[], options: GraphTransformOptions)
     folderData.childCount = children.length;
   });
 
-  // Return only important folders (with multiple files) and standalone files
   const importantFolders = folderNodes.filter((folder) => {
     const folderData = folder.data as FolderNodeData;
     return folderData.childCount >= 2;
@@ -170,7 +141,6 @@ function createFolderHierarchy(nodes: AppNode[], options: GraphTransformOptions)
       return !hasFolder && files.length > 0;
     })
     .map(([, files]) => {
-      // Pick the most important file from each small folder
       return files.reduce((best, current) => {
         const bestData = best.data as FileNodeData;
         const currentData = current.data as FileNodeData;
@@ -181,11 +151,7 @@ function createFolderHierarchy(nodes: AppNode[], options: GraphTransformOptions)
   return [...importantFolders, ...representativeFiles, ...fileNodes];
 }
 
-/**
- * Apply intelligent layout algorithm
- */
 function applyIntelligentLayout(nodes: AppNode[], edges: AppEdge[], options: GraphTransformOptions): AppNode[] {
-  // Categorize nodes by type and importance
   const entryPoints = nodes.filter((n) => {
     if (n.type === "file" && "fileType" in n.data) {
       const fileData = n.data as FileNodeData;
@@ -208,7 +174,6 @@ function applyIntelligentLayout(nodes: AppNode[], edges: AppEdge[], options: Gra
   const layoutNodes: AppNode[] = [];
   let currentY = 0;
 
-  // Layout entry points at the top
   entryPoints.forEach((node, index) => {
     layoutNodes.push({
       ...node,
@@ -221,7 +186,6 @@ function applyIntelligentLayout(nodes: AppNode[], edges: AppEdge[], options: Gra
 
   currentY += options.levelSpacing;
 
-  // Layout main components in the middle
   const componentsPerRow = Math.ceil(Math.sqrt(components.length));
   components.forEach((node, index) => {
     const row = Math.floor(index / componentsPerRow);
@@ -238,7 +202,6 @@ function applyIntelligentLayout(nodes: AppNode[], edges: AppEdge[], options: Gra
 
   currentY += Math.ceil(components.length / componentsPerRow) * options.nodeSpacing.y + options.levelSpacing;
 
-  // Layout utilities at the bottom
   const utilitiesPerRow = Math.ceil(Math.sqrt(utilities.length));
   utilities.forEach((node, index) => {
     const row = Math.floor(index / utilitiesPerRow);
@@ -256,15 +219,12 @@ function applyIntelligentLayout(nodes: AppNode[], edges: AppEdge[], options: Gra
   return layoutNodes;
 }
 
-/**
- * Filter and clean edges to only show relevant connections
- */
 function filterAndCleanEdges(edges: AppEdge[], nodes: AppNode[], options: GraphTransformOptions): AppEdge[] {
   const nodeIds = new Set(nodes.map((n) => n.id));
 
   return edges
     .filter((edge) => nodeIds.has(edge.source) && nodeIds.has(edge.target))
-    .filter((edge) => edge.source !== edge.target) // Remove self-references
+    .filter((edge) => edge.source !== edge.target)
     .map((edge) => ({
       ...edge,
       type: "smoothstep" as const,
@@ -273,9 +233,6 @@ function filterAndCleanEdges(edges: AppEdge[], nodes: AppNode[], options: GraphT
     })) as AppEdge[];
 }
 
-/**
- * Update stats based on filtered data
- */
 function updateStats(originalStats: DependencyGraphStats, nodes: AppNode[], edges: AppEdge[]): DependencyGraphStats {
   const languages = new Set<string>();
   const entryPoints: string[] = [];
@@ -295,13 +252,10 @@ function updateStats(originalStats: DependencyGraphStats, nodes: AppNode[], edge
     totalFiles: nodes.length,
     totalDependencies: edges.length,
     languages: Array.from(languages),
-    entryPoints: entryPoints.slice(0, 5), // Limit to top 5
+    entryPoints: entryPoints.slice(0, 5),
   };
 }
 
-/**
- * Quick preset transformations
- */
 export const GraphPresets = {
   overview: (data: DependencyGraphData) =>
     transformToCleanGraph(data, {
