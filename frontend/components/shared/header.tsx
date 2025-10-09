@@ -24,7 +24,6 @@ export const Header = () => {
   const isAnalyzePage = pathSegments[pathSegments.length - 1] === "analyze";
   const shouldHideHeader = pathSegments.length > 1;
 
-  // Handle mounting to prevent hydration issues
   React.useEffect(() => {
     setMounted(true);
   }, []);
@@ -39,7 +38,6 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [mounted]);
 
-  // Return null only after mounting to prevent hydration mismatch
   if (!mounted) {
     return (
       <header>
