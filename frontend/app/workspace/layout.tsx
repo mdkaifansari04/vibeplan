@@ -10,16 +10,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mx-auto max-w-(--breakpoint-2xl)">
+    <div className="mx-auto max-w-(--breakpoint-3xl)">
       <Sidemenu />
       <div className="lg:ml-80">
         <AddressBar />
         <main className=" p-4 pt-12 md:p-6">
           <div className="space-y-10 pb-20">{children}</div>
         </main>
-        <div className="flex sm:hidden fixed bottom-6 left-2">
-          <StarCuicuiGithubButton />
-        </div>
       </div>
     </div>
   );

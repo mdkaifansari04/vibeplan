@@ -111,9 +111,7 @@ export default function AnalyzePage() {
       document.getElementById("github-url-input")?.focus();
     }, 300);
   };
-
   if (!mounted) return null;
-
   if (isAnalyzing) {
     return <AnalyzingState currentStep={currentStep} totalSteps={ANALYSIS_STEPS.length} stepName={ANALYSIS_STEPS[currentStep]} url={url} />;
   }

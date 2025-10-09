@@ -11,6 +11,7 @@ import StarCuicuiGithubButton from "./start-github-button";
 import { ScrollArea, ScrollAreaViewport } from "@radix-ui/react-scroll-area";
 import { cn } from "@/lib/utils";
 import Logo from "../ui/logo";
+import AIInput from "../input/ai-input";
 
 export const firstMenuSection = {
   name: "Info",
@@ -53,22 +54,17 @@ export function SidemenuContent({ className }: Readonly<{ className?: string }>)
         </div>
         <StarCuicuiGithubButton />
       </div>
-      <NewSectionSelector />
       <div className="w-full mt-8">
         <NavigationSidemenuAnimatedBackground>
-          {firstMenuSection.categoryList.map((category, _index) => (
-            <li className="block" data-id={category.slug} key={category.slug}>
-              <GlobalNavItem Icon={null} href={category.href ?? `/${category.slug}`} isMobile={false} name={category.name} tag={category.slug === "changelog" && isNew ? "New" : undefined} target={category.href ? "newWindow" : "sameWindow"} />
-            </li>
-          ))}
+          <p>hi</p>
         </NavigationSidemenuAnimatedBackground>
       </div>
       <ScrollArea className="w-full h-full mt-4">
         <ScrollAreaViewport className="h-full" id="sidemenu-container">
-          {/* <NavigationMenu /> */}
+          {/* messages */}
         </ScrollAreaViewport>
       </ScrollArea>
-
+      <AIInput />
       <Byline />
     </div>
   );
