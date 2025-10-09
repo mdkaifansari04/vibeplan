@@ -5,6 +5,3 @@ export { default as FolderNode } from "./folder-node";
 
 // Export types
 export * from "./types";
-
-// Export utilities
-export * from "./graph-utils";
