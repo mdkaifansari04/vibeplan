@@ -1,11 +1,10 @@
 "use client";
 
 import DependencyGraphSection from "@/components/container/depedency-graph/dependecy-graph-section";
-import PhaseSection from "@/components/container/phase/phase-section";
+import { PhaseSidebar } from "@/components/container/phase/phase-section";
 import React, { useState, useEffect } from "react";
 import type { DependencyGraphData } from "@/components/container/depedency-graph/types";
 
-// Sample data structure - replace with actual API call
 const sampleDependencyGraphData: DependencyGraphData = {
   nodes: [
     {
@@ -85,6 +84,64 @@ const sampleDependencyGraphData: DependencyGraphData = {
   },
 };
 
+const demoPhases = [
+  {
+    id: "phase-04",
+    title: "Integrate Priority Indicator in Job List Items",
+    description: "- Extend job list item component to show priority badge\n- Apply color coding based on priority enum values\n- Ensure accessibility with appropriate ARIA labels\n- Update styling to accommodate new badge\n- Add visual regression tests for badge appearance",
+    relevantFiles: [],
+    dependencies: ["phase-03"],
+    estimatedComplexity: "low",
+    priority: "medium",
+    category: "improvement",
+    reasoning: "Visual cues help users quickly identify high‑priority jobs, enhancing usability.",
+  },
+  {
+    id: "phase-05",
+    title: "Add Job Filtering by Priority",
+    description: "- Add filter controls\n- URL persists selected filters\n- Unit tests for filtering logic",
+    relevantFiles: [],
+    dependencies: ["phase-04"],
+    estimatedComplexity: "medium",
+    priority: "high",
+    category: "feature",
+  },
+  {
+    id: "phase-06",
+    title: "Persist Priority to DB",
+    description: "- Add column to jobs table\n- Map enum to string column\n- Backfill defaults",
+    relevantFiles: [],
+    dependencies: ["phase-05"],
+    estimatedComplexity: "high",
+    priority: "critical",
+    category: "data",
+  },
+] as const;
+
+const demoPlans = [
+  {
+    phaseId: "phase-04",
+    data: {
+      instruction: "Create a TypeScript enum for priority levels, extend the job model, and add tests.",
+      plan: "# Implementation Plan...\n...details omitted for brevity...",
+    },
+  },
+  {
+    phaseId: "phase-04",
+    data: {
+      instruction: "Integrate small badge in list item component, add ARIA labels, update styles.",
+      plan: "...\n",
+    },
+  },
+  {
+    phaseId: "phase-05",
+    data: {
+      instruction: "Introduce query param parsing and controlled filters with SSR defaults.",
+      plan: "...\n",
+    },
+  },
+];
+
 function Page() {
   const [dependencyData, setDependencyData] = useState(sampleDependencyGraphData);
 
@@ -92,14 +149,20 @@ function Page() {
   // useEffect(() => {
   //   fetchDependencyGraph().then(data => setDependencyData(data));
   // }, []);
+  const handleGeneratePlan = (phaseId: string) => {
+    console.log("[v0] Generate plan clicked for:", phaseId);
+  };
 
+  const handleOpenPlan = (phaseId: string, index: number) => {
+    console.log("[v0] Open plan clicked:", { phaseId, index });
+  };
   return (
     <div className="w-full flex gap-5">
       <div className="w-3/4 h-[calc(100vh-4rem)]">
         <DependencyGraphSection data={dependencyData} />
       </div>
       <div className="w-1/4 bg-emerald-100">
-        <PhaseSection />
+        <PhaseSidebar phases={demoPhases as any} plans={demoPlans as any} onGeneratePlan={handleGeneratePlan} onOpenPlan={handleOpenPlan} />
       </div>
     </div>
   );
