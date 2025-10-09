@@ -14,9 +14,7 @@ export function PlanModal({ open, onOpenChange, phaseTitle, instruction, planMar
       setCopied(true);
       const t = setTimeout(() => setCopied(false), 1200);
       return () => clearTimeout(t);
-    } catch {
-      // no-op
-    }
+    } catch {}
   };
 
   return (
@@ -26,8 +24,6 @@ export function PlanModal({ open, onOpenChange, phaseTitle, instruction, planMar
           <DialogTitle className="text-sm">{phaseTitle}</DialogTitle>
           <DialogDescription className="text-xs text-foreground/70">Review the instruction and the detailed plan.</DialogDescription>
         </DialogHeader>
-
-        {/* Instruction with copy */}
         <section aria-label="Instruction" className="space-y-2">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-medium">Instruction</h3>
@@ -39,17 +35,11 @@ export function PlanModal({ open, onOpenChange, phaseTitle, instruction, planMar
             </Button>
           </div>
           <div className="rounded-md border border-border bg-muted/40 p-3 text-xs leading-5 text-foreground/90 whitespace-pre-wrap">{instruction}</div>
-
-          {/* tiny hint */}
           <p className="text-[10px] text-foreground/60">
             Hint: Save this text to <code>.github/prompts/instruction.prompt.md</code> to guide your AI assistant.
           </p>
         </section>
-
-        {/* Divider */}
         <div className="my-2 h-px w-full bg-border" />
-
-        {/* Markdown Plan */}
         <section aria-label="Plan details" className="space-y-2">
           <h3 className="text-xs font-medium">Plan</h3>
           <div className="rounded-md border border-border bg-background/60 p-3">

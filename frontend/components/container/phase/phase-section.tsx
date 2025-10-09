@@ -52,7 +52,6 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
     setSaving(true);
     try {
       setLocalPhases((prev) => prev.map((p) => (p.id === editingId ? { ...p, description: next } : p)));
-      // Hook: persist to backend here if needed
     } finally {
       setSaving(false);
     }
@@ -62,13 +61,32 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
     <aside aria-label="Phases" className={["sticky top-0 h-[100svh] w-1/4 min-w-[320px] shrink-0 border-l border-border bg-sidebar p-3", "overflow-y-auto", className || ""].join(" ")}>
       <div className="mb-2 px-1">
         <h2 className="text-sm font-medium text-foreground/80">Phases</h2>
-        <p className="text-xs text-foreground/60">Hover a card to see details</p>
+        <p className="text-xs text-foreground/60">{phases.length > 0 ? "Hover a card to see details" : "No phases found"}</p>
       </div>
 
       <div className="flex flex-col gap-3">
-        {phases.map((phase) => (
-          <PhaseCard onEditPhase={handleEditPhase} key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={onGeneratePlan} onOpenPlan={onOpenPlan} />
-        ))}
+        {phases.length > 0 ? (
+          phases.map((phase) => <PhaseCard onEditPhase={handleEditPhase} key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={onGeneratePlan} onOpenPlan={onOpenPlan} />)
+        ) : (
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <div className="rounded-full bg-muted p-3 mb-3">
+              <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-medium text-foreground mb-1">No Phases Found</h3>
+            <p className="text-xs text-muted-foreground mb-4 max-w-[200px]">Generate phases after sending a prompt to get started with your project breakdown.</p>
+            <button
+              className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+              onClick={() => {
+                // TODO: Add functionality to trigger phase generation
+                console.log("Generate phases clicked");
+              }}
+            >
+              Generate Phases
+            </button>
+          </div>
+        )}
         <EditPhaseModal open={editOpen && !!editingPhase} onOpenChange={setEditOpen} title={editingPhase?.title || ""} description={editingPhase?.description || ""} onSave={handleSaveDescription} saving={saving} />
       </div>
     </aside>

@@ -1,7 +1,7 @@
 "use client";
 import { type ComponentProps, type RefObject, useMemo, useRef } from "react";
 import { motion, useAnimationFrame } from "motion/react";
-import { useMouse } from "@/app/hooks/use-mouse";
+import { useMouse } from "@/hooks/use-mouse";
 
 interface TextProps {
   children: string;
