@@ -5,6 +5,7 @@ import StarCuicuiGithubButton from "@/components/sidemenu/start-github-button";
 import { AddressBar } from "@/components/shared/address-bar";
 import { ThemeProvider } from "next-themes";
 import { Header } from "@/components/shared/header";
+import { Toaster } from "@/components/ui/toaster";
 import "./styles/globals.css";
 import { StickyFooter } from "@/components/shared/sticky-footer";
 import Footer from "@/components/landing/footer";
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

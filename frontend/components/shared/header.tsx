@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/liquid-glass-button";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { NewThemeSwitch } from "../sidemenu/new-theme-selector";
+import Logo from "../ui/logo";
 
 const menuItems = [
   { name: "Products", href: "#link" },
@@ -16,8 +18,12 @@ const menuItems = [
 export const Header = () => {
   const [menuState, setMenuState] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const pathname = usePathname().split("/");
-  if (pathname.length > 2) return null;
+  const pathname = usePathname();
+  const pathSegments = pathname.split("/").filter(Boolean);
+  const isAnalyzePage = pathSegments[pathSegments.length - 1] === "analyze";
+
+  if (pathSegments.length > 1) return null;
+
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -25,19 +31,16 @@ export const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <header>
       <nav data-state={menuState && "active"} className="fixed left-0 w-full z-20 px-2 active:border-none active:outline-none">
         <div className={cn("mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12", isScrolled && "bg-background/50 max-w-4xl rounded-2xl border-neutral-500 backdrop-blur-lg lg:px-5")}>
           <div className="relative flex flex-wrap items-center justify-between gap-6 lg:gap-0 py-2">
             <div className="flex w-full justify-between lg:w-auto">
-              <Link href="/" aria-label="home" className="flex gap-2 items-center">
-                <p className="font-semibold text-xl tracking-tighter">
-                  Vibe<span className="text-">plan</span>
-                </p>
-              </Link>
+              <Logo />
 
-              <button onClick={() => setMenuState(!menuState)} aria-label={menuState == true ? "Close Menu" : "Open Menu"} className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden">
+              <button onClick={() => setMenuState(!menuState)} aria-label={menuState ? "Close Menu" : "Open Menu"} className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden">
                 <Equal className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
                 <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
               </button>
@@ -55,23 +58,21 @@ export const Header = () => {
                   ))}
                 </ul>
               </div>
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-2 sm:space-y-0 md:w-fit">
-                <Button asChild variant="outline" size="sm" className={cn(isScrolled && "lg:hidden")}>
-                  <Link href="#">
-                    <span>Login</span>
-                  </Link>
-                </Button>
-                <Button asChild size="sm" className={cn(isScrolled && "lg:hidden")}>
-                  <Link href="#">
-                    <span>Sign Up</span>
-                  </Link>
-                </Button>
-                <Button asChild size="sm" className={cn(isScrolled ? "lg:inline-flex" : "hidden")}>
-                  <Link href="#">
-                    <span>Get Started</span>
-                  </Link>
-                </Button>
-              </div>
+              {!isAnalyzePage && (
+                <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-2 sm:space-y-0 md:w-fit">
+                  <NewThemeSwitch className={cn(isScrolled && "lg:hidden")} />
+                  <Button asChild size="sm" className={cn(isScrolled && "lg:hidden")}>
+                    <Link href="/analyze">
+                      <span>Analyze</span>
+                    </Link>
+                  </Button>
+                  <Button asChild size="sm" className={cn(isScrolled ? "lg:inline-flex" : "hidden")}>
+                    <Link href="/analyze">
+                      <span>Get Started</span>
+                    </Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>

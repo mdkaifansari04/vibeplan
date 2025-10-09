@@ -5,12 +5,14 @@ import { BackgroundBeams } from "../ui/background-beams";
 import { Button } from "../ui/liquid-glass-button";
 
 export function Footer() {
-  const pathname = usePathname().split("/");
-  if (pathname.length > 2) return null;
+  const pathSegments = usePathname().split("/");
+  const isAnalyzePage = pathSegments[pathSegments.length - 1] === "analyze";
+  if (isAnalyzePage || pathSegments.length > 2) return null;
+
   return (
     <div className="relative w-full">
       <div className="relative h-[120dvh] w-full">
-        <BackgroundBeams /> 
+        <BackgroundBeams />
         <div className="bg-neutral-200 dark:bg-neutral-800  rounded-3xl h-full flex flex-col items-center justify-center">
           <h3 className="text-7xl font-bold mb-4">Plan Smarter. Ship Faster.</h3>
           <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8">Join developers who stopped wrestling with AI agents and started planning with precision.</p>

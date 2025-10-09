@@ -10,6 +10,7 @@ import { GlobalNavItem } from "./navigation-item";
 import StarCuicuiGithubButton from "./start-github-button";
 import { ScrollArea, ScrollAreaViewport } from "@radix-ui/react-scroll-area";
 import { cn } from "@/lib/utils";
+import Logo from "../ui/logo";
 
 export const firstMenuSection = {
   name: "Info",
@@ -47,11 +48,7 @@ export function SidemenuContent({ className }: Readonly<{ className?: string }>)
     <div className={cn("", className)}>
       <div className="w-full">
         <div className="flex items-center justify-between px-4 py-4">
-          <Link className="group flex w-fit items-center gap-x-2.5 transition-transform hover:scale-105" href="/" title="Vibeplan - A vibe coding planning agent">
-            <span aria-hidden="true" className="sr-only">
-              Vibeplan - A vibe coding planning agent
-            </span>
-          </Link>
+          <Logo />
           <NewThemeSwitch />
         </div>
         <StarCuicuiGithubButton />
