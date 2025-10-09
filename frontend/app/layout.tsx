@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "./styles/globals.css";
 import { StickyFooter } from "@/components/shared/sticky-footer";
 import Footer from "@/components/landing/footer";
+import { ClientProvider } from "@/provider/client-provider";
 
 export const metadata: Metadata = {
   title: "Vibe Plan",
@@ -29,12 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${figtree.className} antialiased smooth-scroll`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
-          {children}
-          <Footer />
-          <Toaster />
-        </ThemeProvider>
+        <ClientProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <Header />
+            {children}
+            <Footer />
+            <Toaster />
+          </ThemeProvider>
+        </ClientProvider>
       </body>
     </html>
   );

@@ -3,12 +3,10 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import type { Phase } from "@/types/phase";
 
 export interface PhaseState {
-  // State
   phases: Phase[];
   isLoading: boolean;
   error: string | null;
 
-  // Actions
   setPhases: (phases: Phase[]) => void;
   updatePhase: (phaseId: string, updatedPhase: Partial<Phase>) => void;
   addPhase: (phase: Phase) => void;
@@ -29,7 +27,6 @@ export const usePhaseStore = create<PhaseState>()(
     (set, get) => ({
       ...initialState,
 
-      // Actions
       setPhases: (phases: Phase[]) => {
         set({
           phases,
@@ -68,14 +65,13 @@ export const usePhaseStore = create<PhaseState>()(
       },
     }),
     {
-      name: "phase-storage", // name of the item in storage (must be unique)
-      storage: createJSONStorage(() => sessionStorage), // use session storage
-      // Optionally, you can specify which parts of the state to persist
+      name: "phase-storage",
+      storage: createJSONStorage(() => sessionStorage),
+
       partialize: (state) => ({
         phases: state.phases,
-        // We don't persist isLoading and error as they're transient
       }),
-      // Handle hydration
+
       onRehydrateStorage: () => (state) => {
         if (state) {
           state.isLoading = false;
@@ -86,12 +82,10 @@ export const usePhaseStore = create<PhaseState>()(
   )
 );
 
-// Selector hooks for better performance
 export const usePhases = () => usePhaseStore((state) => state.phases);
 export const usePhaseLoading = () => usePhaseStore((state) => state.isLoading);
 export const usePhaseError = () => usePhaseStore((state) => state.error);
 
-// Actions selector - using individual functions to avoid infinite loops
 export const usePhaseActions = () => {
   const setPhases = usePhaseStore((state) => state.setPhases);
   const updatePhase = usePhaseStore((state) => state.updatePhase);

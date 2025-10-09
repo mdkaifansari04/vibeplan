@@ -12,45 +12,15 @@ import { Button } from "@/components/ui/liquid-glass-button";
 import { CircularBarsSpinnerLoader } from "@/components/ui/loader";
 import { ModernSimpleInput } from "@/components/ui/modern-simple-input";
 import { YouTubePlayer } from "@/components/ui/youtube-player";
+import { useIndexRepository } from "@/hooks/mutation";
 import { useToast } from "@/hooks/use-toast";
+import { DEMO_VIDEOS, EXAMPLE_REPOS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useDependencyActions } from "@/store/dependency-graph";
 import { AlertCircle, Check, Clock, Github, Loader2, Sparkles } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useMemo, useState } from "react";
-
-const EXAMPLE_REPOS = [
-  { name: "Next.js", url: "https://github.com/vercel/next.js" },
-  { name: "shadcn/ui", url: "https://github.com/shadcn/ui" },
-  { name: "React", url: "https://github.com/facebook/react" },
-];
-
-const DEMO_VIDEOS = [
-  {
-    id: "AGWyx96lP8U",
-    title: "How to Plan Coding Projects Effectively",
-    description: "Learn the 9-step planning process from idea to execution",
-  },
-  {
-    id: "CAeWjoP525M",
-    title: "How to Structure a Programming Project",
-    description: "10 simple things to build impressive projects",
-  },
-  {
-    id: "Efl3bKY6Y00",
-    title: "Best Practices for File Organization",
-    description: "Structure and organize your project file system",
-  },
-  {
-    id: "your-vibeplan-demo-id",
-    title: "VibePlan Quick Demo",
-    description: "See how VibePlan analyzes repos in action",
-  },
-  {
-    id: "6oJ2LLxfP3s",
-    title: "Project Structure Best Practices",
-    description: "Professional folder and file organization",
-  },
-];
+import { useRouter } from "next/navigation";
+import { use, useEffect, useMemo, useState } from "react";
 
 const ANALYSIS_STEPS = ["Fetching repository files...", "Analyzing project structure...", "Scanning dependencies...", "Generating atomic phases...", "Creating implementation plans...", "Finalizing analysis..."];
 
@@ -62,12 +32,15 @@ export default function AnalyzePage() {
   const [showError, setShowError] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
+
+  const { mutate: indexRepository } = useIndexRepository();
+  const { setDependencyData } = useDependencyActions();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Validate GitHub URL
   useEffect(() => {
     const githubRegex = /^https?:\/\/(www\.)?github\.com\/[\w-]+\/[\w.-]+\/?$/;
     setIsValidUrl(githubRegex.test(url));
@@ -79,9 +52,7 @@ export default function AnalyzePage() {
   useEffect(() => {
     if (isAnalyzing && currentStep < ANALYSIS_STEPS.length - 1) {
       const isSecondToLast = currentStep === ANALYSIS_STEPS.length - 2;
-      const delay = isSecondToLast
-        ? Math.random() * 3000 + 6000 // 6-9 seconds for second-to-last step (longer wait)
-        : Math.random() * 1500 + 2000; // 2-3.5 seconds for other steps
+      const delay = isSecondToLast ? Math.random() * 3000 + 6000 : Math.random() * 1500 + 2000;
 
       const timer = setTimeout(() => {
         setCurrentStep((prev) => prev + 1);
@@ -98,10 +69,22 @@ export default function AnalyzePage() {
     }
 
     setIsAnalyzing(true);
-    setCurrentStep(0);
-    toast({
-      title: "Analysis started!",
-      description: "This may take 3-10 minutes depending on repository size.",
+    indexRepository(url, {
+      onSuccess: (data) => {
+        setCurrentStep(ANALYSIS_STEPS.length - 1);
+        setDependencyData({ nodes: data.dependencyGraph.nodes, edges: data.dependencyGraph.edges, stats: data.dependencyGraph.stats });
+        router.push(`/workspace/${data.namespace}`);
+      },
+      onError: (error) => {
+        console.error("Indexing error:", error);
+        setIsAnalyzing(false);
+        setCurrentStep(0);
+        toast({
+          title: "Analysis failed",
+          description: "An unexpected error occurred. Please try again.",
+          variant: "destructive",
+        });
+      },
     });
   };
 
@@ -123,7 +106,7 @@ export default function AnalyzePage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center">
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               Analyze Your{" "}
-              <Highlighter action="underline" color="#7F62D7">
+              <Highlighter action="underline" color="#ea6d74">
                 Repository
               </Highlighter>
             </motion.h1>

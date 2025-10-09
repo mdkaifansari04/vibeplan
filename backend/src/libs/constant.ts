@@ -12,3 +12,4 @@ export const baseConfig = {
     model: "openai/gpt-oss-120b",
   },
 };
+

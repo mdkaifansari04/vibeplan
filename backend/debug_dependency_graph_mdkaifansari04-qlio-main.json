@@ -12,7 +12,7 @@
         "language": "markdown",
         "functions": 0,
         "classes": 0,
-        "lines": 206,
+        "lines": 0,
         "fileType": "documentation"
       },
       "sourcePosition": "right",
@@ -30,7 +30,7 @@
         "language": "markdown",
         "functions": 0,
         "classes": 0,
-        "lines": 37,
+        "lines": 0,
         "fileType": "documentation"
       },
       "sourcePosition": "right",
@@ -174,7 +174,7 @@
         "language": "css",
         "functions": 0,
         "classes": 0,
-        "lines": 168,
+        "lines": 0,
         "fileType": "file"
       },
       "sourcePosition": "right",
@@ -930,7 +930,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 21,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1272,7 +1272,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 5270,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1290,7 +1290,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 52,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1308,7 +1308,7 @@
         "language": "unknown",
         "functions": 0,
         "classes": 0,
-        "lines": 6,
+        "lines": 0,
         "fileType": "file"
       },
       "sourcePosition": "right",
@@ -1398,7 +1398,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 28,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1416,7 +1416,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 10,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1434,7 +1434,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 43,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1452,7 +1452,7 @@
         "language": "yaml",
         "functions": 0,
         "classes": 0,
-        "lines": 1855,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1830,7 +1830,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 116,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1866,7 +1866,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 10,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1884,7 +1884,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 39,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -1902,7 +1902,7 @@
         "language": "yaml",
         "functions": 0,
         "classes": 0,
-        "lines": 4207,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",
@@ -2154,7 +2154,7 @@
         "language": "json",
         "functions": 0,
         "classes": 0,
-        "lines": 21,
+        "lines": 0,
         "fileType": "config"
       },
       "sourcePosition": "right",

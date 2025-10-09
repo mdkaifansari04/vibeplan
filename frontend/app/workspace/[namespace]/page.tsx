@@ -30,7 +30,6 @@ function Page() {
   const handleGeneratePlan = (phaseId: string) => {
     console.log("[v0] Generate plan clicked for:", phaseId);
     // TODO: Integrate your plan generation here
-    // This will call your backend API to generate a plan
   };
 
   const handleOpenPlan = (phaseId: string, index: number) => {
@@ -47,7 +46,6 @@ function Page() {
 
   const phaseTitle = phases.find((p) => p.id === selected?.phaseId)?.title || "Plan";
 
-  // Show loading state while data is being fetched
   if (isDependencyLoading || isPhaseLoading) {
     return (
       <div className="w-full flex items-center justify-center h-[calc(100vh-4rem)]">
@@ -57,11 +55,11 @@ function Page() {
   }
 
   return (
-    <div className="w-full flex gap-5">
+    <div className="w-full flex gap-2">
       <div className="w-3/4 h-[calc(100vh-4rem)]">
         <DependencyGraphSection data={dependencyData} />
       </div>
-      <div className="w-1/4 bg-emerald-100">
+      <div className="w-1/4 bg-emerald-100 rounded-xl">
         <PhaseSidebar phases={phases as any} plans={plans as any} onGeneratePlan={handleGeneratePlan} onOpenPlan={handleOpenPlan} />
         <PlanModal open={open && !!current} onOpenChange={setOpen} phaseTitle={phaseTitle} instruction={current?.instruction || ""} planMarkdown={current?.plan || ""} />
       </div>
