@@ -4,10 +4,12 @@ import * as React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
+import { usePhaseStore } from "@/store/phase";
 
-export function EditPhaseModal({ open, onOpenChange, title, description, onSave, saving = false }: { open: boolean; onOpenChange: (v: boolean) => void; title: string; description: string; onSave: (next: string) => Promise<void> | void; saving?: boolean }) {
+export function EditPhaseModal({ open, onOpenChange, title, description, onSave, saving = false, phaseId }: { open: boolean; onOpenChange: (v: boolean) => void; title: string; description: string; onSave: (next: string) => Promise<void> | void; saving?: boolean; phaseId: string }) {
   const [value, setValue] = React.useState(description);
-
+  const { updatePhase } = usePhaseStore();
   React.useEffect(() => {
     setValue(description);
   }, [description]);
@@ -29,6 +31,8 @@ export function EditPhaseModal({ open, onOpenChange, title, description, onSave,
               size="sm"
               onClick={async () => {
                 await onSave(value);
+                updatePhase(phaseId, { description: value });
+                toast({ title: "Phase Updated", description: "The phase description has been updated successfully.", duration: 5000 });
                 onOpenChange(false);
               }}
               disabled={saving}

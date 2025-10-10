@@ -4,22 +4,15 @@ import type { Plan } from "@/types/phase";
 
 export interface PlanState {
   plans: Plan[];
-  isLoading: boolean;
-  error: string | null;
-
   setPlans: (plans: Plan[]) => void;
   addPlan: (plan: Plan) => void;
   updatePlan: (phaseId: string, planData: { instruction: string; plan: string }) => void;
   removePlan: (phaseId: string, index?: number) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
   reset: () => void;
 }
 
 const initialState = {
   plans: [],
-  isLoading: false,
-  error: null,
 };
 
 export const usePlanStore = create<PlanState>()(
@@ -30,8 +23,6 @@ export const usePlanStore = create<PlanState>()(
       setPlans: (plans: Plan[]) => {
         set({
           plans,
-          error: null,
-          isLoading: false,
         });
       },
 
@@ -71,14 +62,6 @@ export const usePlanStore = create<PlanState>()(
         }
       },
 
-      setLoading: (loading: boolean) => {
-        set({ isLoading: loading });
-      },
-
-      setError: (error: string | null) => {
-        set({ error });
-      },
-
       reset: () => {
         set(initialState);
       },
@@ -90,39 +73,6 @@ export const usePlanStore = create<PlanState>()(
       partialize: (state) => ({
         plans: state.plans,
       }),
-
-      onRehydrateStorage: () => (state) => {
-        if (state) {
-          state.isLoading = false;
-          state.error = null;
-        }
-      },
     }
   )
 );
-
-export const usePlans = () => usePlanStore((state) => state.plans);
-export const usePlanLoading = () => usePlanStore((state) => state.isLoading);
-export const usePlanError = () => usePlanStore((state) => state.error);
-
-export const usePlansForPhase = (phaseId: string) => usePlanStore((state) => state.plans.filter((plan) => plan.phaseId === phaseId));
-
-export const usePlanActions = () => {
-  const setPlans = usePlanStore((state) => state.setPlans);
-  const addPlan = usePlanStore((state) => state.addPlan);
-  const updatePlan = usePlanStore((state) => state.updatePlan);
-  const removePlan = usePlanStore((state) => state.removePlan);
-  const setLoading = usePlanStore((state) => state.setLoading);
-  const setError = usePlanStore((state) => state.setError);
-  const reset = usePlanStore((state) => state.reset);
-
-  return {
-    setPlans,
-    addPlan,
-    updatePlan,
-    removePlan,
-    setLoading,
-    setError,
-    reset,
-  };
-};

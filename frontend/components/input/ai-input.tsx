@@ -4,8 +4,8 @@ import { Image, BarChart2, MoreHorizontal, Send, LoaderCircle } from "lucide-rea
 import { useGeneratePhases } from "@/hooks/mutation";
 import { useParams } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import { usePhaseActions } from "@/store/phase";
-import { useMessagesActions } from "@/store/messages";
+import { useMessagesStore } from "@/store/messages";
+import { usePhaseStore } from "@/store/phase";
 
 interface CreativeCardProps {
   placeholder?: string;
@@ -14,8 +14,8 @@ interface CreativeCardProps {
 
 const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creative idea here...✨", tags = ["Generate Image", "Analyze Data", "Explore More"] }) => {
   const { mutate: generatePhase, isPending } = useGeneratePhases();
-  const { setPhases } = usePhaseActions();
-  const { addMessage, updateMessage } = useMessagesActions();
+  const { setPhases } = usePhaseStore();
+  const { addMessage } = useMessagesStore();
   const params = useParams();
   const namespace = params.namespace as string;
   const [inputValue, setInputValue] = useState("");
@@ -27,18 +27,9 @@ const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creativ
     // Add user message
     const userMessageId = `user_${Date.now()}`;
     addMessage({
-      content: userPrompt,
+      message: userPrompt,
       type: "user",
     });
-
-    // Add AI response message with pending status
-    const aiMessageId = `ai_${Date.now()}`;
-    addMessage({
-      content: "Generating phases for your request...",
-      type: "ai",
-      status: "pending",
-    });
-
     generatePhase(
       {
         namespace,
@@ -53,20 +44,7 @@ const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creativ
             duration: 5000,
           });
 
-          // Update phases store
-          const transformedPhases = data.phases.map((phase) => ({
-            ...phase,
-            category: (phase.category as "feature" | "improvement" | "documentation" | "bug") || "improvement",
-          }));
-          setPhases(transformedPhases);
-
-          // Update AI message with success
-          updateMessage(aiMessageId, {
-            content: `Successfully generated ${data.phases.length} phases for your project. Check the phases panel to see the detailed breakdown.`,
-            status: "success",
-          });
-
-          // Clear input
+          setPhases(data.phases, data.contextSummary.topRelevantFiles);
           setInputValue("");
         },
         onError: (error) => {
@@ -75,12 +53,6 @@ const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creativ
             description: error?.message || "Something went wrong while generating phases.",
             duration: 5000,
             variant: "destructive",
-          });
-
-          // Update AI message with error
-          updateMessage(aiMessageId, {
-            content: "Sorry, I encountered an error while generating phases. Please try again.",
-            status: "error",
           });
         },
       }

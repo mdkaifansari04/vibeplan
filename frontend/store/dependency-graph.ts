@@ -4,12 +4,8 @@ import type { DependencyGraphData, AppNode, AppEdge, DependencyGraphStats } from
 
 export interface DependencyGraphState {
   dependencyData: DependencyGraphData;
-  isLoading: boolean;
-  error: string | null;
 
   setDependencyData: (data: DependencyGraphData) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
   reset: () => void;
 }
 
@@ -36,17 +32,7 @@ export const useDependencyGraphStore = create<DependencyGraphState>()(
       setDependencyData: (data: DependencyGraphData) => {
         set({
           dependencyData: data,
-          error: null,
-          isLoading: false,
         });
-      },
-
-      setLoading: (loading: boolean) => {
-        set({ isLoading: loading });
-      },
-
-      setError: (error: string | null) => {
-        set({ error });
       },
 
       reset: () => {
@@ -56,35 +42,6 @@ export const useDependencyGraphStore = create<DependencyGraphState>()(
     {
       name: "dependency-graph-storage",
       storage: createJSONStorage(() => sessionStorage),
-
-      partialize: (state) => ({
-        dependencyData: state.dependencyData,
-      }),
-
-      onRehydrateStorage: () => (state) => {
-        if (state) {
-          state.isLoading = false;
-          state.error = null;
-        }
-      },
     }
   )
 );
-
-export const useDependencyData = () => useDependencyGraphStore((state) => state.dependencyData);
-export const useDependencyLoading = () => useDependencyGraphStore((state) => state.isLoading);
-export const useDependencyError = () => useDependencyGraphStore((state) => state.error);
-
-export const useDependencyActions = () => {
-  const setDependencyData = useDependencyGraphStore((state) => state.setDependencyData);
-  const setLoading = useDependencyGraphStore((state) => state.setLoading);
-  const setError = useDependencyGraphStore((state) => state.setError);
-  const reset = useDependencyGraphStore((state) => state.reset);
-
-  return {
-    setDependencyData,
-    setLoading,
-    setError,
-    reset,
-  };
-};

@@ -1,4 +1,5 @@
 import { AppEdge, AppNode } from "@/components/container/depedency-graph";
+import { RelevantFiles } from "@/store/phase";
 import { Phase } from "@/types/phase";
 
 export interface ApiResponse<T> {
@@ -26,6 +27,14 @@ export interface GeneratePhaseResponse {
   phases: Phase[];
   message: string;
   timestamp: string;
+  totalPhases: number;
+  contextFilesUsed: number;
+  contextSummary: {
+    totalFilesFound: number;
+    languagesFound: string[];
+    fileTypes: string[];
+    topRelevantFiles: RelevantFiles[];
+  };
 }
 
 export interface IndexRepositoryResponse {

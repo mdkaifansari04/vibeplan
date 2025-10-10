@@ -1,64 +1,65 @@
+// components/message-component.tsx
+
 import React from "react";
-import { User, Bot, Info, Clock, CheckCircle, XCircle } from "lucide-react";
+import { MessageSquare, Sparkles, CheckCircle2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Message } from "@/store/messages";
+import { MessageSquareDashed } from "../animate-ui/icons/message-square-dashed";
+import { AnimateIcon } from "../animate-ui/icons/icon";
 
 interface MessageComponentProps {
   message: Message;
 }
 
 const MessageComponent: React.FC<MessageComponentProps> = ({ message }) => {
-  const getMessageIcon = () => {
+  const getMessageDisplay = () => {
     switch (message.type) {
       case "user":
-        return <User size={16} className="text-blue-500 dark:text-blue-400" />;
+        return {
+          icon: <MessageSquare size={16} className="text-neutral-600 dark:text-neutral-400" />,
+          label: "Your Request",
+          bgClass: "bg-sidebar border border-neutral-200 dark:border-neutral-700",
+        };
+
       case "ai":
-        return <Bot size={16} className="text-emerald-500 dark:text-emerald-400" />;
-      case "system":
-        return <Info size={16} className="text-gray-500 dark:text-gray-400" />;
+        return {
+          icon: <Sparkles size={16} className="text-purple-500 dark:text-purple-400" />,
+          label: "Phase Generation",
+          bgClass: "bg-sidebar border border-purple-200 dark:border-purple-800/50",
+        };
+
       default:
-        return <Info size={16} className="text-gray-500 dark:text-gray-400" />;
+        return {
+          icon: <MessageSquare size={16} className="text-neutral-500" />,
+          label: "Message",
+          bgClass: "bg-sidebar border border-neutral-200 dark:border-neutral-700",
+        };
     }
   };
 
-  const getStatusIcon = () => {
-    switch (message.status) {
-      case "pending":
-        return <Clock size={12} className="text-yellow-500 dark:text-yellow-400 animate-pulse" />;
-      case "success":
-        return <CheckCircle size={12} className="text-green-500 dark:text-green-400" />;
-      case "error":
-        return <XCircle size={12} className="text-red-500 dark:text-red-400" />;
-      default:
-        return null;
-    }
-  };
-
-  const getTimeString = () => {
-    const now = new Date();
-    const messageTime = new Date(message.timestamp);
-    const diffInMinutes = Math.floor((now.getTime() - messageTime.getTime()) / (1000 * 60));
-
-    if (diffInMinutes < 1) return "now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
-    return messageTime.toLocaleDateString();
-  };
+  const display = getMessageDisplay();
 
   return (
-    <div className={cn("group flex gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50", message.type === "user" && "bg-blue-50/50 dark:bg-blue-950/20", message.type === "ai" && "bg-emerald-50/50 dark:bg-emerald-950/20", message.type === "system" && "bg-gray-50/50 dark:bg-gray-800/20")}>
-      {/* Icon */}
-      <div className="flex-shrink-0 mt-0.5">{getMessageIcon()}</div>
-
-      {/* Content */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1">
-          <span className={cn("text-xs font-medium capitalize", message.type === "user" && "text-blue-600 dark:text-blue-400", message.type === "ai" && "text-emerald-600 dark:text-emerald-400", message.type === "system" && "text-gray-600 dark:text-gray-400")}>{message.type}</span>
-          {message.status && getStatusIcon()}
-          <span className="text-xs text-gray-500 dark:text-gray-400 ml-auto">{getTimeString()}</span>
+    <div className={cn("group rounded-lg shadow-sm transition-all duration-200", "hover:shadow-md hover:scale-[1.01]", display.bgClass)}>
+      <AnimateIcon animateOnHover>
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-neutral-200 dark:border-neutral-700">
+          <MessageSquareDashed className={"w-5"} />
+          {/* <div className="flex-shrink-0">{display.icon}</div> */}
+          <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300">{display.label}</span>
         </div>
+      </AnimateIcon>
 
-        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed break-words">{message.content}</p>
+      <div className="px-4 py-3">
+        <p className="text-sm text-neutral-800 dark:text-neutral-200 leading-relaxed whitespace-pre-wrap">{message.message}</p>
+
+        {/* {message.metadata && (
+          <div className="mt-3 pt-3 border-t border-neutral-200 dark:border-neutral-700">
+            <div className="flex flex-wrap gap-2 text-xs text-neutral-600 dark:text-neutral-400">
+              {message.metadata.phaseCount && <span className="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800">{message.metadata.phaseCount} phases generated</span>}
+              {message.metadata.contextFiles && <span className="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800">{message.metadata.contextFiles} files analyzed</span>}
+            </div>
+          </div>
+        )} */}
       </div>
     </div>
   );

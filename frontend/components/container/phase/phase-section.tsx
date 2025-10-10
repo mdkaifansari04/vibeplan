@@ -58,7 +58,7 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
   };
 
   return (
-    <aside aria-label="Phases" className={["sticky top-0 h-[100svh] w-1/4 min-w-[320px] shrink-0 rounded bg-sidebar p-3", "overflow-y-auto", className || ""].join(" ")}>
+    <aside aria-label="Phases" className={["sticky top-0 h-[calc(100vh-4rem)] w-1/4 min-w-[320px] shrink-0 rounded bg-sidebar p-3", "overflow-y-auto", className || ""].join(" ")}>
       <div className="mb-2 px-1">
         <h2 className="text-sm font-medium text-foreground/80">Phases</h2>
         <p className="text-xs text-foreground/60">{phases.length > 0 ? "Hover a card to see details" : "No phases found"}</p>
@@ -86,7 +86,7 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
             </button>
           </div>
         )}
-        <EditPhaseModal open={editOpen && !!editingPhase} onOpenChange={setEditOpen} title={editingPhase?.title || ""} description={editingPhase?.description || ""} onSave={handleSaveDescription} saving={saving} />
+        <EditPhaseModal phaseId={editingPhase?.id || ""} open={editOpen && !!editingPhase} onOpenChange={setEditOpen} title={editingPhase?.title || ""} description={editingPhase?.description || ""} onSave={handleSaveDescription} saving={saving} />
       </div>
     </aside>
   );

@@ -16,7 +16,7 @@ import { useIndexRepository } from "@/hooks/mutation";
 import { useToast } from "@/hooks/use-toast";
 import { DEMO_VIDEOS, EXAMPLE_REPOS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { useDependencyActions } from "@/store/dependency-graph";
+import { useDependencyGraphStore } from "@/store/dependency-graph";
 import { AlertCircle, Check, Clock, Github, Loader2, Sparkles } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ export default function AnalyzePage() {
   const router = useRouter();
 
   const { mutate: indexRepository } = useIndexRepository();
-  const { setDependencyData } = useDependencyActions();
+  const { setDependencyData } = useDependencyGraphStore();
 
   useEffect(() => {
     setMounted(true);

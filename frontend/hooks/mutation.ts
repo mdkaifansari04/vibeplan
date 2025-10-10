@@ -14,3 +14,10 @@ export const useGeneratePhases = () => {
     mutationFn: generatePhases,
   });
 };
+
+export const generatePlan = async () => {
+  return useMutation({
+    mutationKey: ["generate-plan"],
+    
+  })
+};

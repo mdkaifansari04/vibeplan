@@ -14,3 +14,8 @@ export const generatePhases = async (request: GeneratePhaseRequest) => {
   const { data } = await axiosInstance.post<ApiResponse<GeneratePhaseResponse>>("/phases/generate", request);
   return data.data;
 };
+
+export const generatePlan = async (phaseId: string) => {
+  const { data } = await axiosInstance.post<ApiResponse<{ instruction: string; plan: string }>>("/plans/generate", { phaseId });
+  return data.data;
+};
