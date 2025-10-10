@@ -74,3 +74,9 @@ export interface IndexRepositoryResponse {
     highPriorityFiles: 7;
   };
 }
+
+export interface PlanGenerationResponse {
+  phaseId: string;
+  instruction: string;
+  plan: string;
+}

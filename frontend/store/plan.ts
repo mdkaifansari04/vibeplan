@@ -4,7 +4,7 @@ import type { Plan } from "@/types/phase";
 
 export interface PlanState {
   plans: Plan[];
-  setPlans: (plans: Plan[]) => void;
+  setPlans: (plans: Plan) => void;
   reset: () => void;
 }
 
@@ -17,9 +17,9 @@ export const usePlanStore = create<PlanState>()(
     (set, get) => ({
       ...initialState,
 
-      setPlans: (plans: Plan[]) => {
+      setPlans: (plan: Plan) => {
         set({
-          plans,
+          plans: [...get().plans, plan],
         });
       },
 

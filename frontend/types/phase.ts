@@ -5,15 +5,13 @@ export interface Phase {
   relevantFiles: string[];
   dependencies: string[];
   estimatedComplexity: "low" | "medium" | "high";
-  priority: "low" | "medium" | "high";
+  priority: "low" | "medium" | "high" | "critical";
   category: "feature" | "improvement" | "documentation" | "bug";
   reasoning: string;
 }
 
 export interface Plan {
   phaseId: string;
-  data: {
-    instruction: string;
-    plan: string;
-  };
+  instruction: string;
+  plan: string;
 }

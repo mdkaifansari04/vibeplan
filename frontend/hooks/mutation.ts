@@ -1,4 +1,4 @@
-import { indexRepository, generatePhases } from "./access-data";
+import { indexRepository, generatePhases, generatePlan } from "./access-data";
 import { useMutation } from "@tanstack/react-query";
 
 export const useIndexRepository = () => {
@@ -15,9 +15,9 @@ export const useGeneratePhases = () => {
   });
 };
 
-export const generatePlan = async () => {
+export const useGeneratePlan = () => {
   return useMutation({
     mutationKey: ["generate-plan"],
-    
-  })
+    mutationFn: generatePlan,
+  });
 };

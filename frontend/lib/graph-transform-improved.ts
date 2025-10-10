@@ -1,8 +1,5 @@
 import type { AppNode, AppEdge, DependencyGraphData, DependencyGraphStats, FileNodeData, FolderNodeData } from "@/components/container/depedency-graph/types";
 
-/**
- * Debug helper - logs what we're working with
- */
 function debugData(label: string, nodes: AppNode[], edges: AppEdge[]) {
   console.log(`[${label}]`, {
     nodeCount: nodes.length,
@@ -12,16 +9,12 @@ function debugData(label: string, nodes: AppNode[], edges: AppEdge[]) {
   });
 }
 
-/**
- * Apply intelligent layout algorithm
- */
 function applyIntelligentLayout(nodes: AppNode[], edges: AppEdge[], direction: "LR" | "TB" = "LR"): { nodes: AppNode[]; edges: AppEdge[] } {
   if (nodes.length === 0) {
     console.warn("No nodes to layout");
     return { nodes: [], edges: [] };
   }
 
-  // Simple grid layout since dagre is not available
   const nodeSpacing = { x: 300, y: 150 };
   const nodesPerRow = Math.ceil(Math.sqrt(nodes.length));
 
@@ -51,7 +44,6 @@ function calculateStats(nodes: AppNode[], edges: AppEdge[], originalData?: Depen
   const languages = new Set<string>();
   const entryPoints: string[] = [];
 
-  // Get all target nodes (nodes that are imported)
   const targetNodes = new Set(edges.map((e) => e.target));
 
   nodes.forEach((node) => {
@@ -59,7 +51,6 @@ function calculateStats(nodes: AppNode[], edges: AppEdge[], originalData?: Depen
       const fileData = node.data as FileNodeData;
       languages.add(fileData.language);
 
-      // Entry point = has outgoing edges but no incoming edges
       const hasOutgoing = edges.some((e) => e.source === node.id);
       const hasIncoming = targetNodes.has(node.id);
 
@@ -101,7 +92,6 @@ export const GraphPresets = {
       };
     }
 
-    // Get all node IDs that participate in at least one edge
     const connectedIds = new Set<string>();
     data.edges.forEach((edge) => {
       connectedIds.add(edge.source);
@@ -110,7 +100,6 @@ export const GraphPresets = {
 
     console.log("Connected IDs:", connectedIds.size);
 
-    // Filter nodes to only connected ones
     const connectedNodes = data.nodes.filter((node) => connectedIds.has(node.id));
 
     console.log("Connected nodes:", connectedNodes.length);
@@ -125,7 +114,6 @@ export const GraphPresets = {
       };
     }
 
-    // Apply layout
     const layouted = applyIntelligentLayout(connectedNodes, data.edges);
     const stats = calculateStats(layouted.nodes, layouted.edges, data);
 
@@ -146,19 +134,15 @@ export const GraphPresets = {
       edges: data.edges.length,
     });
 
-    // Get connected nodes
     const connectedIds = new Set<string>();
     data.edges.forEach((edge) => {
       connectedIds.add(edge.source);
       connectedIds.add(edge.target);
     });
 
-    // Add important standalone files
     const importantNodes = data.nodes.filter((node) => {
-      // Already connected
       if (connectedIds.has(node.id)) return true;
 
-      // Important file patterns
       const path = node.id.toLowerCase();
       const fileData = node.type === "file" && "lines" in node.data ? (node.data as FileNodeData) : null;
 
@@ -167,11 +151,9 @@ export const GraphPresets = {
 
     console.log("Detailed nodes:", importantNodes.length);
 
-    // Limit to 80 nodes for performance
     const limitedNodes = importantNodes.slice(0, 80);
     const limitedNodeIds = new Set(limitedNodes.map((n) => n.id));
 
-    // Filter edges to only include nodes we're showing
     const relevantEdges = data.edges.filter((edge) => limitedNodeIds.has(edge.source) && limitedNodeIds.has(edge.target));
 
     const layouted = applyIntelligentLayout(limitedNodes, relevantEdges);
@@ -192,7 +174,6 @@ export const GraphPresets = {
       edges: data.edges.length,
     });
 
-    // Group files by their parent folder
     const folderMap = new Map<string, AppNode[]>();
 
     data.nodes.forEach((node) => {
@@ -207,23 +188,20 @@ export const GraphPresets = {
 
     console.log("Folders found:", folderMap.size);
 
-    // Create folder nodes
     const folderNodes: AppNode[] = [];
     const folderEdgeMap = new Map<string, Set<string>>();
 
     Array.from(folderMap.entries()).forEach(([folderPath, files]) => {
-      // Skip single-file folders for now, but create them anyway
       const folderName = folderPath.split("/").pop() || "root";
       const totalLines = files.reduce((sum, f) => {
         const fileData = f.type === "file" && "lines" in f.data ? (f.data as FileNodeData) : null;
         return sum + (fileData?.lines || 0);
       }, 0);
 
-      // Create folder node
       folderNodes.push({
         id: folderPath,
         type: "folder",
-        position: { x: 0, y: 0 }, // Will be set by layout
+        position: { x: 0, y: 0 },
         data: {
           label: folderName,
           path: folderPath,
@@ -233,7 +211,6 @@ export const GraphPresets = {
       });
     });
 
-    // Create folder-to-folder edges
     data.edges.forEach((edge) => {
       const sourceParts = edge.source.split("/");
       const targetParts = edge.target.split("/");
@@ -300,7 +277,6 @@ export const GraphPresets = {
       };
     }
 
-    // Find entry points (nodes with no incoming edges)
     const targetNodes = new Set(data.edges.map((e) => e.target));
     const entryPoints = data.nodes.filter((node) => {
       const hasOutgoing = data.edges.some((e) => e.source === node.id);
@@ -310,7 +286,6 @@ export const GraphPresets = {
 
     console.log("Entry points found:", entryPoints.length);
 
-    // If no clear entry points, use files with most outgoing connections
     let selectedNodes: AppNode[];
     if (entryPoints.length === 0) {
       const outgoingCount = new Map<string, number>();
@@ -327,7 +302,6 @@ export const GraphPresets = {
         .slice(0, 15)
         .map((item) => item.node);
     } else {
-      // Get entry points + their immediate dependencies
       const immediateIds = new Set<string>();
       entryPoints.forEach((ep) => {
         immediateIds.add(ep.id);
@@ -337,7 +311,6 @@ export const GraphPresets = {
       selectedNodes = data.nodes.filter((node) => immediateIds.has(node.id));
     }
 
-    // Limit to 25 nodes
     selectedNodes = selectedNodes.slice(0, 25);
     const selectedIds = new Set(selectedNodes.map((n) => n.id));
 
@@ -356,7 +329,6 @@ export const GraphPresets = {
   },
 };
 
-// Keep the old interface for compatibility
 export function transformToCleanGraph(rawData: DependencyGraphData): DependencyGraphData {
   return GraphPresets.overview(rawData);
 }

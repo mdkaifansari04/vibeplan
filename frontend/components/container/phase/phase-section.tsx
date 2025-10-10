@@ -3,6 +3,10 @@
 import * as React from "react";
 import { EditPhaseModal } from "./edit-modal";
 import { PhaseCard } from "./phase-card";
+import { usePhaseStore } from "@/store/phase";
+import { useGeneratePhases, useGeneratePlan } from "@/hooks/mutation";
+import { toast } from "@/hooks/use-toast";
+import { usePlanStore } from "@/store/plan";
 
 export type Phase = {
   id: string;
@@ -24,7 +28,7 @@ type Plan = {
   };
 };
 
-export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, className }: { phases: Phase[]; plans: Plan[]; onGeneratePlan?: (phaseId: string) => void; onOpenPlan?: (phaseId: string, index: number) => void; className?: string }) {
+export function PhaseSidebar({ phases, plans, onOpenPlan, className }: { phases: Phase[]; plans: Plan[]; onGeneratePlan?: (phaseId: string) => void; onOpenPlan?: (phaseId: string, index: number) => void; className?: string }) {
   const plansByPhase = React.useMemo(() => {
     const map = new Map<string, Plan[]>();
     for (const p of plans) {
@@ -43,6 +47,9 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
 
   const editingPhase = React.useMemo(() => localPhases.find((p) => p.id === editingId) || null, [localPhases, editingId]);
 
+  const { phases: storedPhases, relevantFiles } = usePhaseStore();
+  const { mutate: generatePlan } = useGeneratePlan();
+  const { setPlans } = usePlanStore();
   const handleEditPhase = (phase: Phase) => {
     setEditingId(phase.id);
     setEditOpen(true);
@@ -57,6 +64,38 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
     }
   };
 
+  const handleGeneratePlan = (phaseId: string) => {
+    const phase = storedPhases.find((p) => p.id === phaseId);
+    if (!phase) {
+      return toast({
+        title: "Error",
+        description: "Phase not found, Try again after refreshing the page.",
+        variant: "destructive",
+      });
+    }
+
+    generatePlan(
+      { phase, relevantFiles },
+      {
+        onSuccess: (data) => {
+          setPlans(data);
+          toast({
+            title: "Success",
+            description: "Plan generated successfully.",
+            variant: "default",
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Error",
+            description: "Failed to generate plan.",
+            variant: "destructive",
+          });
+        },
+      }
+    );
+  };
+
   return (
     <aside aria-label="Phases" className={["sticky top-0 h-[calc(100vh-4rem)] w-1/4 min-w-[320px] shrink-0 rounded bg-sidebar p-3", "overflow-y-auto", className || ""].join(" ")}>
       <div className="mb-2 px-1">
@@ -66,7 +105,7 @@ export function PhaseSidebar({ phases, plans, onGeneratePlan, onOpenPlan, classN
 
       <div className="flex flex-col gap-3">
         {phases.length > 0 ? (
-          phases.map((phase) => <PhaseCard onEditPhase={handleEditPhase} key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={onGeneratePlan} onOpenPlan={onOpenPlan} />)
+          phases.map((phase) => <PhaseCard onEditPhase={handleEditPhase} key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={handleGeneratePlan} onOpenPlan={onOpenPlan} />)
         ) : (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="rounded-full bg-muted p-3 mb-3">

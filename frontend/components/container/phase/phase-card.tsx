@@ -67,7 +67,7 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEdi
             <span className={cn("inline-block h-1.5 w-1.5 rounded-full", phase.estimatedComplexity === "high" ? "bg-destructive" : phase.estimatedComplexity === "medium" ? "bg-primary" : "bg-muted-foreground")} />
             {phase.estimatedComplexity}
           </span>
-          <button className="h-7 w-7 inline-flex items-center justify-center rounded-md border border-border bg-background text-foreground/80 hover:bg-muted transition" aria-label="Edit phase description" onClick={() => onEditPhase?.(phase)}>
+          <button className="h-7 w-7 cursor-pointer inline-flex items-center justify-center  rounded-md border border-border bg-transparent text-foreground/80 hover:bg-muted transition" aria-label="Edit phase description" onClick={() => onEditPhase?.(phase)}>
             <PencilLine className="h-3 w-3" />
           </button>
         </div>

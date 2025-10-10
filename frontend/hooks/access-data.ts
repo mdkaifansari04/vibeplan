@@ -1,5 +1,7 @@
-import { ApiResponse, IndexRepositoryResponse, GeneratePhaseRequest, GeneratePhaseResponse } from "./type.d";
+import { Phase } from "@/types/phase";
+import { ApiResponse, IndexRepositoryResponse, GeneratePhaseRequest, GeneratePhaseResponse, PlanGenerationResponse } from "./type.d";
 import axios from "axios";
+import { RelevantFiles } from "@/store/phase";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -15,7 +17,7 @@ export const generatePhases = async (request: GeneratePhaseRequest) => {
   return data.data;
 };
 
-export const generatePlan = async (phaseId: string) => {
-  const { data } = await axiosInstance.post<ApiResponse<{ instruction: string; plan: string }>>("/plans/generate", { phaseId });
+export const generatePlan = async (body: { phase: Phase; relevantFiles: RelevantFiles[] }) => {
+  const { data } = await axiosInstance.post<ApiResponse<PlanGenerationResponse>>("/plans/generate", body);
   return data.data;
 };

@@ -25,7 +25,7 @@ function Page() {
   const current = React.useMemo(() => {
     if (!selected) return null;
     const plansForPhase = plans.filter((p) => p.phaseId === selected.phaseId);
-    const data = plansForPhase[selected.index]?.data;
+    const data = plansForPhase[selected.index];
     return data || null;
   }, [selected, plans]);
 
