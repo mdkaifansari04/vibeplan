@@ -1,11 +1,10 @@
 "use client";
-import { motion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Button as LiquidButton } from "@/components/ui/liquid-glass-button";
 import ShiftCard from "@/components/ui/shift-card";
 import { cn } from "@/lib/utils";
-import { Eye, PencilLine, View } from "lucide-react";
+import { Eye, PencilLine } from "lucide-react";
+import { motion } from "motion/react";
 
 type Phase = {
   id: string;
@@ -78,9 +77,9 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEdi
 
   const topAnimateContent = (
     <>
-      <motion.img transition={{ duration: 0.3, ease: "circIn" }} src="/phase-thumbnail.jpg" layoutId={`phase-img-${phase.id}`} width={78} height={80} alt="Phase thumbnail" className="absolute right-2 top-1.5 rounded-sm shadow-lg" />
+      <motion.img transition={{ duration: 0.3, ease: "circIn" }} src="/phase-thumbnail.jpg" layoutId={`phase-img-${phase.id}`} width={50} height={50} alt="Phase thumbnail" className="absolute right-2 top-1.5 rounded-sm shadow-lg" />
       <motion.div
-        className="absolute right-[6px] top-[4px] h-[70px] w-[82px] rounded-sm rounded-br-sm border-[2px] border-dashed border-neutral-800/80 bg-transparent dark:border-neutral-200/80 ml-auto mb-[6px] dark:mb-[3px]"
+        className="absolute right-[6px] top-[4px] h-[50px] w-[50px] rounded-sm rounded-br-sm border-[2px] border-dashed border-neutral-800/80 bg-transparent dark:border-neutral-200/80 ml-auto mb-[6px] dark:mb-[3px]"
         initial={{ opacity: 0, scale: 1.6, y: 0, filter: "blur(4px)" }}
         animate={{
           opacity: 1,
@@ -100,7 +99,7 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEdi
   );
 
   const middleContent = <motion.img src="/phase-image.jpg" layoutId={`phase-img-${phase.id}`} alt="Phase preview" className="w-1/2 mx-auto rounded-sm border-2 border-white dark:border-black" />;
-
+  const planAvailable = plans.length > 0;
   const bottomContent = (
     <div className="pb-3">
       <div className="flex w-full flex-col gap-2 rounded-t-lg border-t border-t-black/10 bg-primary/90 px-3 pb-3">
@@ -115,7 +114,7 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEdi
             <path d="M12 5C6 5 1.73 8.11 0 12c1.73 3.89 6 7 12 7s10.27-3.11 12-7c-1.73-3.89-6-7-12-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
           </svg>
         </Button> */}
-        <p className="text-pretty text-[12px] leading-4 text-neutral-100 dark:text-[#171717]">{phase.description.split("\n").slice(0, 2).join(" ")}</p>
+        <p className="text-pretty text-[12px] leading-4 text-neutral-100 dark:text-[#171717]">{phase.description.slice(0, 270) + "..."}</p>
 
         {phase.dependencies?.length ? (
           <div className="flex flex-wrap items-center gap-1">
@@ -128,15 +127,17 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEdi
           </div>
         ) : null}
 
-        <div className="mt-1 flex flex-col gap-2 rounded-xl bg-accent/80 px-1 py-1 dark:bg-accent">
-          <Button size="sm" className="h-7 text-xs" onClick={() => onGeneratePlan?.(phase.id)}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="mr-1" aria-hidden="true">
-              <path d="M5 3l1.5 3L10 7.5 6.5 9 5 12 3.5 9 0 7.5 3.5 6 5 3Zm14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2ZM12 10l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z" />
-            </svg>
-            Generate plan
-          </Button>
+        <div className="my-1 h-full flex flex-col gap-2 rounded-xl bg-accent/80 px-1 py-1 dark:bg-accent">
+          {!planAvailable && (
+            <Button size="sm" className="h-7 text-xs " onClick={() => onGeneratePlan?.(phase.id)}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="mr-1" aria-hidden="true">
+                <path d="M5 3l1.5 3L10 7.5 6.5 9 5 12 3.5 9 0 7.5 3.5 6 5 3Zm14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2ZM12 10l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z" />
+              </svg>
+              Generate plan
+            </Button>
+          )}
 
-          {plans.length > 0 && (
+          {planAvailable && (
             <div className="flex flex-col gap-1.5">
               {plans.map((p, idx) => (
                 <div

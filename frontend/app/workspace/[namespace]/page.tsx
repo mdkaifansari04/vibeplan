@@ -1,21 +1,17 @@
 "use client";
+import React from "react";
 
 import DependencyGraphSection from "@/components/container/depedency-graph/dependecy-graph-section";
 import { PhaseSidebar } from "@/components/container/phase/phase-section";
 import { PlanModal } from "@/components/container/phase/plan-modal";
-import { CircularBarsSpinnerLoader } from "@/components/ui/loader";
-import { useGeneratePhases } from "@/hooks/mutation";
 import { useDependencyGraphStore } from "@/store/dependency-graph";
 import { usePhaseStore } from "@/store/phase";
 import { usePlanStore } from "@/store/plan";
-import { useParams } from "next/navigation";
-import React from "react";
 
 function Page() {
   const { dependencyData } = useDependencyGraphStore();
   const { phases } = usePhaseStore();
   const { plans } = usePlanStore();
-  const { mutateAsync, isPending: isGenerating } = useGeneratePhases();
 
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<{ phaseId: string; index: number } | null>(null);

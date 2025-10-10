@@ -9,22 +9,21 @@ import { usePhaseStore } from "@/store/phase";
 
 interface CreativeCardProps {
   placeholder?: string;
-  tags?: string[];
 }
 
-const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creative idea here...✨", tags = ["Generate Image", "Analyze Data", "Explore More"] }) => {
+const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creative idea here...✨" }) => {
   const { mutate: generatePhase, isPending } = useGeneratePhases();
-  const { setPhases } = usePhaseStore();
+  const { setPhases, setRelevantFiles, reset, setUserPrompt } = usePhaseStore();
   const { addMessage } = useMessagesStore();
   const params = useParams();
   const namespace = params.namespace as string;
   const [inputValue, setInputValue] = useState("");
 
   const handleGeneratePhase = () => {
+    reset();
     const userPrompt = inputValue.trim();
     if (!userPrompt) return;
 
-    // Add user message
     const userMessageId = `user_${Date.now()}`;
     addMessage({
       message: userPrompt,
@@ -44,7 +43,11 @@ const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creativ
             duration: 5000,
           });
 
-          setPhases(data.phases, data.contextSummary.topRelevantFiles);
+          console.log("daata", data);
+
+          setPhases(data.phases);
+          setRelevantFiles(data.contextSummary.topRelevantFiles);
+          setUserPrompt(userPrompt);
           setInputValue("");
         },
         onError: (error) => {
@@ -76,32 +79,11 @@ const AIInput: React.FC<CreativeCardProps> = ({ placeholder = "Type your creativ
           </div>
 
           <div className="w-full flex justify-end items-end p-3">
-            {/* <div className="flex gap-3">
-              <button className="flex text-black/20 dark:text-white/20 bg-transparent border-none cursor-pointer transition-all duration-300 hover:text-black dark:hover:text-white hover:-translate-y-1">
-                <Image size={20} />
-              </button>
-              <button className="flex text-black/20 dark:text-white/20 bg-transparent border-none cursor-pointer transition-all duration-300 hover:text-black dark:hover:text-white hover:-translate-y-1">
-                <BarChart2 size={20} />
-              </button>
-              <button className="flex text-black/20 dark:text-white/20 bg-transparent border-none cursor-pointer transition-all duration-300 hover:text-black dark:hover:text-white hover:-translate-y-1">
-                <MoreHorizontal size={20} />
-              </button>
-            </div> */}
-
             <button onClick={() => handleGeneratePhase()} disabled={isPending || !inputValue.trim()} className="flex p-1 bg-gradient-to-t dark:from-gray-800 dark:via-gray-600 dark:to-gray-800 from-gray-400 via-gray-300 to-gray-500 rounded-lg shadow-inner border-none outline-none cursor-pointer transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
               <i className="w-8 h-8 p-2 dark:bg-black/10 bg-white/20 rounded-lg backdrop-blur-sm text-gray-500 dark:text-gray-400 flex items-center justify-center">{isPending ? <LoaderCircle className="w-4 h-4 animate-spin" /> : <Send size={20} className="transition-all duration-300 hover:text-gray-100 dark:hover:text-white hover:drop-shadow-[0_0_5px_#fff]" />}</i>
             </button>
           </div>
         </div>
-
-        {/* Tags */}
-        {/* <div className="flex gap-2 text-gray-900 dark:text-white text-xs py-3">
-          {tags.map((tag, idx) => (
-            <span key={idx} className="px-2 py-1 bg-white dark:bg-black border border-gray-300 dark:border-gray-800 rounded-lg cursor-pointer select-none transition-colors">
-              {tag}
-            </span>
-          ))}
-        </div> */}
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ class PlanController {
       const result = await this.planService.generatePlan({ topRelevantFiles, phase, namespace });
       res.status(200).json({
         success: true,
-        data: result,
+        data: { phaseId: phase.id, ...result },
         message: "Detailed plan generated successfully",
       });
     } catch (error) {

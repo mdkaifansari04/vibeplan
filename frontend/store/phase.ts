@@ -8,8 +8,11 @@ export interface RelevantFiles {
   similarity: number;
 }
 export interface PhaseState {
+  userPrompt: string;
   phases: Phase[];
-  setPhases: (phases: Phase[], relevantFiles: RelevantFiles[]) => void;
+  setPhases: (phases: Phase[]) => void;
+  setUserPrompt: (prompt: string) => void;
+
   updatePhase: (phaseId: string, updatedPhase: Partial<Phase>) => void;
   reset: () => void;
 
@@ -18,6 +21,7 @@ export interface PhaseState {
 }
 
 const initialState = {
+  userPrompt: "",
   phases: [],
   relevantFiles: [],
 };
@@ -27,10 +31,15 @@ export const usePhaseStore = create<PhaseState>()(
     (set, get) => ({
       ...initialState,
 
-      setPhases: (phases: Phase[], relevantFiles: RelevantFiles[]) => {
+      setPhases: (phases: Phase[]) => {
         set({
           phases,
-          relevantFiles,
+        });
+      },
+
+      setUserPrompt: (prompt: string) => {
+        set({
+          userPrompt: prompt,
         });
       },
 
@@ -51,10 +60,6 @@ export const usePhaseStore = create<PhaseState>()(
     {
       name: "phase-storage",
       storage: createJSONStorage(() => sessionStorage),
-
-      partialize: (state) => ({
-        phases: state.phases,
-      }),
     }
   )
 );

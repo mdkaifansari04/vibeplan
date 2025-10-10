@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { PhaseCard } from "./phase-card";
 import { EditPhaseModal } from "./edit-modal";
+import { PhaseCard } from "./phase-card";
 
 export type Phase = {
   id: string;
