@@ -17,7 +17,7 @@ export const generatePhases = async (request: GeneratePhaseRequest) => {
   return data.data;
 };
 
-export const generatePlan = async (body: { phase: Phase; relevantFiles: RelevantFiles[] }) => {
+export const generatePlan = async (body: { namespace: string; phase: Phase; topRelevantFiles: RelevantFiles[] }) => {
   const { data } = await axiosInstance.post<ApiResponse<PlanGenerationResponse>>("/plans/generate", body);
   return data.data;
 };

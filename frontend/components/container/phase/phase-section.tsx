@@ -7,6 +7,9 @@ import { usePhaseStore } from "@/store/phase";
 import { useGeneratePhases, useGeneratePlan } from "@/hooks/mutation";
 import { toast } from "@/hooks/use-toast";
 import { usePlanStore } from "@/store/plan";
+import { useParams } from "next/navigation";
+import { Plan } from "@/types/phase";
+import LoadingAlert from "@/components/shared/loading-alert";
 
 export type Phase = {
   id: string;
@@ -18,14 +21,6 @@ export type Phase = {
   priority: "low" | "medium" | "high" | "critical";
   category: string;
   reasoning?: string;
-};
-
-type Plan = {
-  phaseId: string;
-  data: {
-    instruction: string;
-    plan: string;
-  };
 };
 
 export function PhaseSidebar({ phases, plans, onOpenPlan, className }: { phases: Phase[]; plans: Plan[]; onGeneratePlan?: (phaseId: string) => void; onOpenPlan?: (phaseId: string, index: number) => void; className?: string }) {
@@ -47,8 +42,10 @@ export function PhaseSidebar({ phases, plans, onOpenPlan, className }: { phases:
 
   const editingPhase = React.useMemo(() => localPhases.find((p) => p.id === editingId) || null, [localPhases, editingId]);
 
+  const params = useParams();
+  const namespace = params.namespace as string;
   const { phases: storedPhases, relevantFiles } = usePhaseStore();
-  const { mutate: generatePlan } = useGeneratePlan();
+  const { mutate: generatePlan, isPending: isGenerating } = useGeneratePlan();
   const { setPlans } = usePlanStore();
   const handleEditPhase = (phase: Phase) => {
     setEditingId(phase.id);
@@ -75,7 +72,7 @@ export function PhaseSidebar({ phases, plans, onOpenPlan, className }: { phases:
     }
 
     generatePlan(
-      { phase, relevantFiles },
+      { namespace, phase, topRelevantFiles: relevantFiles },
       {
         onSuccess: (data) => {
           setPlans(data);
@@ -103,9 +100,11 @@ export function PhaseSidebar({ phases, plans, onOpenPlan, className }: { phases:
         <p className="text-xs text-foreground/60">{phases.length > 0 ? "Hover a card to see details" : "No phases found"}</p>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="relative flex flex-col gap-3">
+        {isGenerating && <LoadingAlert title="Generating Plan..." description="Please wait while we generate your plan." />}
+
         {phases.length > 0 ? (
-          phases.map((phase) => <PhaseCard onEditPhase={handleEditPhase} key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={handleGeneratePlan} onOpenPlan={onOpenPlan} />)
+          phases.map((phase) => <PhaseCard isGenerating={isGenerating} onEditPhase={handleEditPhase} key={phase.id} phase={phase} plans={plansByPhase.get(phase.id) || []} onGeneratePlan={handleGeneratePlan} onOpenPlan={onOpenPlan} />)
         ) : (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="rounded-full bg-muted p-3 mb-3">

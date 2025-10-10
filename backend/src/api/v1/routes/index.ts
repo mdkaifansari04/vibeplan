@@ -6,5 +6,5 @@ import planRoute from "./plan.routes";
 const router = Router();
 router.use("/indexing", indexingRoute);
 router.use("/phases", phaseGenerationRoute);
-router.use("/plan", planRoute);
+router.use("/plans", planRoute);
 export default router;

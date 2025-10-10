@@ -20,10 +20,8 @@ type Phase = {
 
 type Plan = {
   phaseId: string;
-  data: {
-    instruction: string;
-    plan: string;
-  };
+  instruction: string;
+  plan: string;
 };
 
 function priorityColor(priority: Phase["priority"]) {
@@ -40,10 +38,10 @@ function priorityColor(priority: Phase["priority"]) {
   }
 }
 
-function SmallPlanCard({ instruction, onRegenerate }: { instruction: string; onRegenerate?: () => void }) {
+function SmallPlanCard({ plan, onRegenerate }: { plan: string; onRegenerate?: () => void }) {
   return (
     <div className="flex items-start gap-2 rounded-md border border-border bg-card/80 px-2 py-2">
-      <div className="mt-0.5 text-xs leading-4 text-foreground/80 line-clamp-2">{instruction}</div>
+      <div className="mt-0.5 text-xs leading-4 text-foreground/80 line-clamp-2">{plan.slice(0, 100) + "..."}</div>
       <button onClick={onRegenerate} className="ml-auto inline-flex h-6 w-6 items-center justify-center rounded-md border border-border text-foreground/70 hover:bg-accent hover:text-foreground transition" aria-label="Regenerate plan" title="Regenerate plan">
         <Eye />
       </button>
@@ -51,7 +49,7 @@ function SmallPlanCard({ instruction, onRegenerate }: { instruction: string; onR
   );
 }
 
-export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEditPhase }: { phase: Phase; plans?: Plan[]; onGeneratePlan?: (phaseId: string) => void; onOpenPlan?: (phaseId: string, index: number) => void; onEditPhase?: (phase: Phase) => void }) {
+export function PhaseCard({ phase, plans = [], onGeneratePlan, isGenerating, onOpenPlan, onEditPhase }: { phase: Phase; plans?: Plan[]; isGenerating: boolean; onGeneratePlan?: (phaseId: string) => void; onOpenPlan?: (phaseId: string, index: number) => void; onEditPhase?: (phase: Phase) => void }) {
   const topContent = (
     <div className="rounded-md bg-accent/90 text-primary shadow-[0px_1px_1px_0px_rgba(0,0,0,0.05),0px_1px_1px_0px_rgba(255,252,240,0.5)_inset,0px_0px_0px_1px_hsla(0,0%,100%,0.1)_inset,0px_0px_1px_0px_rgba(28,27,26,0.5)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(0,0,0,0.1),0_2px_2px_0_rgba(0,0,0,0.1),0_4px_4px_0_rgba(0,0,0,0.1),0_8px_8px_0_rgba(0,0,0,0.1)]">
       <div className="flex flex-col justify-between p-3">
@@ -129,7 +127,7 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEdi
 
         <div className="my-1 h-full flex flex-col gap-2 rounded-xl bg-accent/80 px-1 py-1 dark:bg-accent">
           {!planAvailable && (
-            <Button size="sm" className="h-7 text-xs " onClick={() => onGeneratePlan?.(phase.id)}>
+            <Button disabled={isGenerating} size="sm" className="h-7 text-xs " onClick={() => onGeneratePlan?.(phase.id)}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="mr-1" aria-hidden="true">
                 <path d="M5 3l1.5 3L10 7.5 6.5 9 5 12 3.5 9 0 7.5 3.5 6 5 3Zm14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2ZM12 10l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z" />
               </svg>
@@ -150,7 +148,7 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, onOpenPlan, onEdi
                   }}
                   className="focus-visible:ring-2 focus-visible:ring-ring/50 rounded-md outline-none"
                 >
-                  <SmallPlanCard instruction={p.data.instruction} onRegenerate={() => onGeneratePlan?.(phase.id)} />
+                  <SmallPlanCard plan={p.plan} onRegenerate={() => onGeneratePlan?.(phase.id)} />
                 </div>
               ))}
             </div>

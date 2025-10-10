@@ -108,7 +108,13 @@ export class LLMService {
 
   async generateDetailedPlan({ phase, topRelevantFiles, namespace }: GeneratePlanPayload): Promise<DetailedPlanResponse> {
     try {
-      const searchQuery = `${phase.title} ${phase.category} ${phase.description.substring(0, 100)} ${topRelevantFiles.map((f) => f.path).join(" ")}`;
+      // Limit search query length to reduce token usage
+      const descriptionSnippet = phase.description.substring(0, 50);
+      const filePathsSnippet = topRelevantFiles
+        .slice(0, 3)
+        .map((f) => f.path)
+        .join(" ");
+      const searchQuery = `${phase.title} ${phase.category} ${descriptionSnippet} ${filePathsSnippet}`;
       console.log("Vector search for:", searchQuery);
 
       const relevantContext = await this.vectorService.findRelevantContext(namespace, searchQuery, "feature");
@@ -123,7 +129,7 @@ export class LLMService {
           { role: "user", content: userPrompt },
         ],
         temperature: 0.3,
-        max_tokens: 12000,
+        max_tokens: 4000, // Reduced from 12000 to stay well under limit
         response_format: {
           type: "json_schema",
           json_schema: {
@@ -161,9 +167,28 @@ export class LLMService {
     }
   }
 
+  private truncateText(text: string, maxLength: number): string {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "... [truncated]";
+  }
+
   private buildSimpleUserPrompt(phase: PayloadPhase, relevantContext: RelevantContext, topRelevantFiles: RelevantFile[]): string {
     const contextFiles = relevantContext.files.slice(0, 3);
-    const filesList = contextFiles.length > 0 ? contextFiles.map((f) => `- ${f.path} (${f.language}). (${f.metadata?.fullCode})`).join("\n") : "No relevant files found";
+
+    // Limit file content to prevent token overflow
+    const filesList =
+      contextFiles.length > 0
+        ? contextFiles
+            .map((f) => {
+              const fileCode = f.metadata?.fullCode || "";
+              const truncatedCode = this.truncateText(fileCode, 500); // Limit to 500 chars per file
+              return `- ${f.path} (${f.language})\n  ${truncatedCode}`;
+            })
+            .join("\n")
+        : "No relevant files found";
+
+    // Truncate description if too long
+    const truncatedDescription = this.truncateText(phase.description, 300);
 
     return `Generate a descriptive implementation plan for this phase:
             **Phase:** ${phase.title}
@@ -172,7 +197,7 @@ export class LLMService {
             **Complexity:** ${phase.estimatedComplexity}
 
             **Description:**
-            ${phase.description}
+            ${truncatedDescription}
 
             **Available Files:**
             ${filesList}
