@@ -8,6 +8,7 @@ import ModernGlassyAlert from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Highlighter } from "@/components/ui/highlighter";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/liquid-glass-button";
 import { CircularBarsSpinnerLoader } from "@/components/ui/loader";
 import { ModernSimpleInput } from "@/components/ui/modern-simple-input";
@@ -26,6 +27,7 @@ const ANALYSIS_STEPS = ["Fetching repository files...", "Analyzing project struc
 
 export default function AnalyzePage() {
   const [url, setUrl] = useState("");
+  const [branch, setBranch] = useState("main");
   const [isValidUrl, setIsValidUrl] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -117,38 +119,35 @@ export default function AnalyzePage() {
             </motion.p>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="max-w-3xl mx-auto space-y-6">
-            <div className="relative">
-              <Github className={cn("absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors z-10", isValidUrl ? "text-green-500" : "text-neutral-400")} />
-              <AnimatePresence>
-                {isValidUrl && (
-                  <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }} className="absolute left-10 top-1/2 -translate-y-1/2 z-10">
-                    <Check className="w-4 h-4 text-green-500" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+          <div className="w-full md:flex md:items-stretch">
+            {/* Combined URL + Branch group */}
+            <div
+              className="flex min-w-3xl mx-auto items-center rounded-lg border bg-card text-sm shadow-sm
+                     focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background"
+              role="group"
+              aria-label="Repository URL and Branch"
+            >
+              <label htmlFor="repo-url" className="sr-only">
+                Repository URL
+              </label>
+              <Input id="repo-url" type="url" required placeholder="https://github.com/owner/repo" autoComplete="off" value={url} onChange={(e) => setUrl(e.target.value)} className="h-11 flex-1 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground" />
 
-              <ModernSimpleInput id="github-url-input" value={url} onChange={(e) => setUrl(e.target.value)} onKeyDown={(e) => e.key === "Enter" && isValidUrl && handleAnalyze()} placeholder="https://github.com/username/repository" className={cn("pl-12 pr-40 h-16 text-lg transition-all duration-300", "focus:shadow-lg focus:shadow-blue-500/20", showError && "border-red-500 focus-visible:border-red-500 animate-shake")} />
+              <div aria-hidden="true" className="mx-1 h-6 w-px bg-border" />
 
-              <Button onClick={() => handleAnalyze()} disabled={!isValidUrl} className={cn("absolute right-2 top-1/2 -translate-y-1/2 px-6 py-3 h-12 transition-transform ease-in-out hover:scale-[1.02]")}>
-                Analyze <span className="ml-2">→</span>
-              </Button>
+              <div className="flex items-center pr-2 pl-1 min-w-28">
+                <label htmlFor="branch" className="sr-only">
+                  Branch
+                </label>
+                <div className="pointer-events-none select-none text-muted-foreground pr-2 text-xs uppercase tracking-wide">Branch</div>
+                <Input id="branch" type="text" placeholder="main" value={branch} onChange={(e) => setBranch(e.target.value)} className="h-8 w-[7.5rem] border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground" />
+              </div>
+              <div className="mt-3 md:mt-0 md:ml-2">
+                <Button onClick={handleAnalyze} size="lg" className="w-full md:w-auto md:h-11 md:rounded-l-none md:border md:border-l-0 md:border-border">
+                  Analyze
+                </Button>
+              </div>
             </div>
-
-            <AnimatePresence>
-              {showError && (
-                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="flex items-center gap-2 text-sm text-red-500">
-                  <AlertCircle className="w-4 h-4" />
-                  <span>Please enter a valid GitHub repository URL</span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex items-center justify-center gap-2 text-sm text-neutral-500">
-              <Clock className="w-4 h-4" />
-              <span>Typical analysis: 3-7 minutes • Large repos: up to 10 minutes</span>
-            </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="flex items-center gap-4 max-w-2xl mx-auto">
             <div className="flex-1 h-px bg-neutral-300 dark:bg-neutral-700" />

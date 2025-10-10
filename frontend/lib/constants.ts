@@ -1,6 +1,6 @@
 export const EXAMPLE_REPOS = [
   { name: "Demo Chat App", url: "https://github.com/mdkaifansari04/Chat-App" },
-  { name: "Full stack app", url: "https://github.com/mdkaifansari04/nirvana-ai" },
+  { name: "Demo todo app", url: "https://github.com/nazaninsbr/React-TodoList.git" },
   { name: "Vibe plan repo", url: "https://github.com/mdkaifansari04/vibeplan" },
 ];
 
