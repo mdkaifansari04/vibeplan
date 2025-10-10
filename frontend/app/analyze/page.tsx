@@ -18,6 +18,9 @@ import { useToast } from "@/hooks/use-toast";
 import { DEMO_VIDEOS, EXAMPLE_REPOS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useDependencyGraphStore } from "@/store/dependency-graph";
+import { useMessagesStore } from "@/store/messages";
+import { usePhaseStore } from "@/store/phase";
+import { usePlanStore } from "@/store/plan";
 import { AlertCircle, Check, Clock, Github, Loader2, Sparkles } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
@@ -38,6 +41,9 @@ export default function AnalyzePage() {
 
   const { mutate: indexRepository } = useIndexRepository();
   const { setDependencyData } = useDependencyGraphStore();
+  const { reset: resetPlan } = usePlanStore();
+  const { reset: resetPhase } = usePhaseStore();
+  const { resetMessages } = useMessagesStore();
 
   useEffect(() => {
     setMounted(true);
@@ -65,35 +71,42 @@ export default function AnalyzePage() {
   }, [isAnalyzing, currentStep]);
 
   const handleAnalyze = () => {
+    resetPhase();
+    resetPlan();
+    resetMessages();
     setIsAnalyzing(true);
     if (!isValidUrl) {
       setShowError(true);
       return;
     }
 
-    indexRepository(url, {
-      onSuccess: (data) => {
-        setCurrentStep(ANALYSIS_STEPS.length - 1);
-        setDependencyData({ nodes: data.dependencyGraph.nodes, edges: data.dependencyGraph.edges, stats: data.dependencyGraph.stats });
-        router.push(`/workspace/${data.namespace}`);
-      },
-      onError: (error) => {
-        console.error("Indexing error:", error);
-        setCurrentStep(0);
-        toast({
-          title: "Analysis failed",
-          description: "An unexpected error occurred. Please try again.",
-          variant: "destructive",
-        });
-      },
-      onSettled: () => {
-        setIsAnalyzing(false);
-      },
-    });
+    indexRepository(
+      { repoUrl: url, branch },
+      {
+        onSuccess: (data) => {
+          setCurrentStep(ANALYSIS_STEPS.length - 1);
+          setDependencyData({ nodes: data.dependencyGraph.nodes, edges: data.dependencyGraph.edges, stats: data.dependencyGraph.stats });
+          router.push(`/workspace/${data.namespace}`);
+        },
+        onError: (error) => {
+          console.error("Indexing error:", error);
+          setCurrentStep(0);
+          toast({
+            title: "Analysis failed",
+            description: "An unexpected error occurred. Please try again.",
+            variant: "destructive",
+          });
+        },
+        onSettled: () => {
+          setIsAnalyzing(false);
+        },
+      }
+    );
   };
 
-  const handleExampleClick = (exampleUrl: string) => {
+  const handleExampleClick = (exampleUrl: string, branch: string) => {
     setUrl(exampleUrl);
+    setBranch(branch);
     setTimeout(() => {
       document.getElementById("github-url-input")?.focus();
     }, 300);
@@ -120,7 +133,6 @@ export default function AnalyzePage() {
           </motion.div>
 
           <div className="w-full md:flex md:items-stretch">
-            {/* Combined URL + Branch group */}
             <div
               className="flex min-w-3xl mx-auto items-center rounded-lg border bg-card text-sm shadow-sm
                      focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background"
@@ -158,7 +170,7 @@ export default function AnalyzePage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="flex flex-wrap justify-center gap-3">
             {EXAMPLE_REPOS.map((repo, index) => (
               <motion.div key={repo.name} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.7 + index * 0.1 }}>
-                <Button size="sm" onClick={() => handleExampleClick(repo.url)} className="hover:scale-105 transition-transform">
+                <Button size="sm" onClick={() => handleExampleClick(repo.url, repo.branch)} className="hover:scale-105 transition-transform">
                   {repo.name}
                 </Button>
               </motion.div>

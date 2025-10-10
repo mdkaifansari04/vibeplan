@@ -1,0 +1,227 @@
+{
+  "nodes": [
+    {
+      "id": "README.md",
+      "type": "input",
+      "position": {
+        "x": 0,
+        "y": -360
+      },
+      "data": {
+        "label": "README.md",
+        "language": "markdown",
+        "functions": 0,
+        "classes": 0,
+        "lines": 21,
+        "fileType": "documentation"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "package.json",
+      "type": "input",
+      "position": {
+        "x": 0,
+        "y": -240
+      },
+      "data": {
+        "label": "package.json",
+        "language": "json",
+        "functions": 0,
+        "classes": 0,
+        "lines": 17,
+        "fileType": "config"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "public/index.html",
+      "type": "input",
+      "position": {
+        "x": 0,
+        "y": -120
+      },
+      "data": {
+        "label": "index.html",
+        "language": "html",
+        "functions": 0,
+        "classes": 0,
+        "lines": 13,
+        "fileType": "file"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "src/App.css",
+      "type": "input",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "App.css",
+        "language": "css",
+        "functions": 0,
+        "classes": 0,
+        "lines": 25,
+        "fileType": "file"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "src/App.js",
+      "type": "default",
+      "position": {
+        "x": 250,
+        "y": -60
+      },
+      "data": {
+        "label": "App.js",
+        "language": "javascript",
+        "functions": 0,
+        "classes": 1,
+        "lines": 22,
+        "fileType": "class"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "src/App.test.js",
+      "type": "input",
+      "position": {
+        "x": 0,
+        "y": 120
+      },
+      "data": {
+        "label": "App.test.js",
+        "language": "javascript",
+        "functions": 0,
+        "classes": 0,
+        "lines": 9,
+        "fileType": "module"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "src/TodoItems.js",
+      "type": "default",
+      "position": {
+        "x": 500,
+        "y": 0
+      },
+      "data": {
+        "label": "TodoItems.js",
+        "language": "javascript",
+        "functions": 0,
+        "classes": 1,
+        "lines": 27,
+        "fileType": "class"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "src/TodoList.js",
+      "type": "default",
+      "position": {
+        "x": 250,
+        "y": 60
+      },
+      "data": {
+        "label": "TodoList.js",
+        "language": "javascript",
+        "functions": 0,
+        "classes": 1,
+        "lines": 55,
+        "fileType": "class"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "src/index.css",
+      "type": "input",
+      "position": {
+        "x": 0,
+        "y": 240
+      },
+      "data": {
+        "label": "index.css",
+        "language": "css",
+        "functions": 0,
+        "classes": 0,
+        "lines": 62,
+        "fileType": "file"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    },
+    {
+      "id": "src/index.js",
+      "type": "input",
+      "position": {
+        "x": 0,
+        "y": 360
+      },
+      "data": {
+        "label": "index.js",
+        "language": "javascript",
+        "functions": 0,
+        "classes": 0,
+        "lines": 16,
+        "fileType": "module"
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left"
+    }
+  ],
+  "edges": [
+    {
+      "id": "src/App.test.js->src/App.js",
+      "source": "src/App.test.js",
+      "target": "src/App.js",
+      "type": "smoothstep",
+      "animated": false
+    },
+    {
+      "id": "src/TodoList.js->src/TodoItems.js",
+      "source": "src/TodoList.js",
+      "target": "src/TodoItems.js",
+      "type": "smoothstep",
+      "animated": false
+    },
+    {
+      "id": "src/index.js->src/TodoList.js",
+      "source": "src/index.js",
+      "target": "src/TodoList.js",
+      "type": "smoothstep",
+      "animated": false
+    }
+  ],
+  "stats": {
+    "totalFiles": 10,
+    "totalDependencies": 3,
+    "languages": [
+      "markdown",
+      "json",
+      "html",
+      "css",
+      "javascript"
+    ],
+    "entryPoints": [
+      "README.md",
+      "package.json",
+      "public/index.html",
+      "src/App.css",
+      "src/App.test.js",
+      "src/index.css",
+      "src/index.js"
+    ]
+  }
+}

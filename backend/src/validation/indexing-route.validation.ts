@@ -7,7 +7,7 @@ import { CustomRequest } from "../types";
 export const indexingRouteValidation = (req: CustomRequest, res: Response, next: NextFunction) => {
   const schema = Joi.object({
     repoUrl: Joi.string().required(),
-    branch: Joi.string().optional().default("main"),
+    branch: Joi.string().required(),
   });
   validateSchema({ schema, req, next });
 };

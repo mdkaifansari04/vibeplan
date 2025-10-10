@@ -24,7 +24,7 @@ class IndexingController {
 
   public indexCodeRepository = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const tempDir = `./tmp_${Date.now()}`;
-    const { repoUrl, branch = "main" } = req.value;
+    const { repoUrl, branch } = req.value;
 
     try {
       const namespace = this.textSearchService.generateNamespace(repoUrl, branch);

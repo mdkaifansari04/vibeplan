@@ -137,15 +137,13 @@ export function YouTubePlayer({
               </>
             )}
 
-            {playing && <iframe src={`https://www.youtube.com/embed/${actualVideoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0&controls=1`} title={title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="h-full w-full border-0" />}
+            {playing && <iframe src={`https://www.youtube.com/embed/${actualVideoId ?? "AGWyx96lP8U"}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0&controls=1`} title={title ?? "How to Plan Coding Projects Effectively"} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="h-full w-full border-0" />}
 
-            {/* Controls Overlay */}
             <YouTubePlayerControls videoId={videoId} expanded={expanded} playing={playing} isHovered={isHovered} onToggleExpand={toggleExpand} controlsClassName={controlsClassName} expandButtonClassName={expandButtonClassName} />
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Expanded state - fixed position */}
       <AnimatePresence>
         {expanded && (
           <>

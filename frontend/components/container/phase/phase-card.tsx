@@ -107,23 +107,7 @@ export function PhaseCard({ phase, plans = [], onGeneratePlan, isGenerating, onO
           </svg>
           <p className="text-[12px] font-medium text-white dark:text-[#171717]">{phase.category}</p>
         </div>
-        {/* <Button size="sm" variant="secondary" className="h-6 w-6 p-0" title={plans.length ? "Quick view" : "No plans yet"} aria-label="Quick view" onClick={() => (plans.length ? onOpenPlan?.(phase.id, 0) : undefined)}>
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-            <path d="M12 5C6 5 1.73 8.11 0 12c1.73 3.89 6 7 12 7s10.27-3.11 12-7c-1.73-3.89-6-7-12-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
-          </svg>
-        </Button> */}
         <p className="text-pretty text-[12px] leading-4 text-neutral-100 dark:text-[#171717]">{phase.description.slice(0, 270) + "..."}</p>
-
-        {phase.dependencies?.length ? (
-          <div className="flex flex-wrap items-center gap-1">
-            <span className="text-[10px] text-white/80 dark:text-[#171717]">Depends:</span>
-            {phase.dependencies.map((d) => (
-              <Badge key={d} variant="secondary" className="px-1.5 py-0.5 text-[10px]">
-                {d}
-              </Badge>
-            ))}
-          </div>
-        ) : null}
 
         <div className="my-1 h-full flex flex-col gap-2 rounded-xl bg-accent/80 px-1 py-1 dark:bg-accent">
           {!planAvailable && (

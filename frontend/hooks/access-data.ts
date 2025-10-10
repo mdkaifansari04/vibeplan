@@ -7,8 +7,8 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
-export const indexRepository = async (repoUrl: string) => {
-  const { data } = await axiosInstance.post<ApiResponse<IndexRepositoryResponse>>("/indexing", { repoUrl });
+export const indexRepository = async (body: { repoUrl: string; branch: string }) => {
+  const { data } = await axiosInstance.post<ApiResponse<IndexRepositoryResponse>>("/indexing", body);
   return data.data;
 };
 

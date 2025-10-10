@@ -1,0 +1,398 @@
+{
+  "repoName": "React-TodoList",
+  "repoUrl": "https://github.com/nazaninsbr/React-TodoList",
+  "branch": "master",
+  "stats": {
+    "totalFiles": 10,
+    "codeFiles": 5,
+    "analyzedFiles": 5,
+    "skippedDirs": [
+      "node_modules",
+      "dist",
+      "build",
+      ".git",
+      ".next",
+      "coverage",
+      ".nuxt",
+      "vendor",
+      "__pycache__",
+      ".pytest_cache",
+      ".vscode",
+      ".idea",
+      "target",
+      "bin",
+      "obj",
+      ".gradle",
+      ".cache",
+      ".expo",
+      ".turbo",
+      ".parcel-cache"
+    ],
+    "includedExtensions": [
+      ".js",
+      ".ts",
+      ".jsx",
+      ".tsx",
+      ".mjs",
+      ".cjs",
+      ".py",
+      ".java",
+      ".go",
+      ".rb",
+      ".php",
+      ".cpp",
+      ".c",
+      ".cs",
+      ".swift",
+      ".kt",
+      ".rs",
+      ".dart",
+      ".scala",
+      ".html",
+      ".css",
+      ".scss",
+      ".json",
+      ".yaml",
+      ".yml",
+      ".md"
+    ]
+  },
+  "files": [
+    {
+      "filePath": "README.md",
+      "relativePath": "README.md",
+      "language": "markdown",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Markdown documentation file",
+      "linesOfCode": 21,
+      "metadata": {
+        "sizeBytes": 318,
+        "lastModified": "2025-10-10T21:16:21.349Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 0,
+        "detectedIssues": [],
+        "semanticTags": [
+          "markdown"
+        ],
+        "needsAiSummary": false,
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "# React TodoList \n\nthis is a very simple todo list application written using React.js\n\nthe `node_modules` have not been uploaded.\n\n<h3>How to run it</h3> \n\n```\n\n  create-react-app todolist\n\n```\n\nreplace the public and src folders with those in this repo. \n```\n  npm start\n```\n\n<h3>Results</h3>\n<img src=\"./result.png\">",
+        "fullContent": "# React TodoList \n\nthis is a very simple todo list application written using React.js\n\nthe `node_modules` have not been uploaded.\n\n<h3>How to run it</h3> \n\n```\n\n  create-react-app todolist\n\n```\n\nreplace the public and src folders with those in this repo. \n```\n  npm start\n```\n\n<h3>Results</h3>\n<img src=\"./result.png\">"
+      }
+    },
+    {
+      "filePath": "package.json",
+      "relativePath": "package.json",
+      "language": "json",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "JSON configuration or data file",
+      "linesOfCode": 17,
+      "metadata": {
+        "sizeBytes": 369,
+        "lastModified": "2025-10-10T21:16:21.349Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 0,
+        "detectedIssues": [],
+        "semanticTags": [
+          "json"
+        ],
+        "needsAiSummary": false,
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "{\n  \"name\": \"todolist\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"dependencies\": {\n    \"react\": \"^16.4.1\",\n    \"react-dom\": \"^16.4.1\",\n    \"react-scripts\": \"0.9.5\"\n  },\n  \"devDependencies\": {},\n  \"scripts\": {\n    \"start\": \"react-scripts start\",\n    \"build\": \"react-scripts build\",\n    \"test\": \"react-scripts test --env=jsdom\",\n    \"eject\": \"react-scripts eject\"\n  }\n}",
+        "fullContent": "{\n  \"name\": \"todolist\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"dependencies\": {\n    \"react\": \"^16.4.1\",\n    \"react-dom\": \"^16.4.1\",\n    \"react-scripts\": \"0.9.5\"\n  },\n  \"devDependencies\": {},\n  \"scripts\": {\n    \"start\": \"react-scripts start\",\n    \"build\": \"react-scripts build\",\n    \"test\": \"react-scripts test --env=jsdom\",\n    \"eject\": \"react-scripts eject\"\n  }\n}"
+      }
+    },
+    {
+      "filePath": "public/index.html",
+      "relativePath": "public/index.html",
+      "language": "html",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Non-code file",
+      "linesOfCode": 13,
+      "metadata": {
+        "sizeBytes": 148,
+        "lastModified": "2025-10-10T21:16:21.349Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 0,
+        "detectedIssues": [],
+        "semanticTags": [
+          "html"
+        ],
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <title>Todo List</title>\n  </head>\n  <body>\n    <div id=\"container\">\n  \n    </div>\n  </body>\n</html>\n\n",
+        "fullContent": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <title>Todo List</title>\n  </head>\n  <body>\n    <div id=\"container\">\n  \n    </div>\n  </body>\n</html>\n\n"
+      }
+    },
+    {
+      "filePath": "src/App.css",
+      "relativePath": "src/App.css",
+      "language": "css",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Non-code file",
+      "linesOfCode": 25,
+      "metadata": {
+        "sizeBytes": 341,
+        "lastModified": "2025-10-10T21:16:21.349Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 0,
+        "detectedIssues": [],
+        "semanticTags": [
+          "css"
+        ],
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": ".App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: App-logo-spin infinite 20s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes App-logo-spin {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n",
+        "fullContent": ".App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: App-logo-spin infinite 20s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes App-logo-spin {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n"
+      }
+    },
+    {
+      "filePath": "src/App.js",
+      "relativePath": "src/App.js",
+      "language": "javascript",
+      "imports": [
+        "react",
+        "./logo.svg",
+        "./App.css"
+      ],
+      "exports": [],
+      "classes": [
+        {
+          "name": "App",
+          "methods": [
+            "render"
+          ],
+          "properties": [],
+          "isExported": false
+        }
+      ],
+      "functions": [],
+      "variables": [],
+      "description": "JavaScript module containing 1 classes",
+      "linesOfCode": 22,
+      "metadata": {
+        "sizeBytes": 496,
+        "lastModified": "2025-10-10T21:16:21.349Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 5,
+        "detectedIssues": [],
+        "semanticTags": [
+          "javascript",
+          "react"
+        ],
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "import React, { Component } from 'react';\nimport logo from './logo.svg';\nimport './App.css';\n\nclass App extends Component {\n  render() {\n    return (\n      <div className=\"App\">\n        <div className=\"App-header\">\n          <img src={logo} className=\"App-logo\" alt=\"logo\" />\n          <h2>Welcome to React</h2>\n        </div>\n        <p className=\"App-intro\">\n          To get started, edit <code>src/App.js</code> and save to reload.\n        </p>\n      </div>\n    );\n  }\n}\n\nexport default App;\n",
+        "fullContent": "import React, { Component } from 'react';\nimport logo from './logo.svg';\nimport './App.css';\n\nclass App extends Component {\n  render() {\n    return (\n      <div className=\"App\">\n        <div className=\"App-header\">\n          <img src={logo} className=\"App-logo\" alt=\"logo\" />\n          <h2>Welcome to React</h2>\n        </div>\n        <p className=\"App-intro\">\n          To get started, edit <code>src/App.js</code> and save to reload.\n        </p>\n      </div>\n    );\n  }\n}\n\nexport default App;\n"
+      }
+    },
+    {
+      "filePath": "src/App.test.js",
+      "relativePath": "src/App.test.js",
+      "language": "javascript",
+      "imports": [
+        "react",
+        "react-dom",
+        "./App"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Test suite with 0 test cases for validation and quality assurance",
+      "linesOfCode": 9,
+      "metadata": {
+        "sizeBytes": 208,
+        "lastModified": "2025-10-10T21:16:21.349Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 2,
+        "detectedIssues": [],
+        "semanticTags": [
+          "javascript",
+          "react"
+        ],
+        "needsAiSummary": false,
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport App from './App';\n\nit('renders without crashing', () => {\n  const div = document.createElement('div');\n  ReactDOM.render(<App />, div);\n});\n",
+        "fullContent": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport App from './App';\n\nit('renders without crashing', () => {\n  const div = document.createElement('div');\n  ReactDOM.render(<App />, div);\n});\n"
+      }
+    },
+    {
+      "filePath": "src/TodoItems.js",
+      "relativePath": "src/TodoItems.js",
+      "language": "javascript",
+      "imports": [
+        "react"
+      ],
+      "exports": [],
+      "classes": [
+        {
+          "name": "TodoItems",
+          "methods": [
+            "createTasks",
+            "delete",
+            "render"
+          ],
+          "properties": [],
+          "isExported": false
+        }
+      ],
+      "functions": [],
+      "variables": [],
+      "description": "JavaScript module containing 1 classes",
+      "linesOfCode": 27,
+      "metadata": {
+        "sizeBytes": 522,
+        "lastModified": "2025-10-10T21:16:21.350Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 4,
+        "detectedIssues": [],
+        "semanticTags": [
+          "javascript",
+          "react"
+        ],
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "import React, {Component} from \"react\";\n\nclass TodoItems extends Component {\n\tconstructor(props){\n\t\tsuper(props);\n\t\tthis.createTasks = this.createTasks.bind(this);\n\t}\n\tcreateTasks(item){\n\t\treturn <li onClick={() => this.delete(item.key)} key={item.key}>{item.text}</li>\n\t}\n\tdelete(key){\n\t\tthis.props.delete(key);\n\t}\n\trender(){\n\t\tvar todoEntries = this.props.entries;\n\t\tvar listItems = todoEntries.map(this.createTasks);\n\n\t\treturn(\n\t\t\t<ul className=\"theList\">\n\t\t\t\t{listItems}\n\t\t\t</ul>\n\t\t);\n\t}\n};\n\nexport default TodoItems;\n",
+        "fullContent": "import React, {Component} from \"react\";\n\nclass TodoItems extends Component {\n\tconstructor(props){\n\t\tsuper(props);\n\t\tthis.createTasks = this.createTasks.bind(this);\n\t}\n\tcreateTasks(item){\n\t\treturn <li onClick={() => this.delete(item.key)} key={item.key}>{item.text}</li>\n\t}\n\tdelete(key){\n\t\tthis.props.delete(key);\n\t}\n\trender(){\n\t\tvar todoEntries = this.props.entries;\n\t\tvar listItems = todoEntries.map(this.createTasks);\n\n\t\treturn(\n\t\t\t<ul className=\"theList\">\n\t\t\t\t{listItems}\n\t\t\t</ul>\n\t\t);\n\t}\n};\n\nexport default TodoItems;\n"
+      }
+    },
+    {
+      "filePath": "src/TodoList.js",
+      "relativePath": "src/TodoList.js",
+      "language": "javascript",
+      "imports": [
+        "react",
+        "./TodoItems"
+      ],
+      "exports": [],
+      "classes": [
+        {
+          "name": "TodoList",
+          "methods": [
+            "addItem",
+            "deleteItem",
+            "render"
+          ],
+          "properties": [],
+          "isExported": false
+        }
+      ],
+      "functions": [],
+      "variables": [],
+      "description": "JavaScript module containing 1 classes",
+      "linesOfCode": 55,
+      "metadata": {
+        "sizeBytes": 1199,
+        "lastModified": "2025-10-10T21:16:21.350Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 4,
+        "detectedIssues": [
+          {
+            "type": "maintainability",
+            "severity": "low",
+            "description": "Console.log statements should be removed from production code",
+            "category": "debug-code"
+          }
+        ],
+        "semanticTags": [
+          "javascript",
+          "react"
+        ],
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "import React, {Component} from \"react\";\nimport TodoItems from \"./TodoItems\";\n\nclass TodoList extends Component {\n\tconstructor(props){\n\t\tsuper(props);\n\t\tthis.state = {items: []};\n\t\tthis.addItem = this.addItem.bind(this);\n\t\tthis.deleteItem = this.deleteItem.bind(this);\n\t}\n\taddItem(e){\n\t\tif(this._inputElement.value !== \"\"){\n\t\t\tvar newItem = {\n\t\t\t\ttext: this._inputElement.value, \n\t\t\t\tkey: Date.now()\n\t\t\t};\n\t\n\t\t\tthis.setState((prevState) => {\n\t\t\t\treturn {\n\t\t\t\t\titems: prevState.items.concat(newItem)\n\t\t\t\t};\n\t\t\t});\n\t\t\n\t\t\tthis._inputElement.value = \"\";\n\t\t}\n\t\tconsole.log(this.state.items);\n\t\te.preventDefault();\n\t}\n\tdeleteItem(key){\n\t\tvar filteredItems = this.state.items.filter(function(item) {\n\t\t\treturn (item.key !== key);\n\t\t});\n\t\t\n\t\tthis.setState({\n\t\t\titems: filteredItems\n\t\t});\n\t}\n\trender(){\n\t\treturn(\n\t\t\t<div className=\"todoListMain\">\n\t\t\t  <div className=\"header\">\n\t\t\t    <form onSubmit={this.addItem}>\n\t\t\t      <input ref={(a) => this._inputElement = a} placeholder=\"enter task\">\n\t\t\t      </input>\n\t\t\t      <button type=\"submit\">add</button>\n\t\t\t    </form>\n\t\t\t    <TodoItems entries={this.state.items} delete={this.deleteItem} />\n\t\t\t  </div>\n\t\t        </div>\n\t\t);\n\t}\n}\n\nexport default TodoList; \n",
+        "fullContent": "import React, {Component} from \"react\";\nimport TodoItems from \"./TodoItems\";\n\nclass TodoList extends Component {\n\tconstructor(props){\n\t\tsuper(props);\n\t\tthis.state = {items: []};\n\t\tthis.addItem = this.addItem.bind(this);\n\t\tthis.deleteItem = this.deleteItem.bind(this);\n\t}\n\taddItem(e){\n\t\tif(this._inputElement.value !== \"\"){\n\t\t\tvar newItem = {\n\t\t\t\ttext: this._inputElement.value, \n\t\t\t\tkey: Date.now()\n\t\t\t};\n\t\n\t\t\tthis.setState((prevState) => {\n\t\t\t\treturn {\n\t\t\t\t\titems: prevState.items.concat(newItem)\n\t\t\t\t};\n\t\t\t});\n\t\t\n\t\t\tthis._inputElement.value = \"\";\n\t\t}\n\t\tconsole.log(this.state.items);\n\t\te.preventDefault();\n\t}\n\tdeleteItem(key){\n\t\tvar filteredItems = this.state.items.filter(function(item) {\n\t\t\treturn (item.key !== key);\n\t\t});\n\t\t\n\t\tthis.setState({\n\t\t\titems: filteredItems\n\t\t});\n\t}\n\trender(){\n\t\treturn(\n\t\t\t<div className=\"todoListMain\">\n\t\t\t  <div className=\"header\">\n\t\t\t    <form onSubmit={this.addItem}>\n\t\t\t      <input ref={(a) => this._inputElement = a} placeholder=\"enter task\">\n\t\t\t      </input>\n\t\t\t      <button type=\"submit\">add</button>\n\t\t\t    </form>\n\t\t\t    <TodoItems entries={this.state.items} delete={this.deleteItem} />\n\t\t\t  </div>\n\t\t        </div>\n\t\t);\n\t}\n}\n\nexport default TodoList; \n"
+      }
+    },
+    {
+      "filePath": "src/index.css",
+      "relativePath": "src/index.css",
+      "language": "css",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [],
+      "description": "Non-code file",
+      "linesOfCode": 62,
+      "metadata": {
+        "sizeBytes": 1150,
+        "lastModified": "2025-10-10T21:16:21.350Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 0,
+        "detectedIssues": [],
+        "semanticTags": [
+          "css"
+        ],
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "body {\n  padding: 50px;\n  background-color: #66CCFF;\n  font-family: sans-serif;\n}\n#container {\n  display: flex;\n  justify-content: center;\n}\n.todoListMain .header input {\n  padding: 10px;\n  font-size: 16px;\n  border: 2px solid #FFF;\n  width: 165px;\n  border-radius: 5px;\n}\n.todoListMain .header button {\n  padding: 10px;\n  font-size: 16px;\n  margin: 10px;\n  margin-right: 0px;\n  background-color: #0066FF;\n  color: #FFF;\n  border: 2px solid #0066FF;\n  border-radius: 5px;\n}\n.todoListMain .header button:hover {\n  background-color: #003399;\n  border: 2px solid #003399;\n  cursor: pointer;\n}\n.todoListMain .theList {\n  list-style: none;\n  padding-left: 0;\n  width: 250px;\n} \n.todoListMain .theList li {\n  color: #333;\n  background-color: rgba(255,255,255,.5);\n  padding: 15px;\n  margin-bottom: 15px;\n  border-radius: 5px;\n  list-style: none;\n}\nul.theList {\n  padding: 0;\n}\n.todoListMain .theList li {\n  color: #333;\n  background-color: rgba(255,255,255,.5);\n  padding: 15px;\n  margin-bottom: 15px;\n  border-radius: 5px;\n \n  transition: background-color .2s ease-out;\n}\n \n.todoListMain .theList li:hover {\n  background-color: pink;\n  cursor: pointer;\n}\n",
+        "fullContent": "body {\n  padding: 50px;\n  background-color: #66CCFF;\n  font-family: sans-serif;\n}\n#container {\n  display: flex;\n  justify-content: center;\n}\n.todoListMain .header input {\n  padding: 10px;\n  font-size: 16px;\n  border: 2px solid #FFF;\n  width: 165px;\n  border-radius: 5px;\n}\n.todoListMain .header button {\n  padding: 10px;\n  font-size: 16px;\n  margin: 10px;\n  margin-right: 0px;\n  background-color: #0066FF;\n  color: #FFF;\n  border: 2px solid #0066FF;\n  border-radius: 5px;\n}\n.todoListMain .header button:hover {\n  background-color: #003399;\n  border: 2px solid #003399;\n  cursor: pointer;\n}\n.todoListMain .theList {\n  list-style: none;\n  padding-left: 0;\n  width: 250px;\n} \n.todoListMain .theList li {\n  color: #333;\n  background-color: rgba(255,255,255,.5);\n  padding: 15px;\n  margin-bottom: 15px;\n  border-radius: 5px;\n  list-style: none;\n}\nul.theList {\n  padding: 0;\n}\n.todoListMain .theList li {\n  color: #333;\n  background-color: rgba(255,255,255,.5);\n  padding: 15px;\n  margin-bottom: 15px;\n  border-radius: 5px;\n \n  transition: background-color .2s ease-out;\n}\n \n.todoListMain .theList li:hover {\n  background-color: pink;\n  cursor: pointer;\n}\n"
+      }
+    },
+    {
+      "filePath": "src/index.js",
+      "relativePath": "src/index.js",
+      "language": "javascript",
+      "imports": [
+        "react",
+        "react-dom",
+        "./index.css",
+        "./TodoList"
+      ],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "variables": [
+        "destination"
+      ],
+      "description": "JavaScript file containing basic code structure and definitions",
+      "linesOfCode": 16,
+      "metadata": {
+        "sizeBytes": 244,
+        "lastModified": "2025-10-10T21:16:21.350Z"
+      },
+      "analysisEnhanced": {
+        "complexityScore": 2,
+        "detectedIssues": [],
+        "semanticTags": [
+          "javascript",
+          "react"
+        ],
+        "priority": "low",
+        "summaryType": "rule-based",
+        "codeSnippet": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport './index.css';\nimport TodoList from \"./TodoList\";\n\n\nvar destination = document.querySelector('#container');\n\n\nReactDOM.render(\n  <div>\n\t<TodoList/>\n  </div>, \n  destination\n);\n",
+        "fullContent": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport './index.css';\nimport TodoList from \"./TodoList\";\n\n\nvar destination = document.querySelector('#container');\n\n\nReactDOM.render(\n  <div>\n\t<TodoList/>\n  </div>, \n  destination\n);\n"
+      }
+    }
+  ]
+}
