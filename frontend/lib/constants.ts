@@ -1,7 +1,7 @@
 export const EXAMPLE_REPOS = [
-  { name: "Next.js", url: "https://github.com/vercel/next.js" },
-  { name: "shadcn/ui", url: "https://github.com/shadcn/ui" },
-  { name: "React", url: "https://github.com/facebook/react" },
+  { name: "Demo Chat App", url: "https://github.com/mdkaifansari04/Chat-App" },
+  { name: "Full stack app", url: "https://github.com/mdkaifansari04/nirvana-ai" },
+  { name: "Vibe plan repo", url: "https://github.com/mdkaifansari04/vibeplan" },
 ];
 
 export const DEMO_VIDEOS = [
