@@ -29,7 +29,7 @@ export function PlanModal({ open, onOpenChange, phaseTitle, instruction, planMar
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="min-w-3xl">
+      <DialogContent className="w-4xl">
         <DialogHeader>
           <DialogTitle className="text-sm">{phaseTitle}</DialogTitle>
           <DialogDescription className="text-xs text-foreground/70">Review the instruction and the detailed plan.</DialogDescription>

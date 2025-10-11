@@ -200,4 +200,11 @@ Make the jobs work better with priorities. Add some code to handle this.
 
 ## NOW GENERATE THE PLAN
 
-Use the provided phase description and codebase context to create a comprehensive implementation plan following ALL the rules above.`;
+Use the provided phase description and codebase context to create a comprehensive implementation plan following ALL the rules above.
+
+## TS type
+{
+  "instructions": string,
+  "plan": string // make sure this is valid markdown and a detailed implementation plan as specified
+}
+`;
