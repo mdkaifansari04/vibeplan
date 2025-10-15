@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOption: cors.CorsOptions = {
-  origin: ENV === "development" ? "http://localhost:3000" : ["https://www.vibeplan.codes", "https://vibeplan.codes"],
+  origin: ["http://localhost:3000", "https://www.vibeplan.codes", "https://vibeplan.codes"],
   optionsSuccessStatus: 200,
   methods: "GET,PUT,PATCH,POST,DELETE",
 };
