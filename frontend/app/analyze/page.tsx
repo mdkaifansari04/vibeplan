@@ -159,6 +159,12 @@ export default function AnalyzePage() {
                 </Button>
               </div>
             </div>
+            {showError && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-2 text-center text-sm text-red-600 flex items-center justify-center gap-2">
+                <AlertCircle className="w-4 h-4" />
+                Please enter a valid GitHub repository URL.
+              </motion.div>
+            )}
           </div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="flex items-center gap-4 max-w-2xl mx-auto">

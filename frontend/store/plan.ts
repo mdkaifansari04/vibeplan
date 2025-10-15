@@ -30,6 +30,7 @@ export const usePlanStore = create<PlanState>()(
     {
       name: "plan-storage",
       storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) => ({ plans: state.plans }),
     }
   )
 );
