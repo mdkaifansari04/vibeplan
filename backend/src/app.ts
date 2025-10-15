@@ -5,11 +5,17 @@ import cors from "cors";
 import { errorHandler } from "./middleware/error-handler";
 const app = express();
 const PORT = getNumber("PORT", 5000);
-
+const ENV = getString("NODE_ENV", "development");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ allowedHeaders: "*", origin: "*" }));
 
+const corsOption: cors.CorsOptions = {
+  origin: ENV === "development" ? "http://localhost:3000" : ["https://www.vibeplan.codes", "https://vibeplan.codes"],
+  optionsSuccessStatus: 200,
+  methods: "GET,PUT,PATCH,POST,DELETE",
+};
+
+app.use(cors(corsOption));
 app.get("/health", (_: Request, res: Response) => {
   res.json({ status: "OK", timestamp: Date.now() });
 });
