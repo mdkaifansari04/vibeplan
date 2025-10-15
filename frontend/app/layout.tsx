@@ -3,6 +3,8 @@ import { Header } from "@/components/shared/header";
 import { Toaster } from "@/components/ui/toaster";
 import { ClientProvider } from "@/provider/client-provider";
 import { ThemeProvider } from "@/provider/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
+
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./styles/globals.css";
@@ -32,6 +34,7 @@ export default function RootLayout({
             {children}
             <Footer />
             <Toaster />
+            <Analytics />
           </ThemeProvider>
         </ClientProvider>
       </body>
